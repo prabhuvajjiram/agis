@@ -20,6 +20,10 @@
   including forced-colors, reduced-transparency, and reduced-motion fallbacks.
 - Applied the dimensional material language to the complete button family while preserving
   semantic hierarchy, contrast, forced-colors behavior, and reduced motion.
+- Strengthened Secondary and Ghost action contrast and elevation without competing with the
+  primary action.
+- Added a glass, two-rail application sidebar patterned after Angel Stones navigation, with
+  searchable destinations and a smooth reduced-motion-safe active indicator.
 - Self-hosted the catalogue's Inter variable font for deterministic cross-platform visual
   baselines; the font remains licensed under SIL Open Font License 1.1.
 

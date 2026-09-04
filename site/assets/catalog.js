@@ -191,6 +191,64 @@ for (const [index, tab] of tabs.entries()) {
   })
 }
 
+const sidebarMenu = document.querySelector('#catalog-sidebar-menu')
+const sidebarIndicator = sidebarMenu?.querySelector('.as-sidebar__indicator')
+const sidebarLinks = [...sidebarMenu?.querySelectorAll('.as-sidebar__link') ?? []]
+const sidebarSearch = document.querySelector('#catalog-sidebar-search')
+const sidebarStatus = document.querySelector('#catalog-sidebar-status')
+
+const positionSidebarIndicator = (link, { animate = true } = {}) => {
+  if (!sidebarMenu || !sidebarIndicator || !link || link.closest('li')?.hidden) {
+    if (sidebarIndicator) sidebarIndicator.hidden = true
+    return
+  }
+
+  sidebarIndicator.hidden = false
+  if (!animate) sidebarIndicator.style.transition = 'none'
+  sidebarMenu.style.setProperty('--as-sidebar-active-offset', `${link.offsetTop}px`)
+  sidebarMenu.style.setProperty('--as-sidebar-active-height', `${link.offsetHeight}px`)
+  if (!animate) requestAnimationFrame(() => sidebarIndicator.style.removeProperty('transition'))
+}
+
+const selectSidebarDestination = (link) => {
+  for (const candidate of sidebarLinks) candidate.removeAttribute('aria-current')
+  link.setAttribute('aria-current', 'page')
+  positionSidebarIndicator(link)
+  sidebarStatus.textContent = `${link.dataset.sidebarLabel} is the current destination.`
+}
+
+if (sidebarMenu) {
+  const currentLink = sidebarLinks.find((link) => link.getAttribute('aria-current') === 'page')
+  positionSidebarIndicator(currentLink, { animate: false })
+  sidebarMenu.dataset.animatedIndicator = 'true'
+}
+
+for (const link of sidebarLinks) {
+  link.addEventListener('click', (event) => {
+    event.preventDefault()
+    selectSidebarDestination(link)
+  })
+}
+
+sidebarSearch?.addEventListener('input', () => {
+  const query = sidebarSearch.value.trim().toLocaleLowerCase()
+  let visibleCount = 0
+  for (const link of sidebarLinks) {
+    const visible = link.dataset.sidebarLabel.toLocaleLowerCase().includes(query)
+    link.closest('li').hidden = !visible
+    if (visible) visibleCount += 1
+  }
+
+  const currentLink = sidebarLinks.find((link) => link.getAttribute('aria-current') === 'page')
+  positionSidebarIndicator(currentLink, { animate: false })
+  sidebarStatus.textContent = `${visibleCount} ${visibleCount === 1 ? 'destination' : 'destinations'} available.`
+})
+
+window.addEventListener('resize', () => {
+  const currentLink = sidebarLinks.find((link) => link.getAttribute('aria-current') === 'page')
+  positionSidebarIndicator(currentLink, { animate: false })
+})
+
 const menuTrigger = document.querySelector('#menu-trigger')
 const menu = document.querySelector('#catalog-menu')
 menuTrigger?.addEventListener('click', () => {

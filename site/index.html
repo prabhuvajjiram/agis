@@ -209,10 +209,66 @@
         <section class="catalog-section" id="navigation">
           <div class="catalog-section__intro">
             <p class="catalog-eyebrow">Navigation</p>
-            <h2>Breadcrumbs, tabs, and pagination</h2>
-            <p>Links move to destinations; tabs switch peer views inside the current context.</p>
+            <h2>Sidebar, breadcrumbs, tabs, and pagination</h2>
+            <p>A glass navigation shell preserves Angel Stones' two-rail structure and moves smoothly between destinations.</p>
           </div>
           <div class="catalog-demo catalog-stack">
+            <aside class="as-sidebar" aria-label="Commercial workspace navigation">
+              <nav class="as-sidebar__rail" aria-label="Product areas">
+                <a class="as-sidebar__rail-link" href="#navigation" aria-label="Home">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><path d="m3 11 9-7 9 7"></path><path d="M5 10v10h14V10M9 20v-6h6v6"></path></svg>
+                </a>
+                <a class="as-sidebar__rail-link" href="#navigation" aria-label="Commercial" aria-current="page">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><path d="M4 5h16v11H4z"></path><path d="M8 20h8M12 16v4M8 10l2 2 5-5 2 2"></path></svg>
+                </a>
+                <a class="as-sidebar__rail-link" href="#navigation" aria-label="Operations">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><path d="m12 3 8 4.5v9L12 21l-8-4.5v-9z"></path><path d="m4 7.5 8 4.5 8-4.5M12 12v9"></path></svg>
+                </a>
+                <a class="as-sidebar__rail-link" href="#navigation" aria-label="Settings">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1-2.8 2.8-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.6v.2h-4V21a1.7 1.7 0 0 0-1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1L4.2 17l.1-.1a1.7 1.7 0 0 0 .3-1.9A1.7 1.7 0 0 0 3 14H2.8v-4H3a1.7 1.7 0 0 0 1.6-1 1.7 1.7 0 0 0-.3-1.9L4.2 7 7 4.2l.1.1a1.7 1.7 0 0 0 1.9.3A1.7 1.7 0 0 0 10 3V2.8h4V3a1.7 1.7 0 0 0 1 1.6 1.7 1.7 0 0 0 1.9-.3l.1-.1L19.8 7l-.1.1a1.7 1.7 0 0 0-.3 1.9 1.7 1.7 0 0 0 1.6 1h.2v4H21a1.7 1.7 0 0 0-1.6 1Z"></path></svg>
+                </a>
+              </nav>
+              <div class="as-sidebar__panel">
+                <header class="as-sidebar__header">
+                  <h3 class="as-sidebar__title">Commercial</h3>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><path d="m8 10 4 4 4-4"></path></svg>
+                </header>
+                <div class="as-sidebar__search">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-4-4"></path></svg>
+                  <input class="as-control" id="catalog-sidebar-search" type="search" autocomplete="off" aria-label="Search Commercial navigation" aria-describedby="catalog-sidebar-status" placeholder="Search navigation">
+                </div>
+                <nav aria-label="Commercial destinations">
+                  <ul class="as-sidebar__menu" id="catalog-sidebar-menu">
+                    <li class="as-sidebar__indicator" aria-hidden="true"></li>
+                    <li><a class="as-sidebar__link" href="#navigation" data-sidebar-label="Sales Dashboard">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><path d="M4 5h16v11H4z"></path><path d="M8 20h8M12 16v4M8 12l2-2 2 2 4-4"></path></svg>
+                      <span>Sales Dashboard</span>
+                    </a></li>
+                    <li><a class="as-sidebar__link" href="#navigation" data-sidebar-label="Sales Pipeline">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><path d="M4 5h16v4H4zM7 9v5h10V9M10 14v5h4v-5"></path></svg>
+                      <span>Sales Pipeline</span>
+                    </a></li>
+                    <li><a class="as-sidebar__link" href="#navigation" data-sidebar-label="Team Quotes" aria-current="page">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><path d="M6 3h9l4 4v14H6z"></path><path d="M15 3v5h4M9 12h6M9 16h6"></path></svg>
+                      <span>Team Quotes</span>
+                    </a></li>
+                    <li><a class="as-sidebar__link" href="#navigation" data-sidebar-label="Order Desk">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><path d="M6 3h9l4 4v14H6z"></path><path d="M15 3v5h4M9 12h6M9 16h4"></path></svg>
+                      <span>Order Desk</span>
+                    </a></li>
+                    <li><a class="as-sidebar__link" href="#navigation" data-sidebar-label="Service Orders">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><path d="m14.5 6.5 3-3 3 3-3 3M9.5 17.5l-3 3-3-3 3-3M13 8l-5 5M16 11l-5 5"></path></svg>
+                      <span>Service Orders</span>
+                    </a></li>
+                    <li><a class="as-sidebar__link" href="#navigation" data-sidebar-label="Customers and Partners">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><circle cx="9" cy="8" r="3"></circle><circle cx="17" cy="10" r="2"></circle><path d="M3 20c0-4 2.5-6 6-6s6 2 6 6M15 15c3 0 5 1.5 5 4"></path></svg>
+                      <span>Customers &amp; Partners</span>
+                    </a></li>
+                  </ul>
+                </nav>
+                <p class="as-sidebar__status" id="catalog-sidebar-status" role="status" aria-live="polite">Team Quotes is the current destination.</p>
+              </div>
+            </aside>
             <nav class="as-breadcrumbs" aria-label="Example breadcrumb">
               <ol><li><a href="#navigation">Orders</a></li><li><a href="#navigation">SO-1042</a></li><li aria-current="page">Documents</li></ol>
             </nav>

@@ -41,6 +41,8 @@ test('@a11y standard controls meet the shared hit-target contract', async ({ pag
     'select:not([hidden])',
     'input:not([type="checkbox"]):not([type="radio"]):not([hidden])',
     'a.as-pagination__button:not([hidden])',
+    'a.as-sidebar__rail-link:not([hidden])',
+    'a.as-sidebar__link:not([hidden])',
   ].join(',')).evaluateAll((elements) => elements
     .filter((element) => element.checkVisibility())
     .map((element) => ({
@@ -60,6 +62,36 @@ test('@a11y tabs support roving keyboard focus', async ({ page }) => {
   await expect(page.getByRole('tab', { name: 'Activity' })).toBeFocused()
   await expect(page.getByRole('tab', { name: 'Activity' })).toHaveAttribute('aria-selected', 'true')
   await expect(page.getByRole('tabpanel', { name: 'Activity' })).toBeVisible()
+})
+
+test('@a11y sidebar exposes current navigation, filtering, and reduced-motion behavior', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'no-preference' })
+  const sidebar = page.getByRole('complementary', { name: 'Commercial workspace navigation' })
+  const menu = page.locator('#catalog-sidebar-menu')
+  const indicator = menu.locator('.as-sidebar__indicator')
+  const teamQuotes = sidebar.getByRole('link', { name: 'Team Quotes' })
+  const orderDesk = sidebar.getByRole('link', { name: 'Order Desk' })
+
+  await expect(teamQuotes).toHaveAttribute('aria-current', 'page')
+  const initialOffset = await menu.evaluate((element) => getComputedStyle(element).getPropertyValue('--as-sidebar-active-offset'))
+  await orderDesk.click()
+  await expect(orderDesk).toHaveAttribute('aria-current', 'page')
+  await expect(teamQuotes).not.toHaveAttribute('aria-current')
+  await expect(page.locator('#catalog-sidebar-status')).toHaveText('Order Desk is the current destination.')
+  const movedOffset = await menu.evaluate((element) => getComputedStyle(element).getPropertyValue('--as-sidebar-active-offset'))
+  expect(movedOffset).not.toBe(initialOffset)
+  expect(await indicator.evaluate((element) => getComputedStyle(element).transitionDuration)).not.toBe('0s')
+
+  const search = page.getByRole('searchbox', { name: 'Search Commercial navigation' })
+  await search.fill('service')
+  await expect(sidebar.getByRole('link', { name: 'Service Orders' })).toBeVisible()
+  await expect(orderDesk).toBeHidden()
+  await expect(page.locator('#catalog-sidebar-status')).toHaveText('1 destination available.')
+  const results = await new AxeBuilder({ page }).include('.as-sidebar').analyze()
+  expect(results.violations, 'filtered sidebar accessibility violations').toEqual([])
+
+  await page.emulateMedia({ reducedMotion: 'reduce' })
+  expect(await indicator.evaluate((element) => getComputedStyle(element).transitionDuration)).toBe('0s')
 })
 
 test('@a11y switch exposes and announces its state', async ({ page }) => {
@@ -115,13 +147,16 @@ test('@a11y every meaningful specimen table column supports announced sorting', 
 test('@a11y premium effects and dimensional buttons retain forced-colors fallbacks', async ({ page }) => {
   const gradient = page.locator('.as-surface[data-appearance="gradient"]')
   const glass = page.locator('.as-surface[data-appearance="glass"]')
+  const sidebar = page.locator('.as-sidebar')
   const buttons = page.locator('#actions .as-button')
 
   await expect(gradient).toBeVisible()
   await expect(glass).toBeVisible()
   await expect(buttons.first()).toBeVisible()
+  await expect(sidebar).toBeVisible()
   expect(await gradient.evaluate((element) => getComputedStyle(element).backgroundImage)).not.toBe('none')
   expect(await glass.evaluate((element) => getComputedStyle(element).backdropFilter)).not.toBe('none')
+  expect(await sidebar.evaluate((element) => getComputedStyle(element).backdropFilter)).not.toBe('none')
   expect(await buttons.evaluateAll((elements) => elements
     .filter((element) => getComputedStyle(element).backgroundImage === 'none')
     .map((element) => element.textContent?.trim()))).toEqual([])
@@ -129,6 +164,7 @@ test('@a11y premium effects and dimensional buttons retain forced-colors fallbac
   await page.emulateMedia({ forcedColors: 'active' })
   expect(await gradient.evaluate((element) => getComputedStyle(element).backgroundImage)).toBe('none')
   expect(await glass.evaluate((element) => getComputedStyle(element).backdropFilter)).toBe('none')
+  expect(await sidebar.evaluate((element) => getComputedStyle(element).backdropFilter)).toBe('none')
   expect(await buttons.evaluateAll((elements) => elements
     .filter((element) => getComputedStyle(element).boxShadow !== 'none')
     .map((element) => element.textContent?.trim()))).toEqual([])
@@ -144,6 +180,9 @@ test('@a11y representative interactive patterns expose visible keyboard focus', 
     '.as-choice input[type="checkbox"]',
     '#catalog-switch',
     '#tab-summary',
+    '#catalog-sidebar-search',
+    '.as-sidebar__rail-link[aria-current="page"]',
+    '.as-sidebar__link[aria-current="page"]',
     '.as-pagination__button[aria-current="page"]',
     '.as-table__sort',
     '.as-disclosure__summary',
@@ -169,6 +208,6 @@ test('@visual catalogue matches the reviewed reference', async ({ page }) => {
   await expect(page).toHaveScreenshot('catalog.png', {
     animations: 'disabled',
     fullPage: true,
-    timeout: 20_000,
+    timeout: 40_000,
   })
 })

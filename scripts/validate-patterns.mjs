@@ -62,10 +62,14 @@ const requiredFiles = {
   ],
   'packages/ui-patterns/navigation.css': [
     '.as-skip-link',
+    '.as-sidebar',
+    '.as-sidebar__rail',
+    '.as-sidebar__indicator',
     '.as-breadcrumbs',
     '.as-tablist',
     '.as-pagination',
     '--as-control-hit-target',
+    'prefers-reduced-transparency',
   ],
   'packages/ui-patterns/data-display.css': [
     '.as-card',
@@ -122,7 +126,7 @@ const requiredFiles = {
     'Automation cannot prove WCAG conformance',
   ],
   'docs/CHOICES.md': ['fieldset', 'role="switch"', 'authoritative operation'],
-  'docs/NAVIGATION.md': ['aria-current="page"', 'role="tablist"', 'Arrow'],
+  'docs/NAVIGATION.md': ['aria-current="page"', 'role="tablist"', 'Arrow', 'Application sidebar', 'prefers-reduced-motion'],
   'docs/DATA_DISPLAY.md': ['aria-sort', 'meaningful data column', 'type-aware comparators', '44px', 'virtualization'],
   'docs/DISCLOSURE.md': ['aria-describedby', 'Escape', 'native Popover'],
   'docs/SPECIALIZED_INPUTS.md': ['native file input', 'malware scanning', 'silently convert'],
@@ -142,6 +146,8 @@ const requiredFiles = {
     'type="file"',
     '<dialog',
     'id="visual-expression"',
+    'id="catalog-sidebar-menu"',
+    'id="catalog-sidebar-search"',
     'data-appearance="glass"',
     'inter-latin-wght-normal.woff2',
   ],
@@ -195,11 +201,16 @@ const generatedTokens = await load('packages/tokens/dist/tokens.css')
 const definedCustomProperties = new Set(
   [...generatedTokens.matchAll(/(--as-[a-z0-9-]+)\s*:/gi)].map((match) => match[1])
 )
+const locallyDefinedCustomProperties = new Set(
+  [...patternCss.matchAll(/(--as-[a-z0-9-]+)\s*:/gi)].map((match) => match[1])
+)
 const referencedCustomProperties = new Set(
   [...patternCss.matchAll(/var\((--as-[a-z0-9-]+)/gi)].map((match) => match[1])
 )
 for (const property of referencedCustomProperties) {
-  if (!definedCustomProperties.has(property)) failures.push(`Pattern CSS references undefined token ${property}`)
+  if (!definedCustomProperties.has(property) && !locallyDefinedCustomProperties.has(property)) {
+    failures.push(`Pattern CSS references undefined token or component property ${property}`)
+  }
 }
 
 const tokens = JSON.parse(await load('packages/tokens/src/tokens.json'))

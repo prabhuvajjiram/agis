@@ -28,8 +28,10 @@ unrelated action green.
 
 Every ASIG button uses the shared dimensional material: a restrained theme-aware gradient,
 top-edge highlight, border, and elevation. Hierarchy still comes from the semantic variant,
-not from removing finish quality from secondary or destructive actions. Ghost remains quiet,
-and Link intentionally stays flat because it communicates navigation rather than elevation.
+not from removing finish quality from secondary or destructive actions. Secondary uses a
+clear theme-tinted border and raised surface; Ghost uses a quieter but still visible neutral
+surface. Link intentionally stays flat because it communicates navigation rather than
+elevation.
 
 ## Size and placement
 
