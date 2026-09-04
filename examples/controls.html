@@ -185,9 +185,15 @@
         if (focusIndex !== null) menuItems().at(focusIndex)?.focus();
       };
 
-      menuTrigger.addEventListener('click', () => actionMenu.hidden ? openMenu() : closeMenu());
+      menuTrigger.addEventListener('click', (event) => {
+        if (event.detail === 0) {
+          openMenu(0);
+          return;
+        }
+        actionMenu.hidden ? openMenu() : closeMenu();
+      });
       menuTrigger.addEventListener('keydown', (event) => {
-        if (event.key === 'ArrowDown' || event.key === 'ArrowUp' || event.key === 'Enter' || event.key === ' ') {
+        if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
           event.preventDefault();
           openMenu(event.key === 'ArrowUp' ? -1 : 0);
         }
