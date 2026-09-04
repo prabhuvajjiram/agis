@@ -1,0 +1,103 @@
+.as-alert {
+  box-sizing: border-box;
+  display: grid;
+  gap: var(--as-space-1);
+  padding: var(--as-space-3) var(--as-space-4);
+  border: 1px solid var(--as-color-border);
+  border-left: 4px solid var(--as-color-info);
+  border-radius: var(--as-radius-control);
+  background: var(--as-color-surface-muted);
+  color: var(--as-color-foreground);
+}
+
+.as-alert[data-variant="success"] { border-left-color: var(--as-color-success); }
+.as-alert[data-variant="warning"] { border-left-color: var(--as-color-warning); }
+.as-alert[data-variant="danger"] { border-left-color: var(--as-color-danger); }
+
+.as-alert__title,
+.as-alert__message {
+  margin: 0;
+}
+
+.as-alert__title {
+  font-size: var(--as-font-size-sm);
+  font-weight: var(--as-font-weight-semibold);
+  line-height: var(--as-font-line-tight);
+}
+
+.as-alert__message {
+  color: var(--as-color-foreground-muted);
+  font-size: var(--as-font-size-sm);
+  line-height: var(--as-font-line-normal);
+}
+
+.as-status {
+  min-height: 1.25rem;
+  color: var(--as-color-foreground-muted);
+  font-size: var(--as-font-size-sm);
+  line-height: var(--as-font-line-normal);
+}
+
+.as-empty-state {
+  display: grid;
+  justify-items: center;
+  gap: var(--as-space-3);
+  padding: var(--as-space-8) var(--as-space-4);
+  border: 1px dashed var(--as-color-border);
+  border-radius: var(--as-radius-panel);
+  color: var(--as-color-foreground-muted);
+  text-align: center;
+}
+
+.as-toast-region {
+  position: fixed;
+  right: var(--as-space-4);
+  bottom: var(--as-space-4);
+  z-index: var(--as-layer-toast);
+  display: grid;
+  width: min(24rem, calc(100vw - 2rem));
+  gap: var(--as-space-2);
+  pointer-events: none;
+}
+
+.as-toast {
+  padding: var(--as-space-3) var(--as-space-4);
+  border: 1px solid var(--as-color-border);
+  border-radius: var(--as-radius-control);
+  background: var(--as-color-surface);
+  color: var(--as-color-foreground);
+  box-shadow: var(--as-elevation-popup);
+  pointer-events: auto;
+}
+
+.as-skeleton {
+  border-radius: var(--as-radius-control);
+  background: linear-gradient(
+    90deg,
+    var(--as-color-surface-muted) 25%,
+    var(--as-color-border) 37%,
+    var(--as-color-surface-muted) 63%
+  );
+  background-size: 400% 100%;
+  animation: as-skeleton 1400ms ease infinite;
+}
+
+@keyframes as-skeleton {
+  0% { background-position: 100% 50%; }
+  100% { background-position: 0 50%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .as-skeleton {
+    background-image: none;
+    animation: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .as-alert,
+  .as-empty-state,
+  .as-toast {
+    border-color: CanvasText;
+  }
+}

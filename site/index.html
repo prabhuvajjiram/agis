@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Browsable catalogue for the Angel Stones Interface Guidelines.">
+    <title>ASIG component catalogue</title>
+    <link rel="stylesheet" href="../packages/tokens/dist/tokens.css">
+    <link rel="stylesheet" href="../packages/ui-patterns/all.css">
+    <link rel="stylesheet" href="./assets/catalog.css">
+    <script src="./assets/catalog.js" defer></script>
+  </head>
+  <body data-as-theme="operations">
+    <a class="as-skip-link" href="#catalog-content">Skip to component catalogue</a>
+
+    <header class="catalog-header">
+      <div>
+        <p class="catalog-kicker">Angel Stones Interface Guidelines</p>
+        <h1>Component catalogue</h1>
+        <p class="catalog-lede">Framework-neutral patterns shared by Operations, CAD, and Marketing.</p>
+      </div>
+      <div class="catalog-theme">
+        <label class="as-field__label" for="theme-select">Preview theme</label>
+        <select class="as-select" id="theme-select">
+          <option value="operations">Operations</option>
+          <option value="operations-dark">Operations dark</option>
+          <option value="cad">CAD</option>
+          <option value="marketing">Marketing</option>
+        </select>
+      </div>
+    </header>
+
+    <div class="catalog-shell">
+      <nav class="catalog-nav" aria-label="Catalogue sections">
+        <a href="#foundations">Foundations</a>
+        <a href="#actions">Actions</a>
+        <a href="#forms">Forms</a>
+        <a href="#choices">Choices</a>
+        <a href="#navigation">Navigation</a>
+        <a href="#data-display">Data display</a>
+        <a href="#disclosure">Disclosure</a>
+        <a href="#specialized-inputs">Specialized inputs</a>
+        <a href="#feedback">Feedback</a>
+        <a href="#overlays">Overlays</a>
+      </nav>
+
+      <main id="catalog-content" tabindex="-1">
+        <section class="catalog-section" id="foundations">
+          <div class="catalog-section__intro">
+            <p class="catalog-eyebrow">Foundation</p>
+            <h2>Semantic color and type</h2>
+            <p>The selected product theme changes expression while semantic roles remain stable.</p>
+          </div>
+          <div class="catalog-swatches" aria-label="Semantic color examples">
+            <div class="catalog-swatch" data-color="primary"><span>Primary</span></div>
+            <div class="catalog-swatch" data-color="accent"><span>Accent</span></div>
+            <div class="catalog-swatch" data-color="success"><span>Success</span></div>
+            <div class="catalog-swatch" data-color="warning"><span>Warning</span></div>
+            <div class="catalog-swatch" data-color="danger"><span>Danger</span></div>
+          </div>
+        </section>
+
+        <section class="catalog-section" id="actions">
+          <div class="catalog-section__intro">
+            <p class="catalog-eyebrow">Actions</p>
+            <h2>Buttons and hierarchy</h2>
+            <p>One clear primary action, with secondary, ghost, destructive, compact, and loading states.</p>
+          </div>
+          <div class="catalog-demo catalog-demo--row">
+            <button class="as-button" type="button">Save changes</button>
+            <button class="as-button" data-variant="secondary" type="button">Preview</button>
+            <button class="as-button" data-variant="ghost" type="button">Cancel</button>
+            <button class="as-button" data-variant="destructive" type="button">Delete</button>
+            <button class="as-button" data-size="compact" type="button">Compact</button>
+            <button class="as-button" type="button" aria-busy="true">
+              <span class="as-button__spinner" aria-hidden="true"></span>Saving
+            </button>
+          </div>
+        </section>
+
+        <section class="catalog-section" id="forms">
+          <div class="catalog-section__intro">
+            <p class="catalog-eyebrow">Forms and selection</p>
+            <h2>Field composition</h2>
+            <p>Stable labels, explicit requirements, connected help, and responsive grouping.</p>
+          </div>
+          <form class="as-form-container catalog-demo" aria-label="Vendor example">
+            <section class="as-form-section">
+              <header class="as-form-section__header">
+                <h3 class="as-form-section__title">Manufacturing vendor</h3>
+                <p class="as-form-section__description">A calmer structure for the workflow shown in the original review.</p>
+              </header>
+              <div class="as-field-grid" data-columns="2">
+                <div class="as-field">
+                  <div class="as-field__header">
+                    <label class="as-field__label" for="catalog-vendor">Vendor</label>
+                    <span class="as-field__requirement" data-state="required">Required</span>
+                  </div>
+                  <select class="as-select" id="catalog-vendor">
+                    <option>Northern Granite</option>
+                    <option>Heritage Memorial Supply</option>
+                  </select>
+                </div>
+                <div class="as-field">
+                  <div class="as-field__header">
+                    <label class="as-field__label" for="catalog-po">Vendor PO</label>
+                    <span class="as-field__requirement">Optional</span>
+                  </div>
+                  <input class="as-control" id="catalog-po" type="text" placeholder="PO number">
+                </div>
+                <div class="as-field">
+                  <div class="as-field__header">
+                    <label class="as-field__label" for="catalog-amount">Buying quote amount</label>
+                    <span class="as-field__requirement">Optional</span>
+                  </div>
+                  <input class="as-control" id="catalog-amount" type="text" inputmode="decimal" placeholder="$0.00" aria-describedby="catalog-amount-help">
+                  <span class="as-field__help" id="catalog-amount-help">Internal vendor cost only.</span>
+                </div>
+                <div class="as-field">
+                  <div class="as-field__header">
+                    <label class="as-field__label" for="catalog-lookup">Searchable selection</label>
+                    <span class="as-field__requirement">Optional</span>
+                  </div>
+                  <button class="as-selection-trigger" id="catalog-lookup" type="button" role="combobox" aria-expanded="false" aria-controls="catalog-vendor-options" aria-haspopup="listbox">
+                    <span class="as-selection-trigger__value">Choose a supplier</span>
+                  </button>
+                  <div class="as-selection-popover" id="catalog-vendor-options" role="listbox" aria-label="Supplier options" hidden>
+                    <button class="as-option" type="button" role="option" aria-selected="false">North Quarry</button>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </form>
+        </section>
+
+        <section class="catalog-section" id="choices">
+          <div class="catalog-section__intro">
+            <p class="catalog-eyebrow">Choices</p>
+            <h2>Checkbox, radio, and switch</h2>
+            <p>Native form choices for submitted decisions; switches for immediate settings.</p>
+          </div>
+          <div class="catalog-demo catalog-grid">
+            <fieldset class="as-choice-group">
+              <legend class="as-choice-group__legend">Notifications</legend>
+              <label class="as-choice">
+                <input type="checkbox" checked>
+                <span class="as-choice__content"><span class="as-choice__label">Order updates</span><span class="as-choice__description">Receive status changes for assigned orders.</span></span>
+              </label>
+              <label class="as-choice">
+                <input type="checkbox">
+                <span class="as-choice__content"><span class="as-choice__label">Daily summary</span><span class="as-choice__description">One grouped message each morning.</span></span>
+              </label>
+            </fieldset>
+            <fieldset class="as-choice-group">
+              <legend class="as-choice-group__legend">Drawing units</legend>
+              <label class="as-choice"><input type="radio" name="catalog-unit" checked><span class="as-choice__label">Inches</span></label>
+              <label class="as-choice"><input type="radio" name="catalog-unit"><span class="as-choice__label">Millimetres</span></label>
+            </fieldset>
+            <div>
+              <button class="as-switch" id="catalog-switch" type="button" role="switch" aria-checked="true">
+                <span class="as-switch__track" aria-hidden="true"><span class="as-switch__thumb"></span></span>
+                Show grid snapping
+              </button>
+              <p class="catalog-caption" id="switch-status" aria-live="polite">Grid snapping is on.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="catalog-section" id="navigation">
+          <div class="catalog-section__intro">
+            <p class="catalog-eyebrow">Navigation</p>
+            <h2>Breadcrumbs, tabs, and pagination</h2>
+            <p>Links move to destinations; tabs switch peer views inside the current context.</p>
+          </div>
+          <div class="catalog-demo catalog-stack">
+            <nav class="as-breadcrumbs" aria-label="Example breadcrumb">
+              <ol><li><a href="#navigation">Orders</a></li><li><a href="#navigation">SO-1042</a></li><li aria-current="page">Documents</li></ol>
+            </nav>
+            <div class="as-tab-scroll">
+              <div class="as-tablist" role="tablist" aria-label="Order views">
+                <button class="as-tab" id="tab-summary" type="button" role="tab" aria-selected="true" aria-controls="panel-summary">Summary</button>
+                <button class="as-tab" id="tab-activity" type="button" role="tab" aria-selected="false" aria-controls="panel-activity" tabindex="-1">Activity</button>
+                <button class="as-tab" id="tab-files" type="button" role="tab" aria-selected="false" aria-controls="panel-files" tabindex="-1">Files</button>
+              </div>
+            </div>
+            <div class="as-tab-panel" id="panel-summary" role="tabpanel" aria-labelledby="tab-summary" tabindex="0">Summary preserves order context and current task state.</div>
+            <div class="as-tab-panel" id="panel-activity" role="tabpanel" aria-labelledby="tab-activity" tabindex="0" hidden>Activity shows the audit-friendly event sequence.</div>
+            <div class="as-tab-panel" id="panel-files" role="tabpanel" aria-labelledby="tab-files" tabindex="0" hidden>Files remain governed by the product's authorization rules.</div>
+            <nav class="as-pagination" aria-label="Example pagination">
+              <span class="as-pagination__summary">Showing 1–20 of 84</span>
+              <span class="as-pagination__controls">
+                <button class="as-pagination__button" type="button" aria-label="Previous page" disabled>Previous</button>
+                <button class="as-pagination__button" type="button" aria-current="page">1</button>
+                <button class="as-pagination__button" type="button" aria-label="Next page">Next</button>
+              </span>
+            </nav>
+          </div>
+        </section>
+
+        <section class="catalog-section" id="data-display">
+          <div class="catalog-section__intro">
+            <p class="catalog-eyebrow">Data display</p>
+            <h2>Cards, descriptions, and tables</h2>
+            <p>Semantic structures preserve comparison, record identity, and accessible headers.</p>
+          </div>
+          <div class="catalog-demo catalog-stack">
+            <article class="as-card">
+              <h3 class="as-card__title">Production summary</h3>
+              <p class="as-card__description">Related information grouped without making the entire surface clickable.</p>
+              <dl class="as-description-list">
+                <dt>Order</dt><dd>SO-1042</dd><dt>Status</dt><dd>Ready for review</dd><dt>Owner</dt><dd>Production team</dd>
+              </dl>
+            </article>
+            <div class="as-table-wrap" role="region" aria-label="Vendor quotes" tabindex="0">
+              <table class="as-table">
+                <caption>Vendor quotes for the selected order</caption>
+                <thead><tr><th scope="col" aria-sort="ascending"><button class="as-table__sort" type="button">Vendor <span aria-hidden="true">↑</span></button></th><th scope="col">Reference</th><th scope="col">Amount</th><th scope="col">Status</th></tr></thead>
+                <tbody><tr><td>Northern Granite</td><td>NG-2026-18</td><td>$1,280.00</td><td><span class="as-status">Received</span></td></tr><tr><td>Heritage Memorial</td><td>HM-8841</td><td>$1,340.00</td><td><span class="as-status">Pending</span></td></tr></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <section class="catalog-section" id="disclosure">
+          <div class="catalog-section__intro">
+            <p class="catalog-eyebrow">Disclosure</p>
+            <h2>Details, tooltip, and popover</h2>
+            <p>Progressive disclosure keeps essential instructions visible and optional detail nearby.</p>
+          </div>
+          <div class="catalog-demo catalog-demo--row">
+            <details class="as-disclosure">
+              <summary class="as-disclosure__summary">Why is a vendor PO optional?</summary>
+              <div class="as-disclosure__content">The workflow may begin before a PO exists. Product rules decide when it becomes required.</div>
+            </details>
+            <span class="as-tooltip">
+              <button class="as-button" data-variant="secondary" data-icon-only type="button" aria-label="Vendor cost help" aria-describedby="vendor-cost-tooltip">?</button>
+              <span class="as-tooltip__content" id="vendor-cost-tooltip" role="tooltip">Internal vendor cost, never customer pricing.</span>
+            </span>
+            <button class="as-button" data-variant="secondary" type="button" popovertarget="catalog-popover">Open popover</button>
+            <div class="as-popover" id="catalog-popover" popover aria-labelledby="popover-title">
+              <div class="as-popover__header"><h3 class="as-popover__title" id="popover-title">Display options</h3></div>
+              <label class="as-choice"><input type="checkbox" checked><span class="as-choice__label">Show archived records</span></label>
+            </div>
+          </div>
+        </section>
+
+        <section class="catalog-section" id="specialized-inputs">
+          <div class="catalog-section__intro">
+            <p class="catalog-eyebrow">Specialized inputs</p>
+            <h2>File, date, and time</h2>
+            <p>Native controls remain available while the product owns validation, storage, and time-zone rules.</p>
+          </div>
+          <div class="catalog-demo catalog-stack">
+            <div class="as-field">
+              <label class="as-field__label" for="catalog-file">Supporting document</label>
+              <input class="as-file-input" id="catalog-file" type="file" aria-describedby="catalog-file-help">
+              <span class="as-field__help" id="catalog-file-help">PDF or image, up to 10 MB.</span>
+            </div>
+            <div class="as-date-time-grid">
+              <div class="as-field"><label class="as-field__label" for="catalog-date">Production date</label><input class="as-control" id="catalog-date" type="date"></div>
+              <div class="as-field"><label class="as-field__label" for="catalog-time">Start time (Eastern)</label><input class="as-control" id="catalog-time" type="time"></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="catalog-section" id="feedback">
+          <div class="catalog-section__intro">
+            <p class="catalog-eyebrow">Feedback</p>
+            <h2>Alerts, status, loading, and empty state</h2>
+            <p>Messages identify the state, its scope, and the next useful action.</p>
+          </div>
+          <div class="catalog-demo catalog-stack">
+            <div class="as-alert" data-variant="success" role="status"><strong class="as-alert__title">Saved</strong><p class="as-alert__message">The design-system example is up to date.</p></div>
+            <div class="as-alert" data-variant="danger" role="alert"><strong class="as-alert__title">Upload failed</strong><p class="as-alert__message">The selected file was preserved. Check the connection and retry.</p></div>
+            <div class="as-skeleton" aria-hidden="true"></div>
+            <div class="as-empty-state"><strong>No matching records</strong><span>Clear one or more filters to broaden the result.</span></div>
+          </div>
+        </section>
+
+        <section class="catalog-section" id="overlays">
+          <div class="catalog-section__intro">
+            <p class="catalog-eyebrow">Overlays</p>
+            <h2>Menu and confirmation dialog</h2>
+            <p>Overlays keep focus, dismissal, and destructive consequences explicit.</p>
+          </div>
+          <div class="catalog-demo catalog-demo--row">
+            <div>
+              <button class="as-button" data-variant="secondary" type="button" id="menu-trigger" aria-haspopup="menu" aria-expanded="false" aria-controls="catalog-menu">More actions</button>
+              <div class="as-menu-popover" id="catalog-menu" role="menu" aria-labelledby="menu-trigger" hidden>
+                <button class="as-menu-item" type="button" role="menuitem">Duplicate</button>
+                <button class="as-menu-item" type="button" role="menuitem" data-variant="destructive">Archive</button>
+              </div>
+            </div>
+            <button class="as-button" data-variant="destructive" type="button" id="dialog-open">Open confirmation</button>
+            <dialog class="as-dialog" data-size="small" id="catalog-dialog" aria-labelledby="dialog-title" aria-describedby="dialog-description">
+              <header class="as-dialog__header"><h3 class="as-dialog__title" id="dialog-title">Archive example?</h3><p class="as-dialog__description" id="dialog-description">This catalogue action is only a specimen.</p></header>
+              <div class="as-dialog__body">A real product must name the affected record and authoritative consequence.</div>
+              <footer class="as-dialog__footer"><button class="as-button" data-variant="ghost" type="button" id="dialog-cancel">Cancel</button><button class="as-button" data-variant="destructive" type="button" id="dialog-confirm">Archive example</button></footer>
+            </dialog>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <footer class="catalog-footer">ASIG 0.3.0 · patterns are framework-neutral; business behavior stays product-owned.</footer>
+  </body>
+</html>

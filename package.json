@@ -1,6 +1,6 @@
 {
   "name": "angelstones-design-system",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": true,
   "description": "Angel Stones Interface Guidelines, semantic design tokens, and cross-product UI patterns.",
   "workspaces": [
@@ -8,7 +8,16 @@
   ],
   "scripts": {
     "build": "node scripts/build-tokens.mjs",
-    "check": "node scripts/validate.mjs && node scripts/validate-patterns.mjs && node scripts/validate-markup.mjs && node scripts/build-tokens.mjs --check"
+    "check": "node scripts/validate.mjs && node scripts/validate-patterns.mjs && node scripts/validate-markup.mjs && node scripts/build-tokens.mjs --check && node scripts/build-vendor-snapshot.mjs --check",
+    "serve": "node scripts/serve.mjs",
+    "snapshot": "npm run build && node scripts/build-vendor-snapshot.mjs",
+    "test": "playwright test",
+    "test:a11y": "playwright test --grep @a11y",
+    "test:visual": "playwright test --grep @visual"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "4.13.0",
+    "@playwright/test": "1.62.1"
   },
   "engines": {
     "node": ">=20"
