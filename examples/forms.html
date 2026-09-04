@@ -1,11 +1,11 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>ASIG form specimen</title>
-    <link rel="stylesheet" href="../packages/tokens/dist/tokens.css" />
-    <link rel="stylesheet" href="../packages/ui-patterns/forms.css" />
+    <link rel="stylesheet" href="../packages/tokens/dist/tokens.css">
+    <link rel="stylesheet" href="../packages/ui-patterns/forms.css">
     <style>
       * { box-sizing: border-box; }
       body { margin: 0; background: #e5e7eb; font-family: Inter, system-ui, sans-serif; }
@@ -35,16 +35,16 @@
               </div>
               <div class="as-field">
                 <div class="as-field__header"><label class="as-field__label" for="operations-po">Vendor PO</label><span class="as-field__requirement">Optional</span></div>
-                <input class="as-control" id="operations-po" placeholder="PO number" />
+                <input class="as-control" id="operations-po" type="text" placeholder="PO number">
               </div>
               <div class="as-field">
                 <div class="as-field__header"><label class="as-field__label" for="operations-cost">Buying final amount</label><span class="as-field__requirement" data-state="later">Required later</span></div>
-                <input class="as-control" id="operations-cost" inputmode="decimal" placeholder="Vendor cost" />
+                <input class="as-control" id="operations-cost" type="text" inputmode="decimal" placeholder="Vendor cost">
                 <p class="as-field__help">Required when the status becomes Ordered to Vendor.</p>
               </div>
               <div class="as-field as-field-grid__full">
                 <div class="as-field__header"><label class="as-field__label" for="operations-reference">Quote reference</label><span class="as-field__requirement">Optional</span></div>
-                <input class="as-control" id="operations-reference" placeholder="Vendor quote reference" />
+                <input class="as-control" id="operations-reference" type="text" placeholder="Vendor quote reference">
               </div>
             </div>
             <p class="as-form-note">Buying amounts are internal vendor costs. Customer pricing remains on the order item.</p>
@@ -71,7 +71,7 @@
               </div>
               <div class="as-field as-field-grid__full">
                 <div class="as-field__header"><label class="as-field__label" for="cad-name">File name</label><span class="as-field__requirement">Optional</span></div>
-                <input class="as-control" id="cad-name" placeholder="monument-design.dxf" />
+                <input class="as-control" id="cad-name" type="text" placeholder="monument-design.dxf">
               </div>
             </div>
             <p class="as-form-note">Geometry validation runs before the deterministic export is created.</p>
@@ -90,11 +90,11 @@
             <div class="as-field-grid" data-columns="2">
               <div class="as-field">
                 <div class="as-field__header"><label class="as-field__label" for="marketing-name">Name</label><span class="as-field__requirement" data-state="required">Required</span></div>
-                <input class="as-control" id="marketing-name" autocomplete="name" />
+                <input class="as-control" id="marketing-name" type="text" autocomplete="name">
               </div>
               <div class="as-field">
                 <div class="as-field__header"><label class="as-field__label" for="marketing-email">Email</label><span class="as-field__requirement" data-state="required">Required</span></div>
-                <input class="as-control" id="marketing-email" type="email" autocomplete="email" />
+                <input class="as-control" id="marketing-email" type="email" autocomplete="email">
               </div>
               <div class="as-field as-field-grid__full">
                 <div class="as-field__header"><label class="as-field__label" for="marketing-message">Project details</label><span class="as-field__requirement">Optional</span></div>

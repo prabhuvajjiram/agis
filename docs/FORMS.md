@@ -46,6 +46,8 @@ do not decide it. The backend remains responsible for enforcing business transit
 - Default minimum height: 44px.
 - Inputs, selects, comboboxes, and buttons in one row use the same height.
 - Use a searchable selection control when the option list is long or expected to grow.
+- Use a dropdown menu for commands and a Select or Combobox for values; they are not
+  interchangeable.
 - Use the correct input mode and autocomplete metadata.
 - Placeholder text is an example or format hint, never the only label.
 
@@ -64,3 +66,6 @@ Shared form patterns own layout and accessible relationships. Product adapters o
 their form library integration. Domain compositions may package repeated field groups,
 but business validation, authorization, persistence, and workflow state remain in the
 owning application.
+
+See [Selection controls](SELECTION.md) for the Select and Combobox decision and
+[Actions and buttons](ACTIONS.md) for submission behavior.

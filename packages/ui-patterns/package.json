@@ -1,15 +1,20 @@
 {
   "name": "@angelstones/ui-patterns",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "description": "Framework-neutral CSS compositions for Angel Stones interfaces.",
   "exports": {
-    "./forms.css": "./forms.css"
+    "./all.css": "./all.css",
+    "./actions.css": "./actions.css",
+    "./feedback.css": "./feedback.css",
+    "./forms.css": "./forms.css",
+    "./overlays.css": "./overlays.css",
+    "./selection.css": "./selection.css"
   },
   "files": [
-    "forms.css"
+    "*.css"
   ],
   "peerDependencies": {
-    "@angelstones/design-tokens": "0.1.0"
+    "@angelstones/design-tokens": "0.2.0"
   }
 }

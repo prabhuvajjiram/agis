@@ -28,7 +28,7 @@ Every theme supplies these roles:
 - border and input surface;
 - primary, primary hover, and content on primary;
 - accent and content on accent;
-- focus, success, warning, danger, and information.
+- focus, success, warning, danger, content on danger, and information.
 
 Components consume roles only. They do not test the active product name or include
 product-specific hex values.

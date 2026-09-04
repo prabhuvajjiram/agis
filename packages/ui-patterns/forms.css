@@ -118,6 +118,7 @@
 }
 
 .as-control {
+  box-sizing: border-box;
   width: 100%;
   min-height: var(--as-control-height);
   padding: var(--as-space-2) var(--as-space-3);

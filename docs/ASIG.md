@@ -42,6 +42,8 @@ rules, tenant access, CAD geometry, pricing, workflow transitions, or persisted 
    visible and understandable.
 7. **Product truth stays local.** Shared UI accepts state and callbacks; the owning
    application remains responsible for permissions and domain validation.
+8. **Use the control that matches the intent.** Links navigate, buttons act, selection
+   controls choose values, menus expose commands, and dialogs focus a decision.
 
 ## Layers
 
@@ -66,6 +68,10 @@ leaking product-specific behavior upward.
 - Color is never the sole carrier of status or validation.
 - Motion honors `prefers-reduced-motion`.
 - Critical workflows are tested with keyboard-only navigation.
+- Interactive controls expose loading, disabled, empty, invalid, and failure states where
+  those states apply.
+- Overlay implementations manage focus, Escape behavior, viewport collision, and focus
+  restoration; CSS alone is not an accessible overlay implementation.
 
 ## Governance
 

@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ASIG control specimen</title>
+    <link rel="stylesheet" href="../packages/tokens/dist/tokens.css">
+    <link rel="stylesheet" href="../packages/ui-patterns/all.css">
+    <style>
+      * { box-sizing: border-box; }
+      body { margin: 0; background: #dde5ea; font-family: Inter, system-ui, sans-serif; }
+      main { display: grid; gap: 1.5rem; width: min(90rem, calc(100% - 2rem)); margin: 2rem auto; }
+      h1 { grid-column: 1 / -1; margin: 0; color: #111827; font-size: 1.75rem; }
+      .specimen { display: grid; align-content: start; gap: 1.25rem; padding: 1.5rem; border-radius: 1rem; background: var(--as-color-background); color: var(--as-color-foreground); }
+      .specimen h2, .specimen h3, .specimen p { margin: 0; }
+      .specimen h2 { font-size: 1.125rem; }
+      .specimen h3 { font-size: 0.875rem; }
+      .example-group { display: grid; gap: 0.75rem; }
+      .control-demo { position: relative; display: inline-flex; }
+      .control-demo .as-menu-popover { position: absolute; top: calc(100% + 0.25rem); right: 0; }
+      .helper { color: var(--as-color-foreground-muted); font-size: 0.75rem; line-height: 1.5; }
+      .icon-stroke { fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2; }
+      @media (min-width: 64rem) { main { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Angel Stones controls and feedback</h1>
+
+      <section class="specimen" data-as-theme="operations" aria-labelledby="operations-heading">
+        <h2 id="operations-heading">Operations</h2>
+
+        <section class="example-group" aria-label="Operations actions">
+          <h3 id="operations-actions">Actions</h3>
+          <div class="as-button-group">
+            <button class="as-button" type="button">Save order</button>
+            <button class="as-button" data-variant="secondary" type="button">Preview</button>
+            <button class="as-button" data-variant="ghost" type="button">Cancel</button>
+          </div>
+          <div class="as-button-group">
+            <button class="as-button" data-variant="destructive" type="button" data-open-dialog>Delete template</button>
+            <button class="as-button" type="button" disabled aria-busy="true">
+              <span class="as-button__spinner" aria-hidden="true"></span>
+              Saving order…
+            </button>
+            <div class="control-demo">
+              <button class="as-button" data-variant="secondary" data-icon-only type="button" aria-label="More order actions" id="menu-trigger" aria-haspopup="menu" aria-expanded="false">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="5" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/></svg>
+              </button>
+              <div class="as-menu-popover" id="action-menu" role="menu" aria-labelledby="menu-trigger" hidden>
+                <button class="as-menu-item" role="menuitem" type="button" tabindex="-1">Duplicate order</button>
+                <button class="as-menu-item" role="menuitem" type="button" tabindex="-1">Export PDF</button>
+                <hr class="as-menu-separator">
+                <button class="as-menu-item" data-variant="destructive" role="menuitem" type="button" tabindex="-1" data-open-dialog>Delete template</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="example-group" aria-label="Operations selection">
+          <h3 id="operations-selection">Selection</h3>
+          <div class="as-field">
+            <div class="as-field__header">
+              <label class="as-field__label" for="operations-vendor">Manufacturing vendor</label>
+              <span class="as-field__requirement" data-state="required">Required</span>
+            </div>
+            <select class="as-select" id="operations-vendor">
+              <option value="">Choose a vendor</option>
+              <option>Northern Granite</option>
+              <option>Vermont Memorials</option>
+            </select>
+          </div>
+        </section>
+
+        <div class="as-alert" data-variant="warning">
+          <p class="as-alert__title">Final amount required later</p>
+          <p class="as-alert__message">Enter the vendor cost before moving to Ordered to Vendor.</p>
+        </div>
+        <p class="as-status" id="save-status" aria-live="polite"></p>
+      </section>
+
+      <section class="specimen" data-as-theme="cad" aria-labelledby="cad-heading">
+        <h2 id="cad-heading">CAD</h2>
+
+        <section class="example-group" aria-label="CAD actions">
+          <h3 id="cad-actions">Actions</h3>
+          <div class="as-button-group">
+            <button class="as-button" type="button">Export DXF</button>
+            <button class="as-button" data-variant="secondary" type="button">Validate</button>
+            <button class="as-button" data-variant="ghost" data-size="compact" type="button">Reset view</button>
+          </div>
+        </section>
+
+        <section class="example-group" aria-label="CAD selection">
+          <h3 id="cad-selection">Selection</h3>
+          <div class="as-field">
+            <div class="as-field__header">
+              <label class="as-field__label" for="cad-units">Drawing units</label>
+              <span class="as-field__requirement" data-state="required">Required</span>
+            </div>
+            <select class="as-select" id="cad-units">
+              <option>Millimeters</option>
+              <option>Inches</option>
+            </select>
+            <p class="as-field__help">Changing units does not change the source geometry.</p>
+          </div>
+        </section>
+
+        <div class="as-alert" data-variant="success">
+          <p class="as-alert__title">Geometry validated</p>
+          <p class="as-alert__message">All contours are closed and ready for deterministic export.</p>
+        </div>
+      </section>
+
+      <section class="specimen" data-as-theme="marketing" aria-labelledby="marketing-heading">
+        <h2 id="marketing-heading">Marketing</h2>
+
+        <section class="example-group" aria-label="Marketing actions">
+          <h3 id="marketing-actions">Actions</h3>
+          <div class="as-button-group">
+            <a class="as-button" href="#marketing-selection">Browse colors</a>
+            <a class="as-button" data-variant="secondary" href="#marketing-selection">Request pricing</a>
+          </div>
+        </section>
+
+        <section class="example-group" id="marketing-selection" aria-label="Marketing selection">
+          <h3 id="marketing-selection-heading">Selection</h3>
+          <div class="as-field">
+            <div class="as-field__header">
+              <label class="as-field__label" for="marketing-color">Granite color family</label>
+              <span class="as-field__requirement">Optional</span>
+            </div>
+            <select class="as-select" id="marketing-color">
+              <option>All colors</option>
+              <option>Black granite</option>
+              <option>Blue granite</option>
+              <option>Gray granite</option>
+            </select>
+          </div>
+        </section>
+
+        <div class="as-alert">
+          <p class="as-alert__title">Natural material variation</p>
+          <p class="as-alert__message">Photography is representative. Confirm the individual stone before ordering.</p>
+        </div>
+      </section>
+    </main>
+
+    <dialog class="as-dialog" data-as-theme="operations" data-size="small" id="confirm-dialog" aria-labelledby="confirm-title" aria-describedby="confirm-description">
+      <header class="as-dialog__header">
+        <h2 class="as-dialog__title" id="confirm-title">Delete order template?</h2>
+        <p class="as-dialog__description" id="confirm-description">This permanently removes the template. Existing orders are not changed.</p>
+        <button class="as-button as-dialog__close" data-variant="ghost" data-icon-only type="button" aria-label="Close confirmation dialog" data-close-dialog>
+          <svg class="icon-stroke" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+        </button>
+      </header>
+      <div class="as-dialog__body">
+        <div class="as-alert" data-variant="danger" role="alert">
+          <p class="as-alert__title">This action cannot be undone</p>
+          <p class="as-alert__message">Confirm only if this is the intended template.</p>
+        </div>
+      </div>
+      <footer class="as-dialog__footer">
+        <button class="as-button" data-variant="secondary" type="button" data-close-dialog>Keep template</button>
+        <button class="as-button" data-variant="destructive" type="button" id="confirm-delete">Delete template</button>
+      </footer>
+    </dialog>
+
+    <script>
+      const menuTrigger = document.querySelector('#menu-trigger');
+      const actionMenu = document.querySelector('#action-menu');
+      const dialog = document.querySelector('#confirm-dialog');
+      const status = document.querySelector('#save-status');
+      let dialogOpener = null;
+
+      const menuItems = () => [...actionMenu.querySelectorAll('[role="menuitem"]:not([disabled])')];
+      const closeMenu = (restoreFocus = false) => {
+        actionMenu.hidden = true;
+        menuTrigger.setAttribute('aria-expanded', 'false');
+        if (restoreFocus) menuTrigger.focus();
+      };
+      const openMenu = (focusIndex = null) => {
+        actionMenu.hidden = false;
+        menuTrigger.setAttribute('aria-expanded', 'true');
+        if (focusIndex !== null) menuItems().at(focusIndex)?.focus();
+      };
+
+      menuTrigger.addEventListener('click', () => actionMenu.hidden ? openMenu() : closeMenu());
+      menuTrigger.addEventListener('keydown', (event) => {
+        if (event.key === 'ArrowDown' || event.key === 'ArrowUp' || event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          openMenu(event.key === 'ArrowUp' ? -1 : 0);
+        }
+        if (event.key === 'Escape' && !actionMenu.hidden) {
+          event.preventDefault();
+          closeMenu(true);
+        }
+      });
+      actionMenu.addEventListener('keydown', (event) => {
+        const items = menuItems();
+        const index = items.indexOf(document.activeElement);
+        let next = null;
+        if (event.key === 'ArrowDown') next = (index + 1) % items.length;
+        if (event.key === 'ArrowUp') next = (index - 1 + items.length) % items.length;
+        if (event.key === 'Home') next = 0;
+        if (event.key === 'End') next = items.length - 1;
+        if (next !== null) {
+          event.preventDefault();
+          items[next].focus();
+        }
+        if (event.key === 'Escape') {
+          event.preventDefault();
+          closeMenu(true);
+        }
+        if (event.key === 'Tab') closeMenu();
+      });
+      actionMenu.addEventListener('click', (event) => {
+        const item = event.target.closest('[role="menuitem"]');
+        if (!item || item.hasAttribute('data-open-dialog')) return;
+        status.textContent = `${item.textContent.trim()} selected for this example.`;
+        closeMenu(true);
+      });
+      document.addEventListener('pointerdown', (event) => {
+        if (!actionMenu.hidden && !actionMenu.contains(event.target) && event.target !== menuTrigger) closeMenu();
+      });
+      document.addEventListener('focusin', (event) => {
+        if (!actionMenu.hidden && !actionMenu.contains(event.target) && event.target !== menuTrigger) closeMenu();
+      });
+
+      document.querySelectorAll('[data-open-dialog]').forEach((button) => {
+        button.addEventListener('click', () => {
+          dialogOpener = button;
+          closeMenu();
+          dialog.showModal();
+        });
+      });
+      document.querySelectorAll('[data-close-dialog]').forEach((button) => button.addEventListener('click', () => dialog.close()));
+      dialog.addEventListener('close', () => dialogOpener?.focus());
+      document.querySelector('#confirm-delete').addEventListener('click', () => {
+        dialog.close();
+        status.textContent = 'Example only: the template was not deleted.';
+      });
+    </script>
+  </body>
+</html>

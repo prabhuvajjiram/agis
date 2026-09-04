@@ -24,6 +24,7 @@ const requiredRoles = [
   'success',
   'warning',
   'danger',
+  'onDanger',
   'info',
 ]
 
@@ -58,6 +59,7 @@ for (const [name, theme] of Object.entries(tokens.themes)) {
     ['muted text', theme.foregroundMuted, theme.background],
     ['primary action text', theme.onPrimary, theme.primary],
     ['accent text', theme.onAccent, theme.accent],
+    ['destructive action text', theme.onDanger, theme.danger],
   ]) {
     const ratio = contrast(foreground, background)
     if (ratio < 4.5) failures.push(`${name} ${label} contrast is ${ratio.toFixed(2)}:1`)

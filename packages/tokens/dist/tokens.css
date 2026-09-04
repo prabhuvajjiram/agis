@@ -12,8 +12,10 @@
   --as-radius-panel: 0.75rem;
   --as-radius-pill: 9999px;
   --as-control-height: 2.75rem;
-  --as-control-height-compact: 2.5rem;
+  --as-control-height-compact: 2.25rem;
+  --as-control-hit-target: 2.75rem;
   --as-control-border-width: 1px;
+  --as-control-icon-size: 1rem;
   --as-font-size-xs: 0.75rem;
   --as-font-size-sm: 0.875rem;
   --as-font-size-md: 1rem;
@@ -26,6 +28,14 @@
   --as-focus-offset: 2px;
   --as-motion-fast: 150ms;
   --as-motion-normal: 200ms;
+  --as-motion-slow: 300ms;
+  --as-elevation-raised: 0 2px 8px rgb(15 23 42 / 0.12);
+  --as-elevation-popup: 0 12px 32px rgb(15 23 42 / 0.2);
+  --as-elevation-dialog: 0 24px 64px rgb(15 23 42 / 0.28);
+  --as-layer-dropdown: 1000;
+  --as-layer-dialog-overlay: 1100;
+  --as-layer-dialog: 1110;
+  --as-layer-toast: 1200;
 }
 
 [data-as-theme="operations"] {
@@ -45,6 +55,7 @@
   --as-color-success: #15803d;
   --as-color-warning: #b45309;
   --as-color-danger: #b91c1c;
+  --as-color-on-danger: #ffffff;
   --as-color-info: #0369a1;
 }
 
@@ -65,6 +76,7 @@
   --as-color-success: #4ade80;
   --as-color-warning: #fbbf24;
   --as-color-danger: #f87171;
+  --as-color-on-danger: #102538;
   --as-color-info: #7dd3fc;
 }
 
@@ -85,6 +97,7 @@
   --as-color-success: #15803d;
   --as-color-warning: #b45309;
   --as-color-danger: #b91c1c;
+  --as-color-on-danger: #ffffff;
   --as-color-info: #0369a1;
 }
 
@@ -105,5 +118,6 @@
   --as-color-success: #86efac;
   --as-color-warning: #fcd34d;
   --as-color-danger: #fca5a5;
+  --as-color-on-danger: #101010;
   --as-color-info: #7dd3fc;
 }

@@ -11,7 +11,20 @@ distribution and release process is approved.
 - validate theme completeness and critical color contrast;
 - provide a static visual specimen.
 
-## Phase 2 — product adapters
+Complete in `0.1.0`.
+
+## Phase 2 — controls and actions
+
+- define button hierarchy, sizing, loading, disabled, and destructive behavior;
+- distinguish Select, Combobox, multi-select, and command menus;
+- define menu, dialog, focus, overlay, and responsive behavior;
+- define alerts, live status, loading, empty, and failure states;
+- provide framework-neutral CSS and an accessible interactive specimen;
+- validate required pattern contracts and expanded theme contrast.
+
+Complete in `0.2.0`.
+
+## Phase 3 — product adapters
 
 ### Angelgranites ERP
 
@@ -35,7 +48,9 @@ distribution and release process is approved.
 - preserve the static cPanel build and additive overlay process;
 - do not modify or package CRM and other separately deployed operational paths.
 
-## Phase 3 — distribution
+Adoption remains unstarted until each product change is reviewed separately.
+
+## Phase 4 — distribution
 
 Choose one reviewed distribution model before adding cross-repository dependencies:
 
@@ -46,7 +61,7 @@ Choose one reviewed distribution model before adding cross-repository dependenci
 Do not use unversioned filesystem links in committed application manifests. They make
 CI, external contributors, and reproducible builds depend on one developer machine.
 
-## Phase 4 — governance and regression protection
+## Phase 5 — governance and regression protection
 
 - add a component/specimen catalogue once the pattern set stabilizes;
 - add screenshot checks for supported themes and widths;
