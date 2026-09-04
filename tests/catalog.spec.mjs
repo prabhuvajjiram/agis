@@ -504,6 +504,9 @@ test('@visual catalogue matches the reviewed reference', async ({ page }) => {
   await expect(page).toHaveScreenshot('catalog.png', {
     animations: 'disabled',
     fullPage: true,
+    // Native GitHub runners can vary by a few anti-aliased pixels around the
+    // table sort glyphs. This remains below any complete UI detail or control.
+    maxDiffPixels: 50,
     timeout: 40_000,
   })
 })
