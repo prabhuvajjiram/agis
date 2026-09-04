@@ -79,7 +79,11 @@ review remains part of the definition of done.
 
 ## Local commands
 
+Use Node.js 26. The committed `.nvmrc`, package engine range, and CI workflow share that
+major-version baseline.
+
 ```sh
+nvm use
 npm run build
 npm run check
 npm test

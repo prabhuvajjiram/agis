@@ -180,6 +180,7 @@ const tokens = JSON.parse(await load('packages/tokens/src/tokens.json'))
 const rootPackage = JSON.parse(await load('package.json'))
 const tokenPackage = JSON.parse(await load('packages/tokens/package.json'))
 const expectedVersion = rootPackage.version
+if (rootPackage.engines?.node !== '>=26 <27') failures.push('ASIG must use the Node.js 26 major-version baseline')
 if (tokens.version !== expectedVersion) failures.push('Token source version must match the ASIG package version')
 if (tokenPackage.version !== expectedVersion) failures.push('design-tokens package version must match the ASIG package version')
 if (tokens.foundation?.control?.height !== '2.75rem') failures.push('Default control height must remain 44px')

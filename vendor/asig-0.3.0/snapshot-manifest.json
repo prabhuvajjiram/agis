@@ -6,7 +6,7 @@
     "@angelstones/ui-patterns"
   ],
   "files": {
-    "CHANGELOG.md": "2176226128b0d1c97da84b30d14c80aad738f4306ac489e57e137437ec6d6183",
+    "CHANGELOG.md": "1e3064e0e285aa1ad5ef125a517f416827cf6da858611c76e37fd9fc75c37933",
     "docs/ACCESSIBILITY.md": "35e5ec225dd53823fc1c0f4cab78f0d9c1dbf4846a69cbd437535c142db03d3f",
     "docs/ACTIONS.md": "3a4cf9ef7a2a18de0fed8abcdcd6cd25d916c3bc5ea24ae8a30bf2ebd0ef9c97",
     "docs/ADOPTION.md": "e125c07fa7252a78d8fb2b33af5bf8ee175b08ead9a7e72ca235ab8c94009375",
@@ -40,6 +40,6 @@
     "packages/ui-patterns/package.json": "4ad95f1d9ae693da7e2638bf6a7d2d5b93aaaca6e89b65e57f17ff8652b9f552",
     "packages/ui-patterns/selection.css": "fe1e148e649d00abfc8ffcc34c9da322b07407cebccfa6785aa71665f03c6d01",
     "packages/ui-patterns/specialized-inputs.css": "b42d197add3d54b151c847b12aa39ece0cbc8b98b7a12ce39ac974ec29fa30e8",
-    "README.md": "a3a08ab515ac91c6711ee6449fd35c2a9647424f25a11d85707750dfe9fee072"
+    "README.md": "2089a7e6b8d97b062d0806cbdcdff63382f883a70df4117c1a13ec8ec09f303f"
   }
 }

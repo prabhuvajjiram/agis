@@ -13,6 +13,7 @@
 - Connected the company standards skill to ASIG without duplicating component guidance.
 - Established WCAG 2.1 Level AA as the minimum release gate for every component, with a
   dedicated automated and manual evidence standard.
+- Standardized local and GitHub Actions project commands on Node.js 26.
 
 Product adapters and the Manufacturing Vendor pilot remain intentionally outside this
 release.
