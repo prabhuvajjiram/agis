@@ -48,6 +48,13 @@ already communicates the field.
 - Arrow keys move through results; Home and End reach the boundaries; Enter selects;
   Escape closes; Tab follows normal focus order.
 - Search input and active option behavior follow one consistent ARIA combobox pattern.
+- In the trigger-plus-popup pattern used by ERP, place a visibly labelled search field at the
+  top of the popup, keep it sticky while results scroll, and focus it when the trigger opens
+  the popup. Do not render a detached page-level search field that loses the selection context.
+- Filter across the visible label plus useful secondary identifiers, announce the result count
+  or no-results state, and never silently select the first filtered result.
+- Escape closes without changing the current value and restores trigger focus. After selection,
+  close the popup, reset the temporary query, retain the authoritative value, and restore focus.
 - Debounced remote results expose loading and failure states without erasing the current
   selection.
 - Portal positioning responds to viewport changes, zoom, nested scrolling, and available

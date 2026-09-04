@@ -70,11 +70,54 @@ test('@a11y switch exposes and announces its state', async ({ page }) => {
   await expect(page.locator('#switch-status')).toHaveText('Grid snapping is off.')
 })
 
+test('@a11y searchable selection filters and chooses an option from inside the popup', async ({ page }) => {
+  const trigger = page.getByRole('combobox', { name: /searchable selection/i })
+  await trigger.click()
+  await expect(trigger).toHaveAttribute('aria-expanded', 'true')
+
+  const search = page.getByRole('searchbox', { name: 'Search suppliers' })
+  await expect(search).toBeFocused()
+  await search.fill('heritage')
+  await expect(page.locator('#catalog-vendor-results')).toHaveText('1 supplier available.')
+  const listbox = page.locator('#catalog-vendor-options')
+  await expect(listbox.getByRole('option', { name: 'Heritage Memorial Supply' })).toBeVisible()
+  const openResults = await new AxeBuilder({ page }).include('#catalog-vendor-popover').analyze()
+  expect(openResults.violations, 'open searchable selection accessibility violations').toEqual([])
+
+  await search.press('ArrowDown')
+  const option = listbox.getByRole('option', { name: 'Heritage Memorial Supply' })
+  await expect(option).toBeFocused()
+  await option.press('Enter')
+
+  await expect(trigger).toHaveAttribute('aria-expanded', 'false')
+  await expect(trigger).toContainText('Heritage Memorial Supply')
+  await expect(trigger).toBeFocused()
+})
+
+test('@a11y every meaningful specimen table column supports announced sorting', async ({ page }) => {
+  const headers = page.locator('#data-display .as-table th')
+  await expect(headers).toHaveCount(4)
+  for (let index = 0; index < 4; index += 1) {
+    await expect(headers.nth(index).getByRole('button')).toBeVisible()
+  }
+
+  const amountHeader = page.getByRole('columnheader', { name: /amount/i })
+  await amountHeader.getByRole('button').click()
+  await expect(amountHeader).toHaveAttribute('aria-sort', 'ascending')
+  await expect(page.locator('#data-display tbody tr').first()).toContainText('$1,280.00')
+  await expect(page.locator('#catalog-table-sort-status')).toHaveText('Vendor quotes sorted by Amount, ascending.')
+
+  await amountHeader.getByRole('button').click()
+  await expect(amountHeader).toHaveAttribute('aria-sort', 'descending')
+  await expect(page.locator('#data-display tbody tr').first()).toContainText('$1,340.00')
+})
+
 test('@a11y representative interactive patterns expose visible keyboard focus', async ({ page }) => {
   const controls = [
     '.catalog-demo .as-button',
     '#catalog-vendor',
     '#catalog-po',
+    '#catalog-lookup',
     '.as-choice input[type="checkbox"]',
     '#catalog-switch',
     '#tab-summary',

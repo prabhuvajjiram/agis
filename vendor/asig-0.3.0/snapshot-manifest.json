@@ -6,7 +6,7 @@
     "@angelstones/ui-patterns"
   ],
   "files": {
-    "CHANGELOG.md": "1e3064e0e285aa1ad5ef125a517f416827cf6da858611c76e37fd9fc75c37933",
+    "CHANGELOG.md": "9bc9db194a2f469d448c132e25311372cbc66f2b4e536dace719d5b4e21f35f0",
     "docs/ACCESSIBILITY.md": "35e5ec225dd53823fc1c0f4cab78f0d9c1dbf4846a69cbd437535c142db03d3f",
     "docs/ACTIONS.md": "3a4cf9ef7a2a18de0fed8abcdcd6cd25d916c3bc5ea24ae8a30bf2ebd0ef9c97",
     "docs/ADOPTION.md": "e125c07fa7252a78d8fb2b33af5bf8ee175b08ead9a7e72ca235ab8c94009375",
@@ -15,7 +15,7 @@
     "docs/CHOICES.md": "3b8f389d6736fb1a4df7d196ae4d6f7f78e51256f024f09676067fd4be61a105",
     "docs/COMPONENT_STATUS.md": "e960f686a8c1bcf0c0b45695ce90fdc9d5c5e356ab08c405e6f088db25ff9cdc",
     "docs/CONTRIBUTING.md": "55da6af335f08a193766e963c0b05f417f9e20082219a8e0bc5d371661a8e22b",
-    "docs/DATA_DISPLAY.md": "c7d0bd2426de8d1d7064327e0f6ec377c1ca77812b17e723b150ddac31de17ad",
+    "docs/DATA_DISPLAY.md": "0e3dfb6794961d8e19fccff6d0fe63e0a78a2bd7f392995007b598289c9a66df",
     "docs/DISCLOSURE.md": "d7f74fb8ef77b12ab6dc8168e49f3d81daa1bbf5558ffa552b72242e70be6b61",
     "docs/DISTRIBUTION.md": "ccf3793143d09feb5a8340f6f0e4debcaaa8ad5d9d6edee955d035fd4d2ed2b1",
     "docs/FEEDBACK.md": "54f248157d9da474fcf0f69f4eeb68799dac56d48ff701d0d2c4377c8e787fb6",
@@ -23,7 +23,7 @@
     "docs/NAVIGATION.md": "0d46afb75fcb911da53cbae2404289e8d567ceb027defd9f0c30e521007ea1ce",
     "docs/OVERLAYS.md": "ee6d4dd0c97a4e345213afed15a7f36bd6d9ab4a46610b6f4c08dd58abe7837e",
     "docs/PRODUCT_THEMES.md": "2d0a63fd78dec19af56425adf2177e6a97b44719737d88c130ae99d9a86e7301",
-    "docs/SELECTION.md": "972b4a6edb6f0935efd8f1849d3eabd76c55147f12f1c177a69aae4fd2694c55",
+    "docs/SELECTION.md": "43a5ab5de591095f13576164503b7f0d7ac4f8b95dd29543e32ca2011212fc5e",
     "docs/SPECIALIZED_INPUTS.md": "faac164a8db3b2c965713fd29158a4ddd49ce2347f87ad999b8f529977109257",
     "packages/design-tokens/dist/tokens.css": "1598208851ba3c338cb63529e77bc6ad45f2ea42c55ecb68f48b1941ebb2aca4",
     "packages/design-tokens/package.json": "6d6931ac7af9872e107460f6f5f2cbb8545bc4806840bd671793247d1a0dcb59",
@@ -31,14 +31,14 @@
     "packages/ui-patterns/actions.css": "f46468f4463239f82ded04943914b2a5db0f07073d843b07075c81dffde7abe7",
     "packages/ui-patterns/all.css": "7e3eb49aad001b58a5ac2ebfdefcbd1b469c031e44d06cf0c7820ac9d0cbc412",
     "packages/ui-patterns/choices.css": "5cb5a794e7353ffed759b2bbb9c754e006d2d6d9384b3e1735723d7cdb6fa16d",
-    "packages/ui-patterns/data-display.css": "6510699eecf6c4ae6316cf7da453fe91604213b77465da89865964152430f26e",
+    "packages/ui-patterns/data-display.css": "e10b1d4e86a5bac07f1c3c14434ed248582ac20301d8909933801e024ac39bf6",
     "packages/ui-patterns/disclosure.css": "7778fe41f7e16293c2843a125a3199a9c5c7c3eeee34bcf599670ef60d39bdf0",
     "packages/ui-patterns/feedback.css": "7089e13f308de758f3a1df0bb41a99502f96d25ce21395fbe23db2aa9cb5e6df",
     "packages/ui-patterns/forms.css": "992cb84de2f4d30e2b0baa797d8b8ea9946124bf4e6dc70187e0b1c6c68e4e97",
     "packages/ui-patterns/navigation.css": "1f583de4a946d71bc6d21ece77a975d28878e52055b2be51361c871dc03fd2f9",
     "packages/ui-patterns/overlays.css": "f24d5b4855496b91d4e63d3858bbc5f87331492dc193d919b8eb03c0a3efebe2",
     "packages/ui-patterns/package.json": "4ad95f1d9ae693da7e2638bf6a7d2d5b93aaaca6e89b65e57f17ff8652b9f552",
-    "packages/ui-patterns/selection.css": "fe1e148e649d00abfc8ffcc34c9da322b07407cebccfa6785aa71665f03c6d01",
+    "packages/ui-patterns/selection.css": "4b2ccbaa5607412e5cc7910499836ac1779ed9778c4b573b24a6cc056be6d32c",
     "packages/ui-patterns/specialized-inputs.css": "b42d197add3d54b151c847b12aa39ece0cbc8b98b7a12ce39ac974ec29fa30e8",
     "README.md": "2089a7e6b8d97b062d0806cbdcdff63382f883a70df4117c1a13ec8ec09f303f"
   }

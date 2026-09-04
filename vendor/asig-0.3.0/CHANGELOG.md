@@ -14,6 +14,8 @@
 - Established WCAG 2.1 Level AA as the minimum release gate for every component, with a
   dedicated automated and manual evidence standard.
 - Standardized local and GitHub Actions project commands on Node.js 26.
+- Added interactive, type-aware sorting to every meaningful data-table column and completed
+  the searchable selection specimen with in-popup filtering and keyboard support.
 
 Product adapters and the Manufacturing Vendor pilot remain intentionally outside this
 release.

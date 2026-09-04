@@ -118,14 +118,27 @@
                 </div>
                 <div class="as-field">
                   <div class="as-field__header">
-                    <label class="as-field__label" for="catalog-lookup">Searchable selection</label>
+                    <span class="as-field__label" id="catalog-lookup-label">Searchable selection</span>
                     <span class="as-field__requirement">Optional</span>
                   </div>
-                  <button class="as-selection-trigger" id="catalog-lookup" type="button" role="combobox" aria-expanded="false" aria-controls="catalog-vendor-options" aria-haspopup="listbox">
-                    <span class="as-selection-trigger__value">Choose a supplier</span>
-                  </button>
-                  <div class="as-selection-popover" id="catalog-vendor-options" role="listbox" aria-label="Supplier options" hidden>
-                    <button class="as-option" type="button" role="option" aria-selected="false">North Quarry</button>
+                  <div class="as-selection">
+                    <button class="as-selection-trigger" id="catalog-lookup" type="button" role="combobox" aria-expanded="false" aria-controls="catalog-vendor-options" aria-haspopup="listbox" aria-labelledby="catalog-lookup-label catalog-lookup-value">
+                      <span class="as-selection-trigger__value" id="catalog-lookup-value">Choose a supplier</span>
+                    </button>
+                    <div class="as-selection-popover" id="catalog-vendor-popover" hidden>
+                      <div class="as-selection-popover__search">
+                        <label class="as-field__label" for="catalog-vendor-search">Search suppliers</label>
+                        <input class="as-combobox-search" id="catalog-vendor-search" type="search" autocomplete="off" aria-controls="catalog-vendor-options" aria-describedby="catalog-vendor-results" placeholder="Name, city, or code">
+                      </div>
+                      <div class="as-selection-options" id="catalog-vendor-options" role="listbox" aria-labelledby="catalog-lookup-label">
+                        <button class="as-option" type="button" role="option" aria-selected="false" tabindex="-1" data-value="North Quarry" data-search="North Quarry Elberton NQ">North Quarry</button>
+                        <button class="as-option" type="button" role="option" aria-selected="false" tabindex="-1" data-value="Heritage Memorial Supply" data-search="Heritage Memorial Supply Barre HMS">Heritage Memorial Supply</button>
+                        <button class="as-option" type="button" role="option" aria-selected="false" tabindex="-1" data-value="Blue Ridge Granite" data-search="Blue Ridge Granite Elberton BRG">Blue Ridge Granite</button>
+                        <button class="as-option" type="button" role="option" aria-selected="false" tabindex="-1" data-value="Summit Stone Works" data-search="Summit Stone Works Ontario SSW">Summit Stone Works</button>
+                      </div>
+                      <p class="as-selection-empty" id="catalog-vendor-empty" hidden>No suppliers match your search.</p>
+                      <p class="as-selection-status" id="catalog-vendor-results" role="status" aria-live="polite">4 suppliers available.</p>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -214,9 +227,17 @@
             <div class="as-table-wrap" role="region" aria-label="Vendor quotes" tabindex="0">
               <table class="as-table">
                 <caption>Vendor quotes for the selected order</caption>
-                <thead><tr><th scope="col" aria-sort="ascending"><button class="as-table__sort" type="button">Vendor <span aria-hidden="true">↑</span></button></th><th scope="col">Reference</th><th scope="col">Amount</th><th scope="col">Status</th></tr></thead>
-                <tbody><tr><td>Northern Granite</td><td>NG-2026-18</td><td>$1,280.00</td><td><span class="as-status">Received</span></td></tr><tr><td>Heritage Memorial</td><td>HM-8841</td><td>$1,340.00</td><td><span class="as-status">Pending</span></td></tr></tbody>
+                <thead>
+                  <tr>
+                    <th scope="col" aria-sort="ascending"><button class="as-table__sort" type="button" data-sort-type="text">Vendor <span aria-hidden="true">↑</span></button></th>
+                    <th scope="col" aria-sort="none"><button class="as-table__sort" type="button" data-sort-type="text">Reference <span aria-hidden="true">↕</span></button></th>
+                    <th scope="col" aria-sort="none"><button class="as-table__sort" type="button" data-sort-type="number">Amount <span aria-hidden="true">↕</span></button></th>
+                    <th scope="col" aria-sort="none"><button class="as-table__sort" type="button" data-sort-type="text">Status <span aria-hidden="true">↕</span></button></th>
+                  </tr>
+                </thead>
+                <tbody><tr><td>Heritage Memorial</td><td>HM-8841</td><td data-sort-value="1340">$1,340.00</td><td><span class="as-status">Pending</span></td></tr><tr><td>Northern Granite</td><td>NG-2026-18</td><td data-sort-value="1280">$1,280.00</td><td><span class="as-status">Received</span></td></tr></tbody>
               </table>
+              <p class="as-table__sort-status" id="catalog-table-sort-status" role="status" aria-live="polite">Vendor quotes sorted by Vendor, ascending.</p>
             </div>
           </div>
         </section>

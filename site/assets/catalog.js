@@ -11,6 +11,160 @@ switchControl?.addEventListener('click', () => {
   switchStatus.textContent = `Grid snapping is ${checked ? 'on' : 'off'}.`
 })
 
+const selection = document.querySelector('.as-selection')
+const selectionTrigger = document.querySelector('#catalog-lookup')
+const selectionValue = document.querySelector('#catalog-lookup-value')
+const selectionPopover = document.querySelector('#catalog-vendor-popover')
+const selectionSearch = document.querySelector('#catalog-vendor-search')
+const selectionOptions = [...document.querySelectorAll('#catalog-vendor-options [role="option"]')]
+const selectionEmpty = document.querySelector('#catalog-vendor-empty')
+const selectionStatus = document.querySelector('#catalog-vendor-results')
+
+const visibleSelectionOptions = () => selectionOptions.filter((option) => !option.hidden)
+
+const updateSelectionResults = () => {
+  const query = selectionSearch.value.trim().toLocaleLowerCase()
+  for (const option of selectionOptions) {
+    option.hidden = !option.dataset.search.toLocaleLowerCase().includes(query)
+  }
+
+  const resultCount = visibleSelectionOptions().length
+  selectionEmpty.hidden = resultCount !== 0
+  selectionStatus.textContent = resultCount === 0
+    ? 'No suppliers available.'
+    : `${resultCount} ${resultCount === 1 ? 'supplier' : 'suppliers'} available.`
+}
+
+const openSelection = (focusTarget = 'search') => {
+  selectionPopover.hidden = false
+  selectionTrigger.setAttribute('aria-expanded', 'true')
+  requestAnimationFrame(() => {
+    if (focusTarget === 'search') {
+      selectionSearch.focus()
+      return
+    }
+    const options = visibleSelectionOptions()
+    options[focusTarget === 'last' ? options.length - 1 : 0]?.focus()
+  })
+}
+
+const closeSelection = ({ restoreFocus = false } = {}) => {
+  selectionPopover.hidden = true
+  selectionTrigger.setAttribute('aria-expanded', 'false')
+  selectionSearch.value = ''
+  updateSelectionResults()
+  if (restoreFocus) requestAnimationFrame(() => selectionTrigger.focus())
+}
+
+const selectOption = (option) => {
+  for (const candidate of selectionOptions) {
+    candidate.setAttribute('aria-selected', String(candidate === option))
+  }
+  selectionValue.textContent = option.dataset.value
+  closeSelection({ restoreFocus: true })
+}
+
+selectionTrigger?.addEventListener('click', () => {
+  if (selectionPopover.hidden) openSelection()
+  else closeSelection()
+})
+
+selectionTrigger?.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape' && !selectionPopover.hidden) {
+    event.preventDefault()
+    closeSelection({ restoreFocus: true })
+    return
+  }
+  if (event.key !== 'ArrowDown' && event.key !== 'ArrowUp') return
+  event.preventDefault()
+  openSelection(event.key === 'ArrowUp' ? 'last' : 'first')
+})
+
+selectionSearch?.addEventListener('input', updateSelectionResults)
+selectionSearch?.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape') {
+    event.preventDefault()
+    closeSelection({ restoreFocus: true })
+    return
+  }
+  if (event.key !== 'ArrowDown' && event.key !== 'ArrowUp') return
+  const options = visibleSelectionOptions()
+  if (options.length === 0) return
+  event.preventDefault()
+  options[event.key === 'ArrowUp' ? options.length - 1 : 0].focus()
+})
+
+for (const option of selectionOptions) {
+  option.addEventListener('click', () => selectOption(option))
+  option.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') {
+      event.preventDefault()
+      closeSelection({ restoreFocus: true })
+      return
+    }
+    if (!['ArrowDown', 'ArrowUp', 'Home', 'End'].includes(event.key)) return
+    const options = visibleSelectionOptions()
+    const currentIndex = options.indexOf(option)
+    let nextIndex = currentIndex
+    if (event.key === 'ArrowDown') nextIndex = Math.min(currentIndex + 1, options.length - 1)
+    if (event.key === 'ArrowUp') nextIndex = Math.max(currentIndex - 1, 0)
+    if (event.key === 'Home') nextIndex = 0
+    if (event.key === 'End') nextIndex = options.length - 1
+    event.preventDefault()
+    options[nextIndex]?.focus()
+  })
+}
+
+document.addEventListener('pointerdown', (event) => {
+  if (!selectionPopover.hidden && !selection.contains(event.target)) closeSelection()
+})
+
+document.addEventListener('focusin', (event) => {
+  if (!selectionPopover.hidden && !selection.contains(event.target)) closeSelection()
+})
+
+const sortableTable = document.querySelector('.as-table')
+const tableSortStatus = document.querySelector('#catalog-table-sort-status')
+const tableSortButtons = [...sortableTable?.querySelectorAll('.as-table__sort') ?? []]
+const tableCollator = new Intl.Collator(undefined, { numeric: true, sensitivity: 'base' })
+
+for (const [columnIndex, button] of tableSortButtons.entries()) {
+  button.addEventListener('click', () => {
+    const activeHeader = button.closest('th')
+    const direction = activeHeader.getAttribute('aria-sort') === 'ascending' ? 'descending' : 'ascending'
+    const rows = [...sortableTable.tBodies[0].rows]
+    const type = button.dataset.sortType
+
+    rows.sort((leftRow, rightRow) => {
+      const leftCell = leftRow.cells[columnIndex]
+      const rightCell = rightRow.cells[columnIndex]
+      const leftValue = leftCell.dataset.sortValue ?? leftCell.textContent.trim()
+      const rightValue = rightCell.dataset.sortValue ?? rightCell.textContent.trim()
+      const leftMissing = leftValue === '' || (type === 'number' && !Number.isFinite(Number(leftValue)))
+      const rightMissing = rightValue === '' || (type === 'number' && !Number.isFinite(Number(rightValue)))
+      if (leftMissing && rightMissing) return 0
+      if (leftMissing) return 1
+      if (rightMissing) return -1
+      const comparison = type === 'number'
+        ? Number(leftValue) - Number(rightValue)
+        : tableCollator.compare(leftValue, rightValue)
+      return direction === 'ascending' ? comparison : comparison * -1
+    })
+
+    for (const header of sortableTable.tHead.rows[0].cells) {
+      header.setAttribute('aria-sort', header === activeHeader ? direction : 'none')
+      const indicator = header.querySelector('.as-table__sort [aria-hidden="true"]')
+      if (indicator) indicator.textContent = header === activeHeader
+        ? direction === 'ascending' ? '↑' : '↓'
+        : '↕'
+    }
+    for (const row of rows) sortableTable.tBodies[0].append(row)
+
+    const columnName = button.textContent.trim().replace(/[↑↓]$/, '').trim()
+    tableSortStatus.textContent = `Vendor quotes sorted by ${columnName}, ${direction}.`
+  })
+}
+
 const tabs = [...document.querySelectorAll('[role="tab"]')]
 const activateTab = (tab) => {
   for (const candidate of tabs) {
