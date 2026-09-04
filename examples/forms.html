@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ASIG form specimen</title>
+    <link rel="stylesheet" href="../packages/tokens/dist/tokens.css" />
+    <link rel="stylesheet" href="../packages/ui-patterns/forms.css" />
+    <style>
+      * { box-sizing: border-box; }
+      body { margin: 0; background: #e5e7eb; font-family: Inter, system-ui, sans-serif; }
+      main { display: grid; gap: 2rem; width: min(90rem, calc(100% - 2rem)); margin: 2rem auto; }
+      h1 { margin: 0; color: #111827; font-size: 1.75rem; }
+      .specimen { padding: 1.5rem; border-radius: 1rem; background: var(--as-color-background); }
+      .specimen > h2 { margin: 0 0 1rem; color: var(--as-color-foreground); font-size: 1.125rem; }
+      @media (min-width: 75rem) { main { grid-template-columns: repeat(3, minmax(0, 1fr)); } h1 { grid-column: 1 / -1; } }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Angel Stones form pattern across product themes</h1>
+
+      <section class="specimen" data-as-theme="operations">
+        <h2>Operations</h2>
+        <div class="as-form-container">
+          <section class="as-form-section" aria-labelledby="operations-title">
+            <header class="as-form-section__header">
+              <h3 class="as-form-section__title" id="operations-title">Manufacturing vendor</h3>
+              <p class="as-form-section__description">Assign the vendor and capture internal purchasing details.</p>
+            </header>
+            <div class="as-field-grid" data-columns="2">
+              <div class="as-field">
+                <div class="as-field__header"><label class="as-field__label" for="operations-vendor">Vendor</label><span class="as-field__requirement" data-state="required">Required</span></div>
+                <select class="as-control" id="operations-vendor"><option>Northern Granite</option></select>
+              </div>
+              <div class="as-field">
+                <div class="as-field__header"><label class="as-field__label" for="operations-po">Vendor PO</label><span class="as-field__requirement">Optional</span></div>
+                <input class="as-control" id="operations-po" placeholder="PO number" />
+              </div>
+              <div class="as-field">
+                <div class="as-field__header"><label class="as-field__label" for="operations-cost">Buying final amount</label><span class="as-field__requirement" data-state="later">Required later</span></div>
+                <input class="as-control" id="operations-cost" inputmode="decimal" placeholder="Vendor cost" />
+                <p class="as-field__help">Required when the status becomes Ordered to Vendor.</p>
+              </div>
+              <div class="as-field as-field-grid__full">
+                <div class="as-field__header"><label class="as-field__label" for="operations-reference">Quote reference</label><span class="as-field__requirement">Optional</span></div>
+                <input class="as-control" id="operations-reference" placeholder="Vendor quote reference" />
+              </div>
+            </div>
+            <p class="as-form-note">Buying amounts are internal vendor costs. Customer pricing remains on the order item.</p>
+          </section>
+        </div>
+      </section>
+
+      <section class="specimen" data-as-theme="cad">
+        <h2>CAD</h2>
+        <div class="as-form-container">
+          <section class="as-form-section" aria-labelledby="cad-title">
+            <header class="as-form-section__header">
+              <h3 class="as-form-section__title" id="cad-title">DXF export</h3>
+              <p class="as-form-section__description">Set fabrication-safe output properties.</p>
+            </header>
+            <div class="as-field-grid" data-columns="2">
+              <div class="as-field">
+                <div class="as-field__header"><label class="as-field__label" for="cad-units">Units</label><span class="as-field__requirement" data-state="required">Required</span></div>
+                <select class="as-control" id="cad-units"><option>Millimeters</option></select>
+              </div>
+              <div class="as-field">
+                <div class="as-field__header"><label class="as-field__label" for="cad-version">DXF version</label><span class="as-field__requirement" data-state="required">Required</span></div>
+                <select class="as-control" id="cad-version"><option>R2010</option></select>
+              </div>
+              <div class="as-field as-field-grid__full">
+                <div class="as-field__header"><label class="as-field__label" for="cad-name">File name</label><span class="as-field__requirement">Optional</span></div>
+                <input class="as-control" id="cad-name" placeholder="monument-design.dxf" />
+              </div>
+            </div>
+            <p class="as-form-note">Geometry validation runs before the deterministic export is created.</p>
+          </section>
+        </div>
+      </section>
+
+      <section class="specimen" data-as-theme="marketing">
+        <h2>Marketing</h2>
+        <div class="as-form-container">
+          <section class="as-form-section" aria-labelledby="marketing-title">
+            <header class="as-form-section__header">
+              <h3 class="as-form-section__title" id="marketing-title">Request information</h3>
+              <p class="as-form-section__description">Tell our team how we can help.</p>
+            </header>
+            <div class="as-field-grid" data-columns="2">
+              <div class="as-field">
+                <div class="as-field__header"><label class="as-field__label" for="marketing-name">Name</label><span class="as-field__requirement" data-state="required">Required</span></div>
+                <input class="as-control" id="marketing-name" autocomplete="name" />
+              </div>
+              <div class="as-field">
+                <div class="as-field__header"><label class="as-field__label" for="marketing-email">Email</label><span class="as-field__requirement" data-state="required">Required</span></div>
+                <input class="as-control" id="marketing-email" type="email" autocomplete="email" />
+              </div>
+              <div class="as-field as-field-grid__full">
+                <div class="as-field__header"><label class="as-field__label" for="marketing-message">Project details</label><span class="as-field__requirement">Optional</span></div>
+                <textarea class="as-control" id="marketing-message"></textarea>
+              </div>
+            </div>
+          </section>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

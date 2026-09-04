@@ -1,0 +1,15 @@
+{
+  "name": "@angelstones/ui-patterns",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Framework-neutral CSS compositions for Angel Stones interfaces.",
+  "exports": {
+    "./forms.css": "./forms.css"
+  },
+  "files": [
+    "forms.css"
+  ],
+  "peerDependencies": {
+    "@angelstones/design-tokens": "0.1.0"
+  }
+}

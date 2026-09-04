@@ -1,0 +1,14 @@
+{
+  "name": "@angelstones/design-tokens",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Semantic design tokens for Angel Stones product themes.",
+  "exports": {
+    "./tokens.css": "./dist/tokens.css",
+    "./tokens.json": "./src/tokens.json"
+  },
+  "files": [
+    "dist",
+    "src/tokens.json"
+  ]
+}
