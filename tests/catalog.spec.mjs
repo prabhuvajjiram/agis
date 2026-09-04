@@ -112,27 +112,32 @@ test('@a11y every meaningful specimen table column supports announced sorting', 
   await expect(page.locator('#data-display tbody tr').first()).toContainText('$1,340.00')
 })
 
-test('@a11y premium effects retain semantic fallbacks in forced colors', async ({ page }) => {
+test('@a11y premium effects and dimensional buttons retain forced-colors fallbacks', async ({ page }) => {
   const gradient = page.locator('.as-surface[data-appearance="gradient"]')
   const glass = page.locator('.as-surface[data-appearance="glass"]')
-  const glossy = page.locator('.as-button[data-appearance="glossy"]')
+  const buttons = page.locator('#actions .as-button')
 
   await expect(gradient).toBeVisible()
   await expect(glass).toBeVisible()
-  await expect(glossy).toBeVisible()
+  await expect(buttons.first()).toBeVisible()
   expect(await gradient.evaluate((element) => getComputedStyle(element).backgroundImage)).not.toBe('none')
   expect(await glass.evaluate((element) => getComputedStyle(element).backdropFilter)).not.toBe('none')
+  expect(await buttons.evaluateAll((elements) => elements
+    .filter((element) => getComputedStyle(element).backgroundImage === 'none')
+    .map((element) => element.textContent?.trim()))).toEqual([])
 
   await page.emulateMedia({ forcedColors: 'active' })
   expect(await gradient.evaluate((element) => getComputedStyle(element).backgroundImage)).toBe('none')
   expect(await glass.evaluate((element) => getComputedStyle(element).backdropFilter)).toBe('none')
-  expect(await glossy.evaluate((element) => getComputedStyle(element).boxShadow)).toBe('none')
+  expect(await buttons.evaluateAll((elements) => elements
+    .filter((element) => getComputedStyle(element).boxShadow !== 'none')
+    .map((element) => element.textContent?.trim()))).toEqual([])
 })
 
 test('@a11y representative interactive patterns expose visible keyboard focus', async ({ page }) => {
   const controls = [
     '.catalog-demo .as-button',
-    '.as-button[data-appearance="glossy"]',
+    '.catalog-visual-card--feature .as-button',
     '#catalog-vendor',
     '#catalog-po',
     '#catalog-lookup',

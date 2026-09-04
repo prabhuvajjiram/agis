@@ -25,7 +25,8 @@ const requiredFiles = {
   'packages/ui-patterns/actions.css': [
     '.as-button',
     '[data-variant="destructive"]',
-    '[data-appearance="glossy"]',
+    'linear-gradient',
+    '--as-elevation-lifted',
     '--as-control-hit-target',
     ':focus-visible',
     'prefers-reduced-motion',
@@ -108,7 +109,7 @@ const requiredFiles = {
     '@import "./specialized-inputs.css"',
     '@import "./surfaces.css"',
   ],
-  'docs/ACTIONS.md': ['Icon-only actions require', 'aria-busy="true"', 'Destructive actions'],
+  'docs/ACTIONS.md': ['Icon-only actions require', 'aria-busy="true"', 'Destructive actions', 'shared dimensional material'],
   'docs/SELECTION.md': ['Combobox behavior', 'Dropdown menu, not Select', 'role="combobox"', 'result count'],
   'docs/OVERLAYS.md': ['focus trapping', 'Escape closes', '44px'],
   'docs/FEEDBACK.md': ['role="alert"', 'aria-live="polite"', 'authoritative operation'],
@@ -127,6 +128,10 @@ const requiredFiles = {
   'docs/SPECIALIZED_INPUTS.md': ['native file input', 'malware scanning', 'silently convert'],
   'docs/DISTRIBUTION.md': ['vendored snapshot', 'SHA-256', 'runtime network request'],
   'docs/VISUAL_EXPRESSION.md': ['one strong focal', 'Forced-colors mode', 'reduced-transparency'],
+  'site/assets/catalog.css': ['@font-face', 'Inter ASIG', 'inter-latin-wght-normal.woff2'],
+  'site/assets/fonts/INTER-OFL.txt': ['SIL OPEN FONT LICENSE Version 1.1'],
+  'site/assets/fonts/README.md': ['@fontsource-variable/inter@5.3.0', '3100e775e8616cd2611beecfa23a4263d7037586789b43f035236a2e6fbd4c62'],
+  'site/assets/fonts/inter-latin-wght-normal.woff2': [],
   'site/index.html': [
     'id="theme-select"',
     'role="switch"',
@@ -138,7 +143,7 @@ const requiredFiles = {
     '<dialog',
     'id="visual-expression"',
     'data-appearance="glass"',
-    'data-appearance="glossy"',
+    'inter-latin-wght-normal.woff2',
   ],
   'examples/controls.html': [
     'aria-label="More order actions"',

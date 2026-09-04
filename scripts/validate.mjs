@@ -67,10 +67,12 @@ for (const [name, theme] of Object.entries(tokens.themes)) {
     ['muted text', theme.foregroundMuted, theme.background],
     ['primary action text', theme.onPrimary, theme.primary],
     ['primary hover action text', theme.onPrimary, theme.primaryHover],
-    ['glossy primary action text', theme.onPrimary, blend(theme.primary, '#ffffff', 0.08)],
-    ['glossy hover action text', theme.onPrimary, blend(theme.primaryHover, '#ffffff', 0.08)],
+    ['dimensional primary action text', theme.onPrimary, blend(theme.primary, '#ffffff', 0.08)],
+    ['dimensional hover action text', theme.onPrimary, blend(theme.primaryHover, '#ffffff', 0.08)],
     ['accent text', theme.onAccent, theme.accent],
     ['destructive action text', theme.onDanger, theme.danger],
+    ['dimensional destructive text', theme.onDanger, blend(theme.danger, '#ffffff', 0.06)],
+    ['dimensional destructive hover text', theme.onDanger, blend(blend(theme.danger, theme.foreground, 0.16), '#ffffff', 0.08)],
   ]) {
     const ratio = contrast(foreground, background)
     if (ratio < 4.5) failures.push(`${name} ${label} contrast is ${ratio.toFixed(2)}:1`)

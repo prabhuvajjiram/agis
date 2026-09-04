@@ -13,7 +13,7 @@ Use `as-surface` for a bounded presentation surface. Appearance and depth are in
   <!-- semantic content remains ordinary HTML -->
 </article>
 
-<button class="as-button" data-appearance="glossy" type="button">Explore designs</button>
+<button class="as-button" type="button">Explore designs</button>
 ```
 
 - `data-appearance="gradient"` adds a theme-aware, low-intensity gradient.
@@ -22,7 +22,10 @@ Use `as-surface` for a bounded presentation surface. Appearance and depth are in
 - `data-depth="raised"` and `data-depth="floating"` provide two deliberate elevation
   levels.
 - `data-gloss="true"` adds a non-interactive highlight. It never communicates state.
-- `data-appearance="glossy"` is available for a single prominent button or call to action.
+
+Buttons use the dimensional finish by default across every product theme. Primary,
+secondary, ghost, destructive, compact, icon-only, and busy buttons share the same material
+language while preserving their semantic hierarchy. The Link variant stays flat by design.
 
 ## Where the premium layer belongs
 
@@ -44,7 +47,7 @@ that competes with operational work.
 - Forced-colors mode removes gradients, translucency, gloss, and shadows while preserving
   readable boundaries. The reduced-transparency preference replaces glass with an opaque
   surface.
-- Reduced-motion mode removes the glossy button press movement. Do not add essential
+- Reduced-motion mode removes the dimensional button press movement. Do not add essential
   animation, automatic parallax, or continuously moving highlights.
 - Limit backdrop blur to a small number of bounded surfaces. Consuming products must test
   contrast and performance against their real backgrounds and content.

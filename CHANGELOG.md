@@ -18,6 +18,10 @@
   the searchable selection specimen with in-popup filtering and keyboard support.
 - Added an opt-in premium visual layer for theme-aware gradients, glass, gloss, and depth,
   including forced-colors, reduced-transparency, and reduced-motion fallbacks.
+- Applied the dimensional material language to the complete button family while preserving
+  semantic hierarchy, contrast, forced-colors behavior, and reduced motion.
+- Self-hosted the catalogue's Inter variable font for deterministic cross-platform visual
+  baselines; the font remains licensed under SIL Open Font License 1.1.
 
 Product adapters and the Manufacturing Vendor pilot remain intentionally outside this
 release.

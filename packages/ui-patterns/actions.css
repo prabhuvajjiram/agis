@@ -14,10 +14,16 @@
   justify-content: center;
   gap: var(--as-space-2);
   padding: var(--as-space-2) var(--as-space-4);
-  border: var(--as-control-border-width) solid transparent;
+  border: var(--as-control-border-width) solid color-mix(in srgb, var(--as-color-primary-hover) 76%, transparent);
   border-radius: var(--as-radius-control);
-  background: var(--as-color-primary);
+  background:
+    linear-gradient(180deg, rgb(255 255 255 / 0.08), transparent 48%),
+    linear-gradient(135deg, var(--as-color-primary), var(--as-color-primary-hover));
   color: var(--as-color-on-primary);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.42),
+    0 2px 4px rgb(15 23 42 / 0.12),
+    0 10px 22px color-mix(in srgb, var(--as-color-primary) 26%, transparent);
   font: inherit;
   font-size: var(--as-font-size-sm);
   font-weight: var(--as-font-weight-semibold);
@@ -29,11 +35,18 @@
     background-color var(--as-motion-fast) ease,
     border-color var(--as-motion-fast) ease,
     box-shadow var(--as-motion-fast) ease,
-    color var(--as-motion-fast) ease;
+    color var(--as-motion-fast) ease,
+    transform var(--as-motion-fast) ease;
 }
 
 .as-button:hover:not(:disabled, [aria-disabled="true"]) {
-  background: var(--as-color-primary-hover);
+  background:
+    linear-gradient(180deg, rgb(255 255 255 / 0.08), transparent 52%),
+    linear-gradient(135deg, var(--as-color-primary-hover), var(--as-color-primary));
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.48),
+    0 3px 6px rgb(15 23 42 / 0.14),
+    0 12px 26px color-mix(in srgb, var(--as-color-primary) 30%, transparent);
 }
 
 .as-button:focus-visible {
@@ -43,50 +56,63 @@
 
 .as-button[data-variant="secondary"] {
   border-color: var(--as-color-border);
-  background: var(--as-color-surface);
+  background:
+    linear-gradient(180deg, rgb(255 255 255 / 0.22), transparent 58%),
+    var(--as-color-surface);
   color: var(--as-color-foreground);
-  box-shadow: var(--as-elevation-raised);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.36), var(--as-elevation-raised);
 }
 
-.as-button[data-variant="secondary"]:hover:not(:disabled, [aria-disabled="true"]),
-.as-button[data-variant="ghost"]:hover:not(:disabled, [aria-disabled="true"]) {
+.as-button[data-variant="secondary"]:hover:not(:disabled, [aria-disabled="true"]) {
   border-color: var(--as-color-primary);
-  background: var(--as-color-surface-muted);
+  background:
+    linear-gradient(180deg, rgb(255 255 255 / 0.24), transparent 58%),
+    var(--as-color-surface-muted);
   color: var(--as-color-foreground);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.4), var(--as-elevation-lifted);
 }
 
 .as-button[data-variant="ghost"] {
-  background: transparent;
+  border-color: color-mix(in srgb, var(--as-color-border) 58%, transparent);
+  background:
+    linear-gradient(180deg, rgb(255 255 255 / 0.14), transparent 64%),
+    color-mix(in srgb, var(--as-color-surface) 42%, transparent);
   color: var(--as-color-foreground);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.2), 0 4px 12px rgb(15 23 42 / 0.05);
+}
+
+.as-button[data-variant="ghost"]:hover:not(:disabled, [aria-disabled="true"]) {
+  border-color: var(--as-color-primary);
+  background:
+    linear-gradient(180deg, rgb(255 255 255 / 0.18), transparent 58%),
+    var(--as-color-surface-muted);
+  color: var(--as-color-foreground);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.28), var(--as-elevation-raised);
 }
 
 .as-button[data-variant="destructive"] {
-  background: var(--as-color-danger);
+  border-color: color-mix(in srgb, var(--as-color-danger) 82%, var(--as-color-foreground));
+  background:
+    linear-gradient(180deg, rgb(255 255 255 / 0.06), transparent 48%),
+    linear-gradient(135deg, var(--as-color-danger), color-mix(in srgb, var(--as-color-danger) 84%, var(--as-color-foreground)));
   color: var(--as-color-on-danger);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.3),
+    0 2px 4px rgb(15 23 42 / 0.12),
+    0 10px 22px color-mix(in srgb, var(--as-color-danger) 24%, transparent);
 }
 
 .as-button[data-variant="destructive"]:hover:not(:disabled, [aria-disabled="true"]) {
-  background: color-mix(in srgb, var(--as-color-danger) 88%, var(--as-color-foreground));
-}
-
-.as-button[data-appearance="glossy"] {
-  border-color: color-mix(in srgb, var(--as-color-primary-hover) 76%, transparent);
-  background:
-    linear-gradient(180deg, rgb(255 255 255 / 0.08), transparent 48%),
-    linear-gradient(135deg, var(--as-color-primary), var(--as-color-primary-hover));
-  box-shadow:
-    inset 0 1px 0 rgb(255 255 255 / 0.42),
-    0 2px 4px rgb(15 23 42 / 0.12),
-    0 10px 22px color-mix(in srgb, var(--as-color-primary) 26%, transparent);
-}
-
-.as-button[data-appearance="glossy"]:hover:not(:disabled, [aria-disabled="true"]) {
   background:
     linear-gradient(180deg, rgb(255 255 255 / 0.08), transparent 52%),
-    linear-gradient(135deg, var(--as-color-primary-hover), var(--as-color-primary));
+    linear-gradient(135deg, color-mix(in srgb, var(--as-color-danger) 84%, var(--as-color-foreground)), var(--as-color-danger));
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.34),
+    0 3px 6px rgb(15 23 42 / 0.14),
+    0 12px 26px color-mix(in srgb, var(--as-color-danger) 28%, transparent);
 }
 
-.as-button[data-appearance="glossy"]:active:not(:disabled, [aria-disabled="true"]) {
+.as-button:not([data-variant="link"]):active:not(:disabled, [aria-disabled="true"]) {
   transform: translateY(1px);
   box-shadow: inset 0 1px 2px rgb(15 23 42 / 0.18);
 }
@@ -97,6 +123,7 @@
   border-color: transparent;
   background: transparent;
   color: var(--as-color-primary);
+  box-shadow: none;
   text-decoration: underline;
   text-underline-offset: 0.2em;
 }
@@ -167,7 +194,7 @@
     transition: none;
   }
 
-  .as-button[data-appearance="glossy"]:active:not(:disabled, [aria-disabled="true"]) {
+  .as-button:not([data-variant="link"]):active:not(:disabled, [aria-disabled="true"]) {
     transform: none;
   }
 
@@ -179,11 +206,14 @@
 @media (forced-colors: active) {
   .as-button {
     border-color: ButtonText;
-  }
-
-  .as-button[data-appearance="glossy"] {
     background: ButtonFace;
     color: ButtonText;
     box-shadow: none;
+  }
+
+  .as-button[data-variant="link"] {
+    border-color: transparent;
+    background: Canvas;
+    color: LinkText;
   }
 }

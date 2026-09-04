@@ -26,6 +26,11 @@ Success, warning, and information colors communicate state. They are not general
 button variants. A completed operation may show success feedback without turning its next
 unrelated action green.
 
+Every ASIG button uses the shared dimensional material: a restrained theme-aware gradient,
+top-edge highlight, border, and elevation. Hierarchy still comes from the semantic variant,
+not from removing finish quality from secondary or destructive actions. Ghost remains quiet,
+and Link intentionally stays flat because it communicates navigation rather than elevation.
+
 ## Size and placement
 
 - The standard interactive height and icon-button width are at least 44px.
@@ -59,4 +64,5 @@ unrelated action green.
 
 Product button adapters must provide semantic variants, standard and compact sizes,
 icon-only naming, visible focus, disabled and busy states, reduced-motion behavior, and
-an escape hatch for product-owned composition without accepting product-specific colors.
+the shared dimensional finish. They also provide an escape hatch for product-owned
+composition without accepting product-specific colors.

@@ -43,8 +43,9 @@ That company requirement is deliberately stronger than the WCAG 2.1 AA baseline.
 
 ### Gradient, glass, gloss, and depth
 
-- Premium visual effects are optional presentation. They never replace a label, boundary,
-  selected state, validation message, warning, or other semantic communication.
+- Premium surface effects are optional presentation; the shared dimensional button finish
+  is the default. Neither replaces a label, boundary, selected state, validation message,
+  warning, or other semantic communication.
 - Text and controls retain the required contrast against the rendered surface at every
   point in a gradient. Essential text is not placed directly on uncontrolled photography.
 - Glass surfaces provide an opaque fallback for unsupported browsers and the user's
