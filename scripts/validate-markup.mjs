@@ -37,6 +37,20 @@ for (const relativePath of files) {
     if (!/\btype\s*=/.test(match[1])) failures.push(`${relativePath} contains an input without an explicit type`)
   }
 
+  if (/<button\b[^>]*\brole="combobox"/i.test(html)) {
+    failures.push(`${relativePath} must not use the invalid button-combobox hybrid focus model`)
+  }
+
+  for (const match of html.matchAll(/<(\w+)\b([^>]*)\brole="combobox"([^>]*)>/gi)) {
+    if (match[1].toLowerCase() !== 'input') {
+      failures.push(`${relativePath} searchable combobox must use an input that retains DOM focus`)
+    }
+    const attributes = `${match[2]} ${match[3]}`
+    if (!/\baria-controls="[^"]+"/.test(attributes)) {
+      failures.push(`${relativePath} combobox must identify its controlled listbox`)
+    }
+  }
+
   const ids = [...html.matchAll(/\bid="([^"]+)"/g)].map((match) => match[1])
   const duplicateIds = ids.filter((id, index) => ids.indexOf(id) !== index)
   if (duplicateIds.length) failures.push(`${relativePath} contains duplicate IDs: ${[...new Set(duplicateIds)].join(', ')}`)

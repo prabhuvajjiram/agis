@@ -2,7 +2,7 @@
   font-family: "Inter ASIG";
   font-style: normal;
   font-weight: 100 900;
-  font-display: swap;
+  font-display: block;
   src: url("./fonts/inter-latin-wght-normal.woff2") format("woff2-variations");
 }
 
@@ -131,8 +131,8 @@ main {
 }
 
 .catalog-section {
-  display: grid;
-  grid-template-columns: minmax(12rem, 0.36fr) minmax(0, 1fr);
+  display: flex;
+  flex-wrap: wrap;
   gap: clamp(1.5rem, 5vw, 4rem);
   padding: clamp(2rem, 5vw, 4.5rem) 0;
   border-bottom: 1px solid var(--as-color-border);
@@ -140,7 +140,13 @@ main {
 }
 
 .catalog-section__intro {
+  flex: 1 1 12rem;
+  min-width: 0;
   align-self: start;
+}
+
+.catalog-section > .catalog-demo {
+  flex: 3 1 32rem;
 }
 
 .catalog-section h2 {
@@ -170,6 +176,11 @@ main {
 
 .catalog-demo--row > .as-disclosure {
   flex-basis: 100%;
+}
+
+.catalog-demo__status {
+  flex-basis: 100%;
+  margin: 0;
 }
 
 .catalog-stack {
@@ -312,7 +323,7 @@ main {
   text-align: center;
 }
 
-@media (max-width: 64rem) {
+@media (max-width: 80rem) {
   .catalog-shell {
     grid-template-columns: 1fr;
   }

@@ -25,6 +25,8 @@ const requiredRoles = [
   'warning',
   'danger',
   'onDanger',
+  'dangerStrong',
+  'onDangerStrong',
   'info',
 ]
 
@@ -71,8 +73,9 @@ for (const [name, theme] of Object.entries(tokens.themes)) {
     ['dimensional hover action text', theme.onPrimary, blend(theme.primaryHover, '#ffffff', 0.08)],
     ['accent text', theme.onAccent, theme.accent],
     ['destructive action text', theme.onDanger, theme.danger],
-    ['dimensional destructive text', theme.onDanger, blend(theme.danger, '#ffffff', 0.06)],
-    ['dimensional destructive hover text', theme.onDanger, blend(blend(theme.danger, theme.foreground, 0.16), '#ffffff', 0.08)],
+    ['strong destructive action text', theme.onDangerStrong, theme.dangerStrong],
+    ['dimensional destructive text', theme.onDangerStrong, blend(theme.dangerStrong, '#ffffff', 0.14)],
+    ['dimensional destructive hover text', theme.onDangerStrong, blend(theme.dangerStrong, '#ffffff', 0.16)],
   ]) {
     const ratio = contrast(foreground, background)
     if (ratio < 4.5) failures.push(`${name} ${label} contrast is ${ratio.toFixed(2)}:1`)

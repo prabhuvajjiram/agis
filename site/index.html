@@ -149,19 +149,19 @@
                     <span class="as-field__requirement">Optional</span>
                   </div>
                   <div class="as-selection">
-                    <button class="as-selection-trigger" id="catalog-lookup" type="button" role="combobox" aria-expanded="false" aria-controls="catalog-vendor-options" aria-haspopup="listbox" aria-labelledby="catalog-lookup-label catalog-lookup-value">
+                    <button class="as-selection-trigger" id="catalog-lookup" type="button" aria-expanded="false" aria-controls="catalog-vendor-popover" aria-haspopup="dialog" aria-labelledby="catalog-lookup-label catalog-lookup-value">
                       <span class="as-selection-trigger__value" id="catalog-lookup-value">Choose a supplier</span>
                     </button>
-                    <div class="as-selection-popover" id="catalog-vendor-popover" hidden>
+                    <div class="as-selection-popover" id="catalog-vendor-popover" role="dialog" aria-modal="false" aria-labelledby="catalog-lookup-label" hidden>
                       <div class="as-selection-popover__search">
-                        <label class="as-field__label" for="catalog-vendor-search">Search suppliers</label>
-                        <input class="as-combobox-search" id="catalog-vendor-search" type="search" autocomplete="off" aria-controls="catalog-vendor-options" aria-describedby="catalog-vendor-results" placeholder="Name, city, or code">
+                        <label class="as-field__label" id="catalog-vendor-search-label" for="catalog-vendor-search">Search suppliers</label>
+                        <input class="as-combobox-search" id="catalog-vendor-search" type="search" role="combobox" autocomplete="off" aria-expanded="true" aria-haspopup="listbox" aria-autocomplete="list" aria-controls="catalog-vendor-options" aria-describedby="catalog-vendor-results" placeholder="Name, city, or code">
                       </div>
                       <div class="as-selection-options" id="catalog-vendor-options" role="listbox" aria-labelledby="catalog-lookup-label">
-                        <button class="as-option" type="button" role="option" aria-selected="false" tabindex="-1" data-value="North Quarry" data-search="North Quarry Elberton NQ">North Quarry</button>
-                        <button class="as-option" type="button" role="option" aria-selected="false" tabindex="-1" data-value="Heritage Memorial Supply" data-search="Heritage Memorial Supply Barre HMS">Heritage Memorial Supply</button>
-                        <button class="as-option" type="button" role="option" aria-selected="false" tabindex="-1" data-value="Blue Ridge Granite" data-search="Blue Ridge Granite Elberton BRG">Blue Ridge Granite</button>
-                        <button class="as-option" type="button" role="option" aria-selected="false" tabindex="-1" data-value="Summit Stone Works" data-search="Summit Stone Works Ontario SSW">Summit Stone Works</button>
+                        <button class="as-option" id="catalog-vendor-option-north" type="button" role="option" aria-selected="false" tabindex="-1" data-value="North Quarry" data-search="North Quarry Elberton NQ">North Quarry</button>
+                        <button class="as-option" id="catalog-vendor-option-heritage" type="button" role="option" aria-selected="false" tabindex="-1" data-value="Heritage Memorial Supply" data-search="Heritage Memorial Supply Barre HMS">Heritage Memorial Supply</button>
+                        <button class="as-option" id="catalog-vendor-option-blue-ridge" type="button" role="option" aria-selected="false" tabindex="-1" data-value="Blue Ridge Granite" data-search="Blue Ridge Granite Elberton BRG">Blue Ridge Granite</button>
+                        <button class="as-option" id="catalog-vendor-option-summit" type="button" role="option" aria-selected="false" tabindex="-1" data-value="Summit Stone Works" data-search="Summit Stone Works Ontario SSW">Summit Stone Works</button>
                       </div>
                       <p class="as-selection-empty" id="catalog-vendor-empty" hidden>No suppliers match your search.</p>
                       <p class="as-selection-status" id="catalog-vendor-results" role="status" aria-live="polite">4 suppliers available.</p>
@@ -193,13 +193,19 @@
             </fieldset>
             <fieldset class="as-choice-group">
               <legend class="as-choice-group__legend">Drawing units</legend>
-              <label class="as-choice"><input type="radio" name="catalog-unit" checked><span class="as-choice__label">Inches</span></label>
-              <label class="as-choice"><input type="radio" name="catalog-unit"><span class="as-choice__label">Millimetres</span></label>
+              <label class="as-choice"><input type="radio" name="catalog-unit" checked><span class="as-choice__content"><span class="as-choice__label">Inches</span><span class="as-choice__description">Standard shop and monument dimensions.</span></span></label>
+              <label class="as-choice"><input type="radio" name="catalog-unit"><span class="as-choice__content"><span class="as-choice__label">Millimetres</span><span class="as-choice__description">Precision CAD and imported drawing dimensions.</span></span></label>
             </fieldset>
             <div>
-              <button class="as-switch" id="catalog-switch" type="button" role="switch" aria-checked="true">
-                <span class="as-switch__track" aria-hidden="true"><span class="as-switch__thumb"></span></span>
-                Show grid snapping
+              <button class="as-switch" id="catalog-switch" type="button" role="switch" aria-checked="true" aria-labelledby="catalog-switch-label" aria-describedby="catalog-switch-description">
+                <span class="as-switch__content">
+                  <span class="as-switch__label" id="catalog-switch-label">Grid snapping</span>
+                  <span class="as-switch__description" id="catalog-switch-description">Align drawing geometry to the active grid.</span>
+                </span>
+                <span class="as-switch__control" aria-hidden="true">
+                  <span class="as-switch__state" id="catalog-switch-state">On</span>
+                  <span class="as-switch__track"><span class="as-switch__thumb"></span></span>
+                </span>
               </button>
               <p class="catalog-caption" id="switch-status" aria-live="polite">Grid snapping is on.</p>
             </div>
@@ -214,30 +220,31 @@
           </div>
           <div class="catalog-demo catalog-stack">
             <aside class="as-sidebar" aria-label="Commercial workspace navigation">
-              <nav class="as-sidebar__rail" aria-label="Product areas">
-                <a class="as-sidebar__rail-link" href="#navigation" aria-label="Home">
+              <nav class="as-sidebar__rail" id="catalog-sidebar-rail" aria-label="Product areas">
+                <span class="as-sidebar__rail-indicator" aria-hidden="true"></span>
+                <a class="as-sidebar__rail-link" href="#navigation" aria-label="Home" data-sidebar-area="home">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><path d="m3 11 9-7 9 7"></path><path d="M5 10v10h14V10M9 20v-6h6v6"></path></svg>
                 </a>
-                <a class="as-sidebar__rail-link" href="#navigation" aria-label="Commercial" aria-current="page">
+                <a class="as-sidebar__rail-link" href="#navigation" aria-label="Commercial" data-sidebar-area="commercial" aria-current="page">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><path d="M4 5h16v11H4z"></path><path d="M8 20h8M12 16v4M8 10l2 2 5-5 2 2"></path></svg>
                 </a>
-                <a class="as-sidebar__rail-link" href="#navigation" aria-label="Operations">
+                <a class="as-sidebar__rail-link" href="#navigation" aria-label="Operations" data-sidebar-area="operations">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><path d="m12 3 8 4.5v9L12 21l-8-4.5v-9z"></path><path d="m4 7.5 8 4.5 8-4.5M12 12v9"></path></svg>
                 </a>
-                <a class="as-sidebar__rail-link" href="#navigation" aria-label="Settings">
+                <a class="as-sidebar__rail-link" href="#navigation" aria-label="Settings" data-sidebar-area="settings">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1-2.8 2.8-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.6v.2h-4V21a1.7 1.7 0 0 0-1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1L4.2 17l.1-.1a1.7 1.7 0 0 0 .3-1.9A1.7 1.7 0 0 0 3 14H2.8v-4H3a1.7 1.7 0 0 0 1.6-1 1.7 1.7 0 0 0-.3-1.9L4.2 7 7 4.2l.1.1a1.7 1.7 0 0 0 1.9.3A1.7 1.7 0 0 0 10 3V2.8h4V3a1.7 1.7 0 0 0 1 1.6 1.7 1.7 0 0 0 1.9-.3l.1-.1L19.8 7l-.1.1a1.7 1.7 0 0 0-.3 1.9 1.7 1.7 0 0 0 1.6 1h.2v4H21a1.7 1.7 0 0 0-1.6 1Z"></path></svg>
                 </a>
               </nav>
               <div class="as-sidebar__panel">
                 <header class="as-sidebar__header">
-                  <h3 class="as-sidebar__title">Commercial</h3>
+                  <h3 class="as-sidebar__title" id="catalog-sidebar-title">Commercial</h3>
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><path d="m8 10 4 4 4-4"></path></svg>
                 </header>
                 <div class="as-sidebar__search">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-4-4"></path></svg>
                   <input class="as-control" id="catalog-sidebar-search" type="search" autocomplete="off" aria-label="Search Commercial navigation" aria-describedby="catalog-sidebar-status" placeholder="Search navigation">
                 </div>
-                <nav aria-label="Commercial destinations">
+                <nav id="catalog-sidebar-destinations" aria-label="Commercial destinations">
                   <ul class="as-sidebar__menu" id="catalog-sidebar-menu">
                     <li class="as-sidebar__indicator" aria-hidden="true"></li>
                     <li><a class="as-sidebar__link" href="#navigation" data-sidebar-label="Sales Dashboard">
@@ -274,20 +281,39 @@
             </nav>
             <div class="as-tab-scroll">
               <div class="as-tablist" role="tablist" aria-label="Order views">
-                <button class="as-tab" id="tab-summary" type="button" role="tab" aria-selected="true" aria-controls="panel-summary">Summary</button>
-                <button class="as-tab" id="tab-activity" type="button" role="tab" aria-selected="false" aria-controls="panel-activity" tabindex="-1">Activity</button>
-                <button class="as-tab" id="tab-files" type="button" role="tab" aria-selected="false" aria-controls="panel-files" tabindex="-1">Files</button>
+                <span class="as-tab__indicator" aria-hidden="true"></span>
+                <button class="as-tab" id="tab-summary" type="button" role="tab" aria-selected="true" aria-controls="panel-summary">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><path d="M6 3h9l3 3v15H6z"></path><path d="M15 3v4h4M9 11h6M9 15h6"></path></svg>
+                  <span>Summary</span>
+                </button>
+                <button class="as-tab" id="tab-activity" type="button" role="tab" aria-selected="false" aria-controls="panel-activity" tabindex="-1">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><path d="M4 12h3l2-5 4 10 2-5h5"></path><circle cx="12" cy="12" r="9"></circle></svg>
+                  <span>Activity</span>
+                </button>
+                <button class="as-tab" id="tab-files" type="button" role="tab" aria-selected="false" aria-controls="panel-files" tabindex="-1">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><path d="m9 12 5-5a3 3 0 0 1 4 4l-7 7a5 5 0 0 1-7-7l7-7"></path></svg>
+                  <span>Files</span>
+                </button>
               </div>
             </div>
             <div class="as-tab-panel" id="panel-summary" role="tabpanel" aria-labelledby="tab-summary" tabindex="0">Summary preserves order context and current task state.</div>
             <div class="as-tab-panel" id="panel-activity" role="tabpanel" aria-labelledby="tab-activity" tabindex="0" hidden>Activity shows the audit-friendly event sequence.</div>
             <div class="as-tab-panel" id="panel-files" role="tabpanel" aria-labelledby="tab-files" tabindex="0" hidden>Files remain governed by the product's authorization rules.</div>
             <nav class="as-pagination" aria-label="Example pagination">
-              <span class="as-pagination__summary">Showing 1–20 of 84</span>
+              <span class="as-pagination__context">
+                <span class="as-pagination__summary" id="catalog-pagination-summary">Showing 1–20 of 84</span>
+                <span class="as-pagination__status" id="catalog-pagination-status" role="status" aria-live="polite">Page 1 of 5.</span>
+              </span>
               <span class="as-pagination__controls">
-                <button class="as-pagination__button" type="button" aria-label="Previous page" disabled>Previous</button>
-                <button class="as-pagination__button" type="button" aria-current="page">1</button>
-                <button class="as-pagination__button" type="button" aria-label="Next page">Next</button>
+                <button class="as-pagination__button" type="button" data-pagination-action="previous" aria-label="Previous page" disabled>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><path d="m15 18-6-6 6-6"></path></svg>
+                  <span>Previous</span>
+                </button>
+                <button class="as-pagination__button" id="catalog-pagination-current" type="button" aria-current="page" aria-label="Current page, 1">1</button>
+                <button class="as-pagination__button" type="button" data-pagination-action="next" aria-label="Next page">
+                  <span>Next</span>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><path d="m9 18 6-6-6-6"></path></svg>
+                </button>
               </span>
             </nav>
           </div>
@@ -300,26 +326,66 @@
             <p>Semantic structures preserve comparison, record identity, and accessible headers.</p>
           </div>
           <div class="catalog-demo catalog-stack">
-            <article class="as-card">
-              <h3 class="as-card__title">Production summary</h3>
-              <p class="as-card__description">Related information grouped without making the entire surface clickable.</p>
-              <dl class="as-description-list">
-                <dt>Order</dt><dd>SO-1042</dd><dt>Status</dt><dd>Ready for review</dd><dt>Owner</dt><dd>Production team</dd>
+            <article class="as-card" data-appearance="summary">
+              <header class="as-card__header">
+                <div class="as-card__identity">
+                  <span class="as-card__icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M5 4h14v16H5z"></path><path d="M8 8h8M8 12h5M8 16h3"></path></svg>
+                  </span>
+                  <div>
+                    <p class="as-card__eyebrow">Work order</p>
+                    <h3 class="as-card__title">Production summary</h3>
+                  </div>
+                </div>
+                <span class="as-data-status" data-tone="success">Ready for review</span>
+              </header>
+              <p class="as-card__description">Current ownership and the next production checkpoint at a glance.</p>
+              <dl class="as-description-list" data-layout="tiles">
+                <div class="as-description-list__item"><dt>Order</dt><dd>SO-1042</dd></div>
+                <div class="as-description-list__item"><dt>Owner</dt><dd>Production team</dd></div>
+                <div class="as-description-list__item"><dt>Next checkpoint</dt><dd>Proof approval</dd></div>
               </dl>
             </article>
-            <div class="as-table-wrap" role="region" aria-label="Vendor quotes" tabindex="0">
-              <table class="as-table">
-                <caption>Vendor quotes for the selected order</caption>
-                <thead>
-                  <tr>
-                    <th scope="col" aria-sort="ascending"><button class="as-table__sort" type="button" data-sort-type="text">Vendor <span aria-hidden="true">↑</span></button></th>
-                    <th scope="col" aria-sort="none"><button class="as-table__sort" type="button" data-sort-type="text">Reference <span aria-hidden="true">↕</span></button></th>
-                    <th scope="col" aria-sort="none"><button class="as-table__sort" type="button" data-sort-type="number">Amount <span aria-hidden="true">↕</span></button></th>
-                    <th scope="col" aria-sort="none"><button class="as-table__sort" type="button" data-sort-type="text">Status <span aria-hidden="true">↕</span></button></th>
-                  </tr>
-                </thead>
-                <tbody><tr><td>Heritage Memorial</td><td>HM-8841</td><td data-sort-value="1340">$1,340.00</td><td><span class="as-status">Pending</span></td></tr><tr><td>Northern Granite</td><td>NG-2026-18</td><td data-sort-value="1280">$1,280.00</td><td><span class="as-status">Received</span></td></tr></tbody>
-              </table>
+            <div class="as-table-wrap">
+              <header class="as-table-toolbar">
+                <div class="as-table-toolbar__identity">
+                  <span class="as-table-toolbar__icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M4 7h16M7 4v6M17 4v6M5 11h14v9H5z"></path><path d="M8 15h3M13 15h3"></path></svg>
+                  </span>
+                  <div>
+                    <h3 class="as-table-toolbar__title" id="vendor-quotes-title">Vendor quotes</h3>
+                    <p class="as-table-toolbar__description" id="vendor-quotes-description">Compare the current purchasing responses for SO-1042.</p>
+                  </div>
+                </div>
+                <span class="as-table-toolbar__count">2 quotes</span>
+              </header>
+              <div class="as-table-scroll" role="region" aria-labelledby="vendor-quotes-title" aria-describedby="vendor-quotes-description" tabindex="0">
+                <table class="as-table">
+                  <caption>Vendor quotes for the selected order</caption>
+                  <thead>
+                    <tr>
+                      <th scope="col" aria-sort="ascending"><button class="as-table__sort" type="button" data-sort-type="text">Vendor <span aria-hidden="true">↑</span></button></th>
+                      <th scope="col" aria-sort="none"><button class="as-table__sort" type="button" data-sort-type="text">Reference <span aria-hidden="true">↕</span></button></th>
+                      <th scope="col" aria-sort="none"><button class="as-table__sort" type="button" data-sort-type="number">Amount <span aria-hidden="true">↕</span></button></th>
+                      <th scope="col" aria-sort="none"><button class="as-table__sort" type="button" data-sort-type="text">Status <span aria-hidden="true">↕</span></button></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><span class="as-table__entity"><span class="as-table__avatar" aria-hidden="true">HM</span><span><span class="as-table__primary">Heritage Memorial</span><span class="as-table__secondary">Preferred supplier</span></span></span></td>
+                      <td><code class="as-table__reference">HM-8841</code></td>
+                      <td data-sort-value="1340"><span class="as-table__amount">$1,340.00</span></td>
+                      <td><span class="as-data-status" data-tone="warning">Pending</span></td>
+                    </tr>
+                    <tr>
+                      <td><span class="as-table__entity"><span class="as-table__avatar" aria-hidden="true">NG</span><span><span class="as-table__primary">Northern Granite</span><span class="as-table__secondary">Current supplier</span></span></span></td>
+                      <td><code class="as-table__reference">NG-2026-18</code></td>
+                      <td data-sort-value="1280"><span class="as-table__amount">$1,280.00</span></td>
+                      <td><span class="as-data-status" data-tone="success">Received</span></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
               <p class="as-table__sort-status" id="catalog-table-sort-status" role="status" aria-live="polite">Vendor quotes sorted by Vendor, ascending.</p>
             </div>
           </div>
@@ -374,10 +440,29 @@
             <p>Messages identify the state, its scope, and the next useful action.</p>
           </div>
           <div class="catalog-demo catalog-stack">
-            <div class="as-alert" data-variant="success" role="status"><strong class="as-alert__title">Saved</strong><p class="as-alert__message">The design-system example is up to date.</p></div>
-            <div class="as-alert" data-variant="danger" role="alert"><strong class="as-alert__title">Upload failed</strong><p class="as-alert__message">The selected file was preserved. Check the connection and retry.</p></div>
-            <div class="as-skeleton" aria-hidden="true"></div>
-            <div class="as-empty-state"><strong>No matching records</strong><span>Clear one or more filters to broaden the result.</span></div>
+            <div class="as-alert" data-variant="success" role="status" aria-labelledby="feedback-saved-title">
+              <span class="as-alert__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></svg></span>
+              <strong class="as-alert__title" id="feedback-saved-title">Changes saved</strong>
+              <p class="as-alert__message">The design-system example is up to date.</p>
+            </div>
+            <div class="as-alert" data-variant="danger" role="alert">
+              <span class="as-alert__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 8v5m0 3.5v.01M10.3 3.8 2.4 18a2 2 0 0 0 1.7 3h15.8a2 2 0 0 0 1.7-3L13.7 3.8a2 2 0 0 0-3.4 0Z"/></svg></span>
+              <strong class="as-alert__title">Upload failed</strong>
+              <p class="as-alert__message">Your file was preserved. Check the connection and try again.</p>
+              <button class="as-button as-alert__action" data-size="compact" data-variant="secondary" type="button" id="feedback-retry">Try again</button>
+            </div>
+            <div class="as-loading-state" role="status" aria-live="polite" aria-labelledby="feedback-loading-title">
+              <span class="as-loading-state__indicator" aria-hidden="true"><span class="as-loading-state__spinner"></span></span>
+              <strong class="as-loading-state__title" id="feedback-loading-title">Syncing vendor updates</strong>
+              <p class="as-loading-state__message">You can continue working while this finishes.</p>
+            </div>
+            <div class="as-empty-state">
+              <span class="as-empty-state__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 7.5h16M8 3.5h8l1.5 4H6.5l1.5-4ZM5 7.5v12h14v-12M9 12h6"/></svg></span>
+              <strong class="as-empty-state__title">No matching records</strong>
+              <p class="as-empty-state__description">No records match the current filters. Clear them to see the full result set.</p>
+              <div class="as-empty-state__actions"><button class="as-button" data-variant="secondary" type="button" id="feedback-clear">Clear filters</button></div>
+            </div>
+            <p class="as-status" id="feedback-action-status" aria-live="polite"></p>
           </div>
         </section>
 
@@ -391,21 +476,28 @@
             <div>
               <button class="as-button" data-variant="secondary" type="button" id="menu-trigger" aria-haspopup="menu" aria-expanded="false" aria-controls="catalog-menu">More actions</button>
               <div class="as-menu-popover" id="catalog-menu" role="menu" aria-labelledby="menu-trigger" hidden>
-                <button class="as-menu-item" type="button" role="menuitem">Duplicate</button>
-                <button class="as-menu-item" type="button" role="menuitem" data-variant="destructive">Archive</button>
+                <button class="as-menu-item" type="button" role="menuitem" tabindex="-1">Duplicate</button>
+                <button class="as-menu-item" type="button" role="menuitem" tabindex="-1" data-variant="destructive" data-open-dialog>Archive</button>
               </div>
             </div>
-            <button class="as-button" data-variant="destructive" type="button" id="dialog-open">Open confirmation</button>
-            <dialog class="as-dialog" data-size="small" id="catalog-dialog" aria-labelledby="dialog-title" aria-describedby="dialog-description">
-              <header class="as-dialog__header"><h3 class="as-dialog__title" id="dialog-title">Archive example?</h3><p class="as-dialog__description" id="dialog-description">This catalogue action is only a specimen.</p></header>
-              <div class="as-dialog__body">A real product must name the affected record and authoritative consequence.</div>
-              <footer class="as-dialog__footer"><button class="as-button" data-variant="ghost" type="button" id="dialog-cancel">Cancel</button><button class="as-button" data-variant="destructive" type="button" id="dialog-confirm">Archive example</button></footer>
+            <button class="as-button" data-variant="secondary" type="button" id="dialog-open"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" aria-hidden="true"><path d="M5 8h14M9 8V5h6v3m-8 0 1 12h8l1-12M10 12v4m4-4v4"/></svg>Review archive</button>
+            <dialog class="as-dialog" data-size="small" data-intent="destructive" id="catalog-dialog" aria-labelledby="dialog-title" aria-describedby="dialog-description">
+              <header class="as-dialog__header">
+                <div class="as-dialog__heading">
+                  <span class="as-dialog__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 8v5m0 3.5v.01M10.3 3.8 2.4 18a2 2 0 0 0 1.7 3h15.8a2 2 0 0 0 1.7-3L13.7 3.8a2 2 0 0 0-3.4 0Z"/></svg></span>
+                  <div><h3 class="as-dialog__title" id="dialog-title">Archive this example?</h3><p class="as-dialog__description" id="dialog-description">It will leave the active catalogue and move to the archive.</p></div>
+                </div>
+                <button class="as-button as-dialog__close" data-variant="ghost" data-icon-only type="button" id="dialog-close" aria-label="Close confirmation dialog"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.8" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
+              </header>
+              <div class="as-dialog__body"><p>Archive only when this record is no longer active. A real product must name the affected record and authoritative consequence.</p></div>
+              <footer class="as-dialog__footer"><button class="as-button" data-variant="secondary" type="button" id="dialog-cancel">Keep active</button><button class="as-button" data-variant="destructive" type="button" id="dialog-confirm">Archive example</button></footer>
             </dialog>
+            <p class="as-status catalog-demo__status" id="overlay-status" aria-live="polite"></p>
           </div>
         </section>
       </main>
     </div>
 
-    <footer class="catalog-footer">ASIG 0.3.0 · patterns are framework-neutral; business behavior stays product-owned.</footer>
+    <footer class="catalog-footer">ASIG 0.4.0 · patterns are framework-neutral; business behavior stays product-owned.</footer>
   </body>
 </html>

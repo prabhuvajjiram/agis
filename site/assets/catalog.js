@@ -5,9 +5,11 @@ themeSelect?.addEventListener('change', () => {
 
 const switchControl = document.querySelector('#catalog-switch')
 const switchStatus = document.querySelector('#switch-status')
+const switchState = document.querySelector('#catalog-switch-state')
 switchControl?.addEventListener('click', () => {
   const checked = switchControl.getAttribute('aria-checked') !== 'true'
   switchControl.setAttribute('aria-checked', String(checked))
+  switchState.textContent = checked ? 'On' : 'Off'
   switchStatus.textContent = `Grid snapping is ${checked ? 'on' : 'off'}.`
 })
 
@@ -19,8 +21,24 @@ const selectionSearch = document.querySelector('#catalog-vendor-search')
 const selectionOptions = [...document.querySelectorAll('#catalog-vendor-options [role="option"]')]
 const selectionEmpty = document.querySelector('#catalog-vendor-empty')
 const selectionStatus = document.querySelector('#catalog-vendor-results')
+let activeSelectionOption = null
 
 const visibleSelectionOptions = () => selectionOptions.filter((option) => !option.hidden)
+
+const setActiveSelectionOption = (option) => {
+  activeSelectionOption = option ?? null
+  for (const candidate of selectionOptions) {
+    if (candidate === activeSelectionOption) candidate.dataset.active = 'true'
+    else delete candidate.dataset.active
+  }
+
+  if (activeSelectionOption) {
+    selectionSearch.setAttribute('aria-activedescendant', activeSelectionOption.id)
+    activeSelectionOption.scrollIntoView({ block: 'nearest' })
+  } else {
+    selectionSearch.removeAttribute('aria-activedescendant')
+  }
+}
 
 const updateSelectionResults = () => {
   const query = selectionSearch.value.trim().toLocaleLowerCase()
@@ -29,6 +47,7 @@ const updateSelectionResults = () => {
   }
 
   const resultCount = visibleSelectionOptions().length
+  if (activeSelectionOption?.hidden) setActiveSelectionOption(null)
   selectionEmpty.hidden = resultCount !== 0
   selectionStatus.textContent = resultCount === 0
     ? 'No suppliers available.'
@@ -39,12 +58,11 @@ const openSelection = (focusTarget = 'search') => {
   selectionPopover.hidden = false
   selectionTrigger.setAttribute('aria-expanded', 'true')
   requestAnimationFrame(() => {
-    if (focusTarget === 'search') {
-      selectionSearch.focus()
-      return
+    selectionSearch.focus()
+    if (focusTarget !== 'search') {
+      const options = visibleSelectionOptions()
+      setActiveSelectionOption(options[focusTarget === 'last' ? options.length - 1 : 0])
     }
-    const options = visibleSelectionOptions()
-    options[focusTarget === 'last' ? options.length - 1 : 0]?.focus()
   })
 }
 
@@ -52,6 +70,7 @@ const closeSelection = ({ restoreFocus = false } = {}) => {
   selectionPopover.hidden = true
   selectionTrigger.setAttribute('aria-expanded', 'false')
   selectionSearch.value = ''
+  setActiveSelectionOption(null)
   updateSelectionResults()
   if (restoreFocus) requestAnimationFrame(() => selectionTrigger.focus())
 }
@@ -87,32 +106,27 @@ selectionSearch?.addEventListener('keydown', (event) => {
     closeSelection({ restoreFocus: true })
     return
   }
-  if (event.key !== 'ArrowDown' && event.key !== 'ArrowUp') return
+  if (event.key === 'Enter' && activeSelectionOption) {
+    event.preventDefault()
+    selectOption(activeSelectionOption)
+    return
+  }
+  if (!['ArrowDown', 'ArrowUp', 'Home', 'End'].includes(event.key)) return
   const options = visibleSelectionOptions()
   if (options.length === 0) return
   event.preventDefault()
-  options[event.key === 'ArrowUp' ? options.length - 1 : 0].focus()
+  const currentIndex = options.indexOf(activeSelectionOption)
+  let nextIndex = currentIndex
+  if (event.key === 'ArrowDown') nextIndex = currentIndex < 0 ? 0 : Math.min(currentIndex + 1, options.length - 1)
+  if (event.key === 'ArrowUp') nextIndex = currentIndex < 0 ? options.length - 1 : Math.max(currentIndex - 1, 0)
+  if (event.key === 'Home') nextIndex = 0
+  if (event.key === 'End') nextIndex = options.length - 1
+  setActiveSelectionOption(options[nextIndex])
 })
 
 for (const option of selectionOptions) {
   option.addEventListener('click', () => selectOption(option))
-  option.addEventListener('keydown', (event) => {
-    if (event.key === 'Escape') {
-      event.preventDefault()
-      closeSelection({ restoreFocus: true })
-      return
-    }
-    if (!['ArrowDown', 'ArrowUp', 'Home', 'End'].includes(event.key)) return
-    const options = visibleSelectionOptions()
-    const currentIndex = options.indexOf(option)
-    let nextIndex = currentIndex
-    if (event.key === 'ArrowDown') nextIndex = Math.min(currentIndex + 1, options.length - 1)
-    if (event.key === 'ArrowUp') nextIndex = Math.max(currentIndex - 1, 0)
-    if (event.key === 'Home') nextIndex = 0
-    if (event.key === 'End') nextIndex = options.length - 1
-    event.preventDefault()
-    options[nextIndex]?.focus()
-  })
+  option.addEventListener('pointermove', () => setActiveSelectionOption(option))
 }
 
 document.addEventListener('pointerdown', (event) => {
@@ -166,14 +180,56 @@ for (const [columnIndex, button] of tableSortButtons.entries()) {
 }
 
 const tabs = [...document.querySelectorAll('[role="tab"]')]
-const activateTab = (tab) => {
+const tablist = document.querySelector('.as-tablist')
+const tabIndicator = tablist?.querySelector('.as-tab__indicator')
+const reducedMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
+const positionTabIndicator = (tab, { animate = true } = {}) => {
+  if (!tablist || !tabIndicator || !tab) return
+  if (!animate) tabIndicator.style.transition = 'none'
+  tablist.style.setProperty('--as-tab-active-offset', `${tab.offsetLeft - tabIndicator.offsetLeft}px`)
+  tablist.style.setProperty('--as-tab-active-width', `${tab.offsetWidth}px`)
+  if (!animate) requestAnimationFrame(() => tabIndicator.style.removeProperty('transition'))
+}
+
+const syncSelectedTabIndicator = () => {
+  positionTabIndicator(
+    tabs.find((tab) => tab.getAttribute('aria-selected') === 'true'),
+    { animate: false },
+  )
+}
+
+const activateTab = (tab, { animate = true } = {}) => {
+  let activePanel
   for (const candidate of tabs) {
     const selected = candidate === tab
     candidate.setAttribute('aria-selected', String(selected))
     candidate.tabIndex = selected ? 0 : -1
     const panel = document.querySelector(`#${candidate.getAttribute('aria-controls')}`)
     if (panel) panel.hidden = !selected
+    if (selected) activePanel = panel
   }
+  positionTabIndicator(tab, { animate })
+  if (animate && activePanel && !reducedMotion()) {
+    activePanel.animate([
+      { opacity: 0.65, transform: 'translateY(0.25rem)' },
+      { opacity: 1, transform: 'translateY(0)' },
+    ], { duration: 200, easing: 'cubic-bezier(0.2, 0.8, 0.2, 1)' })
+  }
+}
+
+if (tablist) {
+  syncSelectedTabIndicator()
+  tablist.dataset.animatedIndicator = 'true'
+
+  if ('ResizeObserver' in window) {
+    const tabLayoutObserver = new ResizeObserver(syncSelectedTabIndicator)
+    tabLayoutObserver.observe(tablist)
+    for (const tab of tabs) tabLayoutObserver.observe(tab)
+  }
+
+  document.fonts?.ready.then(syncSelectedTabIndicator)
+  window.addEventListener('pageshow', syncSelectedTabIndicator)
 }
 
 for (const [index, tab] of tabs.entries()) {
@@ -191,11 +247,54 @@ for (const [index, tab] of tabs.entries()) {
   })
 }
 
+const paginationSummary = document.querySelector('#catalog-pagination-summary')
+const paginationStatus = document.querySelector('#catalog-pagination-status')
+const paginationCurrent = document.querySelector('#catalog-pagination-current')
+const paginationPrevious = document.querySelector('[data-pagination-action="previous"]')
+const paginationNext = document.querySelector('[data-pagination-action="next"]')
+const paginationTotalItems = 84
+const paginationPageSize = 20
+const paginationTotalPages = Math.ceil(paginationTotalItems / paginationPageSize)
+let paginationPage = 1
+
+const updatePagination = (nextPage, { animate = true } = {}) => {
+  paginationPage = Math.max(1, Math.min(nextPage, paginationTotalPages))
+  const firstItem = ((paginationPage - 1) * paginationPageSize) + 1
+  const lastItem = Math.min(paginationPage * paginationPageSize, paginationTotalItems)
+  paginationSummary.textContent = `Showing ${firstItem}–${lastItem} of ${paginationTotalItems}`
+  paginationStatus.textContent = `Page ${paginationPage} of ${paginationTotalPages}.`
+  paginationCurrent.textContent = String(paginationPage)
+  paginationCurrent.setAttribute('aria-label', `Current page, ${paginationPage}`)
+  paginationPrevious.disabled = paginationPage === 1
+  paginationNext.disabled = paginationPage === paginationTotalPages
+  if (animate && !reducedMotion()) {
+    paginationCurrent.animate([
+      { opacity: 0.55, transform: 'translateY(0.15rem)' },
+      { opacity: 1, transform: 'translateY(0)' },
+    ], { duration: 160, easing: 'ease-out' })
+  }
+}
+
+paginationPrevious?.addEventListener('click', () => updatePagination(paginationPage - 1))
+paginationNext?.addEventListener('click', () => updatePagination(paginationPage + 1))
+
 const sidebarMenu = document.querySelector('#catalog-sidebar-menu')
 const sidebarIndicator = sidebarMenu?.querySelector('.as-sidebar__indicator')
 const sidebarLinks = [...sidebarMenu?.querySelectorAll('.as-sidebar__link') ?? []]
+const sidebarRail = document.querySelector('#catalog-sidebar-rail')
+const sidebarRailIndicator = sidebarRail?.querySelector('.as-sidebar__rail-indicator')
+const sidebarRailLinks = [...sidebarRail?.querySelectorAll('.as-sidebar__rail-link') ?? []]
+const sidebarPanel = document.querySelector('.as-sidebar__panel')
+const sidebarTitle = document.querySelector('#catalog-sidebar-title')
+const sidebarDestinations = document.querySelector('#catalog-sidebar-destinations')
 const sidebarSearch = document.querySelector('#catalog-sidebar-search')
 const sidebarStatus = document.querySelector('#catalog-sidebar-status')
+const sidebarAreaDestinations = {
+  home: ['Overview', 'My Work', 'Notifications', 'Recent Records', 'Favorites', 'Help Center'],
+  commercial: ['Sales Dashboard', 'Sales Pipeline', 'Team Quotes', 'Order Desk', 'Service Orders', 'Customers and Partners'],
+  operations: ['Production Dashboard', 'Shop Floor', 'Scheduling', 'Quality Control', 'Inventory', 'Shipping'],
+  settings: ['Company Profile', 'Users and Roles', 'Workflows', 'Integrations', 'Notifications', 'Audit and Security'],
+}
 
 const positionSidebarIndicator = (link, { animate = true } = {}) => {
   if (!sidebarMenu || !sidebarIndicator || !link || link.closest('li')?.hidden) {
@@ -215,6 +314,60 @@ const selectSidebarDestination = (link) => {
   link.setAttribute('aria-current', 'page')
   positionSidebarIndicator(link)
   sidebarStatus.textContent = `${link.dataset.sidebarLabel} is the current destination.`
+}
+
+const positionSidebarRailIndicator = (link, { animate = true } = {}) => {
+  if (!sidebarRail || !sidebarRailIndicator || !link) return
+  if (!animate) sidebarRailIndicator.style.transition = 'none'
+  sidebarRail.style.setProperty('--as-sidebar-rail-active-offset', `${link.offsetTop - sidebarRailIndicator.offsetTop}px`)
+  sidebarRail.style.setProperty('--as-sidebar-rail-active-height', `${link.offsetHeight}px`)
+  if (!animate) requestAnimationFrame(() => sidebarRailIndicator.style.removeProperty('transition'))
+}
+
+const selectSidebarArea = (link) => {
+  const areaKey = link.dataset.sidebarArea
+  const areaLabel = link.getAttribute('aria-label')
+  const destinations = sidebarAreaDestinations[areaKey]
+  if (!destinations) return
+
+  for (const candidate of sidebarRailLinks) candidate.removeAttribute('aria-current')
+  link.setAttribute('aria-current', 'page')
+  positionSidebarRailIndicator(link)
+
+  sidebarTitle.textContent = areaLabel
+  sidebarDestinations.setAttribute('aria-label', `${areaLabel} destinations`)
+  sidebarSearch.value = ''
+  sidebarSearch.setAttribute('aria-label', `Search ${areaLabel} navigation`)
+  for (const [index, destinationLink] of sidebarLinks.entries()) {
+    destinationLink.closest('li').hidden = false
+    destinationLink.dataset.sidebarLabel = destinations[index]
+    destinationLink.querySelector('span').textContent = destinations[index]
+    destinationLink.removeAttribute('aria-current')
+  }
+
+  const firstDestination = sidebarLinks[0]
+  firstDestination.setAttribute('aria-current', 'page')
+  positionSidebarIndicator(firstDestination)
+  sidebarStatus.textContent = `${areaLabel}: ${firstDestination.dataset.sidebarLabel} is the current destination.`
+  if (!reducedMotion()) {
+    sidebarPanel.animate([
+      { opacity: 0.7, transform: 'translateX(-0.25rem)' },
+      { opacity: 1, transform: 'translateX(0)' },
+    ], { duration: 180, easing: 'cubic-bezier(0.2, 0.8, 0.2, 1)' })
+  }
+}
+
+if (sidebarRail) {
+  const currentArea = sidebarRailLinks.find((link) => link.getAttribute('aria-current') === 'page')
+  positionSidebarRailIndicator(currentArea, { animate: false })
+  sidebarRail.dataset.animatedIndicator = 'true'
+}
+
+for (const link of sidebarRailLinks) {
+  link.addEventListener('click', (event) => {
+    event.preventDefault()
+    selectSidebarArea(link)
+  })
 }
 
 if (sidebarMenu) {
@@ -245,27 +398,105 @@ sidebarSearch?.addEventListener('input', () => {
 })
 
 window.addEventListener('resize', () => {
+  syncSelectedTabIndicator()
+  const currentArea = sidebarRailLinks.find((link) => link.getAttribute('aria-current') === 'page')
+  positionSidebarRailIndicator(currentArea, { animate: false })
   const currentLink = sidebarLinks.find((link) => link.getAttribute('aria-current') === 'page')
   positionSidebarIndicator(currentLink, { animate: false })
 })
 
 const menuTrigger = document.querySelector('#menu-trigger')
 const menu = document.querySelector('#catalog-menu')
-menuTrigger?.addEventListener('click', () => {
-  const opening = menu.hidden
-  menu.hidden = !opening
-  menuTrigger.setAttribute('aria-expanded', String(opening))
-  if (opening) menu.querySelector('[role="menuitem"]')?.focus()
+const overlayStatus = document.querySelector('#overlay-status')
+const menuItems = () => [...menu.querySelectorAll('[role="menuitem"]:not([disabled])')]
+const closeMenu = (restoreFocus = false) => {
+  menu.hidden = true
+  menuTrigger.setAttribute('aria-expanded', 'false')
+  if (restoreFocus) menuTrigger.focus()
+}
+const openMenu = (focusIndex = null) => {
+  menu.hidden = false
+  menuTrigger.setAttribute('aria-expanded', 'true')
+  if (focusIndex !== null) menuItems().at(focusIndex)?.focus()
+}
+
+menuTrigger?.addEventListener('click', (event) => {
+  if (event.detail === 0) {
+    openMenu(0)
+    return
+  }
+  menu.hidden ? openMenu() : closeMenu()
+})
+
+menuTrigger?.addEventListener('keydown', (event) => {
+  if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+    event.preventDefault()
+    openMenu(event.key === 'ArrowUp' ? -1 : 0)
+  }
+  if (event.key === 'Escape' && !menu.hidden) {
+    event.preventDefault()
+    closeMenu(true)
+  }
 })
 
 menu?.addEventListener('keydown', (event) => {
-  if (event.key !== 'Escape') return
-  menu.hidden = true
-  menuTrigger.setAttribute('aria-expanded', 'false')
-  menuTrigger.focus()
+  const items = menuItems()
+  const index = items.indexOf(document.activeElement)
+  let next = null
+  if (event.key === 'ArrowDown') next = (index + 1) % items.length
+  if (event.key === 'ArrowUp') next = (index - 1 + items.length) % items.length
+  if (event.key === 'Home') next = 0
+  if (event.key === 'End') next = items.length - 1
+  if (next !== null) {
+    event.preventDefault()
+    items[next].focus()
+  }
+  if (event.key === 'Escape') {
+    event.preventDefault()
+    closeMenu(true)
+  }
+  if (event.key === 'Tab') closeMenu()
 })
 
 const dialog = document.querySelector('#catalog-dialog')
-document.querySelector('#dialog-open')?.addEventListener('click', () => dialog.showModal())
+let dialogOpener = null
+const openDialog = (opener) => {
+  dialogOpener = opener
+  closeMenu()
+  dialog.showModal()
+}
+
+menu?.addEventListener('click', (event) => {
+  const item = event.target.closest('[role="menuitem"]')
+  if (!item) return
+  if (item.hasAttribute('data-open-dialog')) {
+    openDialog(menuTrigger)
+    return
+  }
+  overlayStatus.textContent = `${item.textContent.trim()} selected for this example.`
+  closeMenu(true)
+})
+
+document.addEventListener('pointerdown', (event) => {
+  if (!menu.hidden && !menu.contains(event.target) && event.target !== menuTrigger) {
+    closeMenu(menu.contains(document.activeElement))
+  }
+})
+
+document.addEventListener('focusin', (event) => {
+  if (!menu.hidden && !menu.contains(event.target) && event.target !== menuTrigger) closeMenu()
+})
+
+document.querySelector('#dialog-open')?.addEventListener('click', (event) => openDialog(event.currentTarget))
 document.querySelector('#dialog-cancel')?.addEventListener('click', () => dialog.close())
+document.querySelector('#dialog-close')?.addEventListener('click', () => dialog.close())
 document.querySelector('#dialog-confirm')?.addEventListener('click', () => dialog.close('confirm'))
+dialog?.addEventListener('close', () => dialogOpener?.focus())
+
+const feedbackStatus = document.querySelector('#feedback-action-status')
+document.querySelector('#feedback-retry')?.addEventListener('click', () => {
+  feedbackStatus.textContent = 'Retry requested. The product would now repeat the upload.'
+})
+document.querySelector('#feedback-clear')?.addEventListener('click', () => {
+  feedbackStatus.textContent = 'Filters cleared. The product would now refresh the results.'
+})

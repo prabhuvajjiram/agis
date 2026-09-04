@@ -1,6 +1,6 @@
 {
   "name": "angelstones-design-system",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "private": true,
   "description": "Angel Stones Interface Guidelines, semantic design tokens, and cross-product UI patterns.",
   "workspaces": [
