@@ -47,6 +47,14 @@ function contrast(first, second) {
   return (lighter + 0.05) / (darker + 0.05)
 }
 
+function blend(first, second, secondWeight) {
+  const secondChannels = rgb(second)
+  const channels = rgb(first).map((channel, index) => Math.round(
+    (channel * (1 - secondWeight) + secondChannels[index] * secondWeight) * 255
+  ).toString(16).padStart(2, '0'))
+  return `#${channels.join('')}`
+}
+
 const failures = []
 
 for (const [name, theme] of Object.entries(tokens.themes)) {
@@ -58,6 +66,9 @@ for (const [name, theme] of Object.entries(tokens.themes)) {
     ['body text', theme.foreground, theme.background],
     ['muted text', theme.foregroundMuted, theme.background],
     ['primary action text', theme.onPrimary, theme.primary],
+    ['primary hover action text', theme.onPrimary, theme.primaryHover],
+    ['glossy primary action text', theme.onPrimary, blend(theme.primary, '#ffffff', 0.08)],
+    ['glossy hover action text', theme.onPrimary, blend(theme.primaryHover, '#ffffff', 0.08)],
     ['accent text', theme.onAccent, theme.accent],
     ['destructive action text', theme.onDanger, theme.danger],
   ]) {

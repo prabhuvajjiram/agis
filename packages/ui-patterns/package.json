@@ -14,7 +14,8 @@
     "./navigation.css": "./navigation.css",
     "./overlays.css": "./overlays.css",
     "./selection.css": "./selection.css",
-    "./specialized-inputs.css": "./specialized-inputs.css"
+    "./specialized-inputs.css": "./specialized-inputs.css",
+    "./surfaces.css": "./surfaces.css"
   },
   "files": [
     "*.css"

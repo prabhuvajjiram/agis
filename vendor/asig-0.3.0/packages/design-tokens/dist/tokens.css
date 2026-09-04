@@ -36,7 +36,11 @@
   --as-motion-fast: 150ms;
   --as-motion-normal: 200ms;
   --as-motion-slow: 300ms;
+  --as-effect-glass-blur: 18px;
+  --as-effect-glass-saturation: 145%;
   --as-elevation-raised: 0 2px 8px rgb(15 23 42 / 0.12);
+  --as-elevation-lifted: 0 2px 4px rgb(15 23 42 / 0.08), 0 12px 28px rgb(15 23 42 / 0.14);
+  --as-elevation-floating: 0 4px 10px rgb(15 23 42 / 0.1), 0 24px 56px rgb(15 23 42 / 0.2);
   --as-elevation-popup: 0 12px 32px rgb(15 23 42 / 0.2);
   --as-elevation-dialog: 0 24px 64px rgb(15 23 42 / 0.28);
   --as-layer-sticky: 900;

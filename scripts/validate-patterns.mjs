@@ -25,6 +25,7 @@ const requiredFiles = {
   'packages/ui-patterns/actions.css': [
     '.as-button',
     '[data-variant="destructive"]',
+    '[data-appearance="glossy"]',
     '--as-control-hit-target',
     ':focus-visible',
     'prefers-reduced-motion',
@@ -85,6 +86,15 @@ const requiredFiles = {
     '.as-file-list',
     '.as-date-time-grid',
   ],
+  'packages/ui-patterns/surfaces.css': [
+    '.as-surface',
+    '[data-appearance="gradient"]',
+    '[data-appearance="glass"]',
+    '[data-depth="floating"]',
+    '[data-gloss="true"]',
+    'prefers-reduced-transparency',
+    'forced-colors',
+  ],
   'packages/ui-patterns/all.css': [
     '@import "./forms.css"',
     '@import "./actions.css"',
@@ -96,6 +106,7 @@ const requiredFiles = {
     '@import "./data-display.css"',
     '@import "./disclosure.css"',
     '@import "./specialized-inputs.css"',
+    '@import "./surfaces.css"',
   ],
   'docs/ACTIONS.md': ['Icon-only actions require', 'aria-busy="true"', 'Destructive actions'],
   'docs/SELECTION.md': ['Combobox behavior', 'Dropdown menu, not Select', 'role="combobox"', 'result count'],
@@ -115,6 +126,7 @@ const requiredFiles = {
   'docs/DISCLOSURE.md': ['aria-describedby', 'Escape', 'native Popover'],
   'docs/SPECIALIZED_INPUTS.md': ['native file input', 'malware scanning', 'silently convert'],
   'docs/DISTRIBUTION.md': ['vendored snapshot', 'SHA-256', 'runtime network request'],
+  'docs/VISUAL_EXPRESSION.md': ['one strong focal', 'Forced-colors mode', 'reduced-transparency'],
   'site/index.html': [
     'id="theme-select"',
     'role="switch"',
@@ -124,6 +136,9 @@ const requiredFiles = {
     'data-sort-type="number"',
     'type="file"',
     '<dialog',
+    'id="visual-expression"',
+    'data-appearance="glass"',
+    'data-appearance="glossy"',
   ],
   'examples/controls.html': [
     'aria-label="More order actions"',
@@ -152,6 +167,7 @@ const patternPaths = [
   'packages/ui-patterns/data-display.css',
   'packages/ui-patterns/disclosure.css',
   'packages/ui-patterns/specialized-inputs.css',
+  'packages/ui-patterns/surfaces.css',
 ]
 const patternCss = (await Promise.all(patternPaths.map(load))).join('\n')
 
@@ -190,6 +206,8 @@ if (tokens.version !== expectedVersion) failures.push('Token source version must
 if (tokenPackage.version !== expectedVersion) failures.push('design-tokens package version must match the ASIG package version')
 if (tokens.foundation?.control?.height !== '2.75rem') failures.push('Default control height must remain 44px')
 if (tokens.foundation?.control?.hitTarget !== '2.75rem') failures.push('Touch hit target must remain 44px')
+if (tokens.foundation?.effect?.glassBlur !== '18px') failures.push('Glass surfaces must use the bounded shared blur token')
+if (!tokens.foundation?.elevation?.floating) failures.push('Premium surfaces require the shared floating elevation token')
 if (!generatedTokens.includes('--as-font-size-2xl:')) failures.push('Generated numeric token names must use kebab case')
 
 const packageDefinition = JSON.parse(await load('packages/ui-patterns/package.json'))
@@ -209,6 +227,7 @@ for (const exportPath of [
   './overlays.css',
   './selection.css',
   './specialized-inputs.css',
+  './surfaces.css',
 ]) {
   if (!packageDefinition.exports?.[exportPath]) failures.push(`ui-patterns package is missing export ${exportPath}`)
 }

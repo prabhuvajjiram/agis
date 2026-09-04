@@ -16,6 +16,8 @@
 - Standardized local and GitHub Actions project commands on Node.js 26.
 - Added interactive, type-aware sorting to every meaningful data-table column and completed
   the searchable selection specimen with in-popup filtering and keyboard support.
+- Added an opt-in premium visual layer for theme-aware gradients, glass, gloss, and depth,
+  including forced-colors, reduced-transparency, and reduced-motion fallbacks.
 
 Product adapters and the Manufacturing Vendor pilot remain intentionally outside this
 release.

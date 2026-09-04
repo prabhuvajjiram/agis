@@ -18,6 +18,7 @@ const patternCss = (
     'data-display.css',
     'disclosure.css',
     'specialized-inputs.css',
+    'surfaces.css',
   ].map((file) => readFile(path.join(root, 'packages/ui-patterns', file), 'utf8')))
 ).join('\n')
 const definedPatternClasses = new Set(

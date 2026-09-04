@@ -41,6 +41,20 @@ That company requirement is deliberately stronger than the WCAG 2.1 AA baseline.
 - Reduced-motion preferences remove non-essential motion. Information is never conveyed by
   animation alone.
 
+### Gradient, glass, gloss, and depth
+
+- Premium visual effects are optional presentation. They never replace a label, boundary,
+  selected state, validation message, warning, or other semantic communication.
+- Text and controls retain the required contrast against the rendered surface at every
+  point in a gradient. Essential text is not placed directly on uncontrolled photography.
+- Glass surfaces provide an opaque fallback for unsupported browsers and the user's
+  reduced-transparency preference. Forced-colors mode removes gradients, translucency,
+  gloss, and decorative shadows while retaining visible semantic boundaries.
+- Gloss and depth do not create additional focus stops. Reduced-motion mode removes
+  non-essential press movement, parallax, shimmer, and continuously animated highlights.
+- Consuming products test effects over their real content and backgrounds; catalogue
+  conformance cannot prove product-level contrast or rendering performance.
+
 ### Forms, errors, and changing state
 
 - Inputs provide visible labels and any format, requirement, or constraint before entry.

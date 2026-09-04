@@ -23,6 +23,7 @@ adoption evidence.
 | Data grids | Behavior boundary | Visual foundations | Table specimen | Product-owned |
 | Navigation and breadcrumbs | Complete | Complete | Complete | Product-owned |
 | File upload and date/time | Complete | Complete | Complete | Product-owned |
+| Premium surfaces and depth | Complete | Complete | Complete | Planned |
 
 ## Global versus product-owned
 

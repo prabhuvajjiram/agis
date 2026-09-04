@@ -19,7 +19,7 @@ visual expression.
 - `@angelstones/design-tokens` — generated CSS custom properties and source JSON.
 - `@angelstones/ui-patterns` — framework-neutral CSS patterns for forms, actions,
   choices, selection, navigation, data display, disclosure, specialized inputs,
-  overlays, and feedback.
+  overlays, feedback, and optional premium surfaces.
 
 The repository deliberately does not contain domain behavior or application shells. ERP
 lifecycle controls, CAD canvas tools, and marketing sections remain owned by their
@@ -45,8 +45,8 @@ Apply one product theme at an application boundary and use semantic variants ins
 
 Applications may import `forms.css`, `actions.css`, `choices.css`, `selection.css`,
 `navigation.css`, `data-display.css`, `disclosure.css`, `specialized-inputs.css`,
-`overlays.css`, or `feedback.css` individually. An adapter may reproduce the same
-contract with local framework primitives instead of using these classes directly.
+`overlays.css`, `feedback.css`, or `surfaces.css` individually. An adapter may reproduce
+the same contract with local framework primitives instead of using these classes directly.
 
 ## Documentation
 
@@ -68,6 +68,7 @@ contract with local framework primitives instead of using these classes directly
 - [Contributing and release checks](docs/CONTRIBUTING.md)
 - [AI assistant integration](docs/AI_ASSISTANT_INTEGRATION.md)
 - [Product themes](docs/PRODUCT_THEMES.md)
+- [Gradient, glass, gloss, and depth](docs/VISUAL_EXPRESSION.md)
 - [Changelog](CHANGELOG.md)
 
 ## Accessibility baseline
