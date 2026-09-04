@@ -53,6 +53,14 @@ for (const relativePath of files) {
     }
   }
 
+  for (const attribute of ['aria-describedby', 'aria-controls']) {
+    for (const match of html.matchAll(new RegExp(`\\b${attribute}="([^"]+)"`, 'g'))) {
+      for (const id of match[1].split(/\s+/)) {
+        if (!idSet.has(id)) failures.push(`${relativePath} ${attribute} references missing ID: ${id}`)
+      }
+    }
+  }
+
   for (const match of html.matchAll(/<label\b[^>]*\bfor="([^"]+)"/g)) {
     if (!idSet.has(match[1])) failures.push(`${relativePath} label references missing control ID: ${match[1]}`)
   }

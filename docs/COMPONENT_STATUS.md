@@ -37,3 +37,11 @@ conversion content stay in the public site.
 The catalogue demonstrates shared structure and interaction, but it is not adoption
 evidence. A family remains product-owned until a consuming repository deliberately maps
 its framework and domain behavior to the documented contract.
+
+## Accessibility conformance
+
+WCAG 2.1 Level AA is a release gate for every family in this table, including patterns
+marked product-owned. “Complete” means that shared guidance, CSS, and specimens pass the
+automated ASIG suite and have the manual evidence required by the
+[accessibility standard](ACCESSIBILITY.md). Product adapters must repeat the checks in their
+actual application context; shared-component results alone are not product conformance.

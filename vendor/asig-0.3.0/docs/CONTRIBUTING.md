@@ -11,7 +11,9 @@ CSS reference, catalogue specimen, and verification move together.
 4. Add a catalogue specimen with native semantics and stable labels.
 5. Extend static contract checks and browser tests where behavior changes.
 6. Run `npm run snapshot` after release content or version changes.
-7. Run `npm run check` and `npm test` before review.
+7. Complete the automated and manual evidence in the
+   [accessibility standard](ACCESSIBILITY.md).
+8. Run `npm run check` and `npm test` before review.
 
 Visual baselines cover 375px, 768px, 1024px, and 1440px widths. Update them only after
 reviewing the rendered change at every width. Accessibility automation is a regression

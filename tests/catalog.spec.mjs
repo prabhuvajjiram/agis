@@ -25,6 +25,16 @@ test('@a11y catalogue has no page-level horizontal overflow', async ({ page }) =
   expect(sizes.scrollWidth).toBeLessThanOrEqual(sizes.clientWidth)
 })
 
+test('@a11y catalogue reflows at the WCAG 320 CSS pixel width', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== 'mobile-375', 'One 320px reflow run is sufficient')
+  await page.setViewportSize({ width: 320, height: 812 })
+  const sizes = await page.evaluate(() => ({
+    clientWidth: document.documentElement.clientWidth,
+    scrollWidth: document.documentElement.scrollWidth,
+  }))
+  expect(sizes.scrollWidth).toBeLessThanOrEqual(sizes.clientWidth)
+})
+
 test('@a11y standard controls meet the shared hit-target contract', async ({ page }) => {
   const undersized = await page.locator([
     'button:not([data-size="compact"]):not([hidden])',
@@ -58,6 +68,35 @@ test('@a11y switch exposes and announces its state', async ({ page }) => {
   await control.click()
   await expect(control).toHaveAttribute('aria-checked', 'false')
   await expect(page.locator('#switch-status')).toHaveText('Grid snapping is off.')
+})
+
+test('@a11y representative interactive patterns expose visible keyboard focus', async ({ page }) => {
+  const controls = [
+    '.catalog-demo .as-button',
+    '#catalog-vendor',
+    '#catalog-po',
+    '.as-choice input[type="checkbox"]',
+    '#catalog-switch',
+    '#tab-summary',
+    '.as-pagination__button[aria-current="page"]',
+    '.as-table__sort',
+    '.as-disclosure__summary',
+    '#catalog-file',
+  ]
+
+  for (const selector of controls) {
+    const control = page.locator(selector).first()
+    await control.focus()
+    const focusIsVisible = await control.evaluate((element) => {
+      const indicatorElement = element.matches('input[type="checkbox"], input[type="radio"]')
+        ? element.closest('.as-choice')
+        : element
+      const style = getComputedStyle(indicatorElement)
+      return (Number.parseFloat(style.outlineWidth) > 0 && style.outlineStyle !== 'none')
+        || style.boxShadow !== 'none'
+    })
+    expect(focusIsVisible, `${selector} must expose a visible focus indicator`).toBe(true)
+  }
 })
 
 test('@visual catalogue matches the reviewed reference', async ({ page }) => {

@@ -11,6 +11,8 @@
   and 1440px, plus Axe checks across every product theme.
 - Added a deterministic, checksummed vendored distribution snapshot and CI artifact.
 - Connected the company standards skill to ASIG without duplicating component guidance.
+- Established WCAG 2.1 Level AA as the minimum release gate for every component, with a
+  dedicated automated and manual evidence standard.
 
 Product adapters and the Manufacturing Vendor pilot remain intentionally outside this
 release.

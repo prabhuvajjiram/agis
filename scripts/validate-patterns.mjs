@@ -99,6 +99,13 @@ const requiredFiles = {
   'docs/OVERLAYS.md': ['focus trapping', 'Escape closes', '44px'],
   'docs/FEEDBACK.md': ['role="alert"', 'aria-live="polite"', 'authoritative operation'],
   'docs/COMPONENT_STATUS.md': ['Product adapters', 'Product-owned'],
+  'docs/ACCESSIBILITY.md': [
+    'WCAG 2.1 Level AA',
+    '4.5:1 contrast',
+    '320 CSS pixels',
+    'screen-reader/browser combination',
+    'Automation cannot prove WCAG conformance',
+  ],
   'docs/CHOICES.md': ['fieldset', 'role="switch"', 'authoritative operation'],
   'docs/NAVIGATION.md': ['aria-current="page"', 'role="tablist"', 'Arrow'],
   'docs/DATA_DISPLAY.md': ['aria-sort', '44px', 'virtualization'],
@@ -142,6 +149,22 @@ const patternPaths = [
   'packages/ui-patterns/specialized-inputs.css',
 ]
 const patternCss = (await Promise.all(patternPaths.map(load))).join('\n')
+
+for (const relativePath of [
+  'packages/ui-patterns/forms.css',
+  'packages/ui-patterns/actions.css',
+  'packages/ui-patterns/selection.css',
+  'packages/ui-patterns/overlays.css',
+  'packages/ui-patterns/choices.css',
+  'packages/ui-patterns/navigation.css',
+  'packages/ui-patterns/data-display.css',
+  'packages/ui-patterns/disclosure.css',
+  'packages/ui-patterns/specialized-inputs.css',
+]) {
+  const content = await load(relativePath)
+  if (!content.includes(':focus-visible')) failures.push(`${relativePath} must define a visible keyboard focus state`)
+}
+
 const generatedTokens = await load('packages/tokens/dist/tokens.css')
 const definedCustomProperties = new Set(
   [...generatedTokens.matchAll(/(--as-[a-z0-9-]+)\s*:/gi)].map((match) => match[1])

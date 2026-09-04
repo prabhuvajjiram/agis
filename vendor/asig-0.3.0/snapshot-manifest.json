@@ -6,14 +6,15 @@
     "@angelstones/ui-patterns"
   ],
   "files": {
-    "CHANGELOG.md": "800d9e0e9b15824f1a487c2f1ebfd1ff260a30dda2bdb26f044a9a98b26914d6",
+    "CHANGELOG.md": "2176226128b0d1c97da84b30d14c80aad738f4306ac489e57e137437ec6d6183",
+    "docs/ACCESSIBILITY.md": "35e5ec225dd53823fc1c0f4cab78f0d9c1dbf4846a69cbd437535c142db03d3f",
     "docs/ACTIONS.md": "3a4cf9ef7a2a18de0fed8abcdcd6cd25d916c3bc5ea24ae8a30bf2ebd0ef9c97",
     "docs/ADOPTION.md": "e125c07fa7252a78d8fb2b33af5bf8ee175b08ead9a7e72ca235ab8c94009375",
     "docs/AI_ASSISTANT_INTEGRATION.md": "94dd6d77b973fbd38baddf1d5af4e97b4ed3870b2357a077b7f4225225e68602",
     "docs/ASIG.md": "dbdb56d11b2e0b221b647fc8612c825bc167f70a942fb2ccee9316f0684b4317",
     "docs/CHOICES.md": "3b8f389d6736fb1a4df7d196ae4d6f7f78e51256f024f09676067fd4be61a105",
-    "docs/COMPONENT_STATUS.md": "b20aee113a09426b243a40d73b8e9d7d97c0239b58fc8a8a7f1399fdbeb899a6",
-    "docs/CONTRIBUTING.md": "6051321bf93da75b121664638cb971319dba23b8078dc4d65f69fc6e2a7293c8",
+    "docs/COMPONENT_STATUS.md": "e960f686a8c1bcf0c0b45695ce90fdc9d5c5e356ab08c405e6f088db25ff9cdc",
+    "docs/CONTRIBUTING.md": "55da6af335f08a193766e963c0b05f417f9e20082219a8e0bc5d371661a8e22b",
     "docs/DATA_DISPLAY.md": "c7d0bd2426de8d1d7064327e0f6ec377c1ca77812b17e723b150ddac31de17ad",
     "docs/DISCLOSURE.md": "d7f74fb8ef77b12ab6dc8168e49f3d81daa1bbf5558ffa552b72242e70be6b61",
     "docs/DISTRIBUTION.md": "ccf3793143d09feb5a8340f6f0e4debcaaa8ad5d9d6edee955d035fd4d2ed2b1",
@@ -39,6 +40,6 @@
     "packages/ui-patterns/package.json": "4ad95f1d9ae693da7e2638bf6a7d2d5b93aaaca6e89b65e57f17ff8652b9f552",
     "packages/ui-patterns/selection.css": "fe1e148e649d00abfc8ffcc34c9da322b07407cebccfa6785aa71665f03c6d01",
     "packages/ui-patterns/specialized-inputs.css": "b42d197add3d54b151c847b12aa39ece0cbc8b98b7a12ce39ac974ec29fa30e8",
-    "README.md": "18d072d48a4ba6ba556fd44c4493ea35f17eba69a1a589b9f95de0e173b99d02"
+    "README.md": "a3a08ab515ac91c6711ee6449fd35c2a9647424f25a11d85707750dfe9fee072"
   }
 }

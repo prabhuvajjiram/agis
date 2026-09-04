@@ -51,6 +51,7 @@ contract with local framework primitives instead of using these classes directly
 ## Documentation
 
 - [ASIG foundations](docs/ASIG.md)
+- [WCAG 2.1 AA accessibility standard](docs/ACCESSIBILITY.md)
 - [Form guidelines](docs/FORMS.md)
 - [Actions and buttons](docs/ACTIONS.md)
 - [Selection controls](docs/SELECTION.md)
@@ -68,6 +69,13 @@ contract with local framework primitives instead of using these classes directly
 - [AI assistant integration](docs/AI_ASSISTANT_INTEGRATION.md)
 - [Product themes](docs/PRODUCT_THEMES.md)
 - [Changelog](CHANGELOG.md)
+
+## Accessibility baseline
+
+Every ASIG component must meet WCAG 2.1 Level AA as a minimum and satisfy the separate
+[accessibility release standard](docs/ACCESSIBILITY.md). Automated checks are required, but
+manual keyboard, screen-reader, zoom/reflow, forced-colors, contrast, and reduced-motion
+review remains part of the definition of done.
 
 ## Local commands
 
