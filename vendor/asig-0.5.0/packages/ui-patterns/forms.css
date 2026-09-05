@@ -1,0 +1,188 @@
+.as-form-container {
+  container-type: inline-size;
+  color: var(--as-color-foreground);
+}
+
+.as-form-section {
+  display: grid;
+  gap: var(--as-space-4);
+  padding: var(--as-space-4);
+  border: 1px solid var(--as-color-border);
+  border-radius: var(--as-radius-panel);
+  background: var(--as-color-surface);
+}
+
+.as-form-section__header {
+  display: grid;
+  gap: var(--as-space-1);
+}
+
+.as-form-section__title {
+  margin: 0;
+  color: var(--as-color-foreground);
+  font-size: var(--as-font-size-md);
+  font-weight: var(--as-font-weight-semibold);
+  line-height: var(--as-font-line-tight);
+}
+
+.as-form-section__description {
+  margin: 0;
+  color: var(--as-color-foreground-muted);
+  font-size: var(--as-font-size-sm);
+  line-height: var(--as-font-line-normal);
+}
+
+.as-field-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-items: start;
+  gap: var(--as-space-4);
+}
+
+@container (min-width: 40rem) {
+  .as-field-grid[data-columns="2"],
+  .as-field-grid[data-columns="3"] {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@container (min-width: 60rem) {
+  .as-field-grid[data-columns="3"] {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.as-field-grid__full {
+  grid-column: 1 / -1;
+}
+
+.as-field {
+  display: grid;
+  min-width: 0;
+  gap: var(--as-space-2);
+}
+
+.as-field__header {
+  display: flex;
+  min-height: 1.25rem;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--as-space-1) var(--as-space-2);
+}
+
+.as-field__label {
+  color: var(--as-color-foreground);
+  font-size: var(--as-font-size-sm);
+  font-weight: var(--as-font-weight-medium);
+  line-height: var(--as-font-line-tight);
+}
+
+.as-field__requirement {
+  display: inline-flex;
+  align-items: center;
+  min-height: 1.25rem;
+  padding-inline: var(--as-space-2);
+  border-radius: var(--as-radius-pill);
+  background: var(--as-color-surface-muted);
+  color: var(--as-color-foreground-muted);
+  font-size: var(--as-font-size-xs);
+  font-weight: var(--as-font-weight-medium);
+  line-height: var(--as-font-line-tight);
+}
+
+.as-field__requirement[data-state="required"] {
+  background: color-mix(in srgb, var(--as-color-danger) 12%, var(--as-color-surface));
+  color: var(--as-color-danger);
+}
+
+.as-field__requirement[data-state="later"] {
+  background: color-mix(in srgb, var(--as-color-info) 12%, var(--as-color-surface));
+  color: var(--as-color-info);
+}
+
+.as-field__help,
+.as-field__error {
+  margin: 0;
+  font-size: var(--as-font-size-xs);
+  line-height: var(--as-font-line-normal);
+}
+
+.as-field__help {
+  color: var(--as-color-foreground-muted);
+}
+
+.as-field__error {
+  color: var(--as-color-danger);
+  font-weight: var(--as-font-weight-medium);
+}
+
+.as-control {
+  box-sizing: border-box;
+  width: 100%;
+  min-height: var(--as-control-height);
+  padding: var(--as-space-2) var(--as-space-3);
+  border: var(--as-control-border-width) solid var(--as-color-border);
+  border-radius: var(--as-radius-control);
+  background: var(--as-color-input);
+  color: var(--as-color-foreground);
+  font: inherit;
+  font-size: var(--as-font-size-md);
+  line-height: var(--as-font-line-normal);
+  transition:
+    border-color var(--as-motion-fast) ease,
+    box-shadow var(--as-motion-fast) ease,
+    background-color var(--as-motion-fast) ease;
+}
+
+.as-control::placeholder {
+  color: var(--as-color-foreground-muted);
+  opacity: 1;
+}
+
+.as-control:hover:not(:disabled) {
+  border-color: var(--as-color-primary);
+}
+
+.as-control:focus-visible {
+  outline: var(--as-focus-width) solid var(--as-color-focus);
+  outline-offset: var(--as-focus-offset);
+}
+
+.as-control[aria-invalid="true"] {
+  border-color: var(--as-color-danger);
+}
+
+.as-control:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+textarea.as-control {
+  min-height: 7rem;
+  resize: vertical;
+}
+
+.as-form-note {
+  margin: 0;
+  padding: var(--as-space-3);
+  border: 1px solid color-mix(in srgb, var(--as-color-info) 35%, var(--as-color-border));
+  border-radius: var(--as-radius-control);
+  background: color-mix(in srgb, var(--as-color-info) 8%, var(--as-color-surface));
+  color: var(--as-color-foreground);
+  font-size: var(--as-font-size-xs);
+  line-height: var(--as-font-line-normal);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .as-control {
+    transition: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .as-field__requirement,
+  .as-form-note {
+    border: 1px solid CanvasText;
+  }
+}

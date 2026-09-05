@@ -1,6 +1,6 @@
 {
   "name": "angelstones-design-system",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "private": true,
   "description": "Angel Stones Interface Guidelines, semantic design tokens, and cross-product UI patterns.",
   "workspaces": [
@@ -8,7 +8,8 @@
   ],
   "scripts": {
     "build": "node scripts/build-tokens.mjs",
-    "check": "node scripts/validate.mjs && node scripts/validate-patterns.mjs && node scripts/validate-markup.mjs && node scripts/build-tokens.mjs --check && node scripts/build-vendor-snapshot.mjs --check",
+    "check": "node scripts/validate.mjs && node scripts/validate-patterns.mjs && node scripts/validate-markup.mjs && node scripts/build-tokens.mjs --check && node scripts/build-vendor-snapshot.mjs --check && npm run check:packages",
+    "check:packages": "npm pack --dry-run --workspace=@angelstones/design-tokens && npm pack --dry-run --workspace=@angelstones/ui-patterns",
     "serve": "node scripts/serve.mjs",
     "snapshot": "npm run build && node scripts/build-vendor-snapshot.mjs",
     "test": "playwright test",
