@@ -96,6 +96,7 @@
           <div class="catalog-demo catalog-demo--row">
             <button class="as-button" type="button">Save changes</button>
             <button class="as-button" data-variant="secondary" type="button">Preview</button>
+            <button class="as-button" data-variant="outline" type="button">Refresh</button>
             <button class="as-button" data-variant="ghost" type="button">Cancel</button>
             <button class="as-button" data-variant="destructive" type="button">Delete</button>
             <button class="as-button" data-size="compact" type="button">Compact</button>
@@ -215,10 +216,18 @@
         <section class="catalog-section" id="navigation">
           <div class="catalog-section__intro">
             <p class="catalog-eyebrow">Navigation</p>
-            <h2>Sidebar, breadcrumbs, tabs, and pagination</h2>
-            <p>A glass navigation shell preserves Angel Stones' two-rail structure and moves smoothly between destinations.</p>
+            <h2>View switchers, sidebar, tabs, and pagination</h2>
+            <p>Calm hierarchy keeps frequent data scopes visible, specialized views searchable, and navigation transitions smooth.</p>
           </div>
           <div class="catalog-demo catalog-stack">
+            <div class="as-view-switcher-bar">
+              <div class="as-view-switcher" role="group" aria-label="Frequent workbench views" aria-describedby="catalog-view-status">
+                <button class="as-view-switcher__item" type="button" aria-pressed="true" data-view-name="Needs Attention">Needs Attention</button>
+                <button class="as-view-switcher__item" type="button" aria-pressed="false" data-view-name="My Tasks">My Tasks</button>
+                <button class="as-view-switcher__item" type="button" aria-pressed="false" data-view-name="Active Orders">Active Orders</button>
+              </div>
+              <p class="catalog-caption as-view-context" id="catalog-view-status" role="status" aria-live="polite">Needs Attention is the current workbench view.</p>
+            </div>
             <aside class="as-sidebar" aria-label="Commercial workspace navigation">
               <nav class="as-sidebar__rail" id="catalog-sidebar-rail" aria-label="Product areas">
                 <span class="as-sidebar__rail-indicator" aria-hidden="true"></span>

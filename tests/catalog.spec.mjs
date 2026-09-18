@@ -107,6 +107,18 @@ test('@a11y standard controls meet the shared hit-target contract', async ({ pag
   expect(undersized).toEqual([])
 })
 
+test('@a11y data view switcher exposes immediate pressed state and status', async ({ page }) => {
+  const group = page.getByRole('group', { name: 'Frequent workbench views' })
+  const needsAttention = group.getByRole('button', { name: 'Needs Attention' })
+  const activeOrders = group.getByRole('button', { name: 'Active Orders' })
+  await expect(needsAttention).toHaveAttribute('aria-pressed', 'true')
+  await activeOrders.focus()
+  await page.keyboard.press('Enter')
+  await expect(activeOrders).toHaveAttribute('aria-pressed', 'true')
+  await expect(needsAttention).toHaveAttribute('aria-pressed', 'false')
+  await expect(page.locator('#catalog-view-status')).toHaveText('Active Orders is the current workbench view.')
+})
+
 test('@a11y tabs support roving keyboard focus and reduced-motion-safe transitions', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'no-preference' })
   const tablist = page.getByRole('tablist', { name: 'Order views' })
@@ -412,7 +424,7 @@ test('@a11y every meaningful specimen table column supports announced sorting', 
   await expect(page.locator('#data-display tbody tr').first()).toContainText('$1,340.00')
 })
 
-test('@a11y premium effects and dimensional buttons retain forced-colors fallbacks', async ({ page }) => {
+test('@a11y premium effects and action hierarchy retain forced-colors fallbacks', async ({ page }) => {
   const gradient = page.locator('.as-surface[data-appearance="gradient"]')
   const glass = page.locator('.as-surface[data-appearance="glass"]')
   const sidebar = page.locator('.as-sidebar')
@@ -443,9 +455,13 @@ test('@a11y premium effects and dimensional buttons retain forced-colors fallbac
   expect(await empty.evaluate((element) => getComputedStyle(element).backdropFilter)).not.toBe('none')
   expect(await dataCard.evaluate((element) => getComputedStyle(element).backdropFilter)).not.toBe('none')
   expect(await dataTable.evaluate((element) => getComputedStyle(element).backdropFilter)).not.toBe('none')
-  expect(await buttons.evaluateAll((elements) => elements
+  const dimensionalButtons = page.locator('#actions .as-button:not([data-variant="ghost"]):not([data-variant="link"]):not([data-variant="outline"])')
+  expect(await dimensionalButtons.evaluateAll((elements) => elements
     .filter((element) => getComputedStyle(element).backgroundImage === 'none')
     .map((element) => element.textContent?.trim()))).toEqual([])
+  await expect(page.getByRole('button', { name: 'Cancel', exact: true })).toHaveCSS('background-image', 'none')
+  await expect(page.getByRole('button', { name: 'Cancel', exact: true })).toHaveCSS('box-shadow', 'none')
+  await expect(page.getByRole('button', { name: 'Refresh', exact: true })).toHaveCSS('background-image', 'none')
 
   await page.emulateMedia({ forcedColors: 'active' })
   expect(await gradient.evaluate((element) => getComputedStyle(element).backgroundImage)).toBe('none')

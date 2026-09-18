@@ -182,7 +182,24 @@ for (const [columnIndex, button] of tableSortButtons.entries()) {
 const tabs = [...document.querySelectorAll('[role="tab"]')]
 const tablist = document.querySelector('.as-tablist')
 const tabIndicator = tablist?.querySelector('.as-tab__indicator')
+const workbenchViews = [...document.querySelectorAll('.as-view-switcher__item')]
+const workbenchViewStatus = document.querySelector('#catalog-view-status')
 const reducedMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
+for (const view of workbenchViews) {
+  view.addEventListener('click', () => {
+    for (const candidate of workbenchViews) {
+      candidate.setAttribute('aria-pressed', String(candidate === view))
+    }
+    workbenchViewStatus.textContent = `${view.dataset.viewName} is the current workbench view.`
+    if (!reducedMotion()) {
+      workbenchViewStatus.animate([
+        { opacity: 0.65, transform: 'translateY(0.125rem)' },
+        { opacity: 1, transform: 'translateY(0)' },
+      ], { duration: 180, easing: 'cubic-bezier(0.2, 0.8, 0.2, 1)' })
+    }
+  })
+}
 
 const positionTabIndicator = (tab, { animate = true } = {}) => {
   if (!tablist || !tabIndicator || !tab) return
