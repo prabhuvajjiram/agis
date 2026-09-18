@@ -142,6 +142,12 @@ const requiredFiles = {
     '@import "./specialized-inputs.css"',
     '@import "./surfaces.css"',
   ],
+  'packages/ui-patterns/dist/all.css': [
+    'Generated from packages/ui-patterns/*.css',
+    '/* forms.css */',
+    '/* actions.css */',
+    '/* surfaces.css */',
+  ],
   'docs/ACTIONS.md': ['Icon-only actions require', 'aria-busy="true"', 'Destructive actions', 'shared dimensional material'],
   'docs/SELECTION.md': ['Combobox behavior', 'Dropdown menu, not Select', 'aria-activedescendant', 'aria-haspopup="dialog"', 'result count'],
   'docs/OVERLAYS.md': ['focus trapping', 'Escape closes', '44px', 'final destructive action'],
@@ -173,6 +179,13 @@ const requiredFiles = {
     'Screen reader',
     'Pending human review',
     'data view switcher',
+  ],
+  'docs/releases/0.5.1-accessibility-evidence.md': [
+    'Automated evidence',
+    'Manual verification',
+    'Screen reader',
+    'Pending human review',
+    'solid action fallback',
   ],
   'site/assets/catalog.css': ['@font-face', 'Inter ASIG', 'inter-latin-wght-normal.woff2'],
   'site/assets/catalog.js': ['aria-activedescendant', 'dataset.active', 'scrollIntoView'],
@@ -251,6 +264,8 @@ for (const relativePath of [
 ]) {
   const content = await load(relativePath)
   if (!content.includes(':focus-visible')) failures.push(`${relativePath} must define a visible keyboard focus state`)
+  const physicalDirection = content.match(/^\s*(?:(?:left|right|margin-left|margin-right|padding-left|padding-right|border-left(?:-color)?|border-right(?:-color)?)\s*:|text-align\s*:\s*(?:left|right)\b)/m)
+  if (physicalDirection) failures.push(`${relativePath} must use logical CSS direction properties instead of ${physicalDirection[0].trim()}`)
 }
 
 const generatedTokens = await load('packages/tokens/dist/tokens.css')
@@ -281,6 +296,8 @@ if (tokens.foundation?.control?.hitTarget !== '2.75rem') failures.push('Touch hi
 if (tokens.foundation?.effect?.glassBlur !== '18px') failures.push('Glass surfaces must use the bounded shared blur token')
 if (!tokens.foundation?.elevation?.floating) failures.push('Premium surfaces require the shared floating elevation token')
 if (!generatedTokens.includes('--as-font-size-2xl:')) failures.push('Generated numeric token names must use kebab case')
+if (!generatedTokens.includes('--as-color-border-strong:')) failures.push('Generated themes must expose the strong control-boundary token')
+if (!generatedTokens.includes('--as-effect-action-gloss:')) failures.push('Generated foundations must expose action gloss tokens')
 
 const packageDefinition = JSON.parse(await load('packages/ui-patterns/package.json'))
 if (packageDefinition.version !== expectedVersion) failures.push('ui-patterns package version must match the ASIG package version')
@@ -289,6 +306,7 @@ if (packageDefinition.peerDependencies?.['@angelstones/design-tokens'] !== expec
 }
 for (const exportPath of [
   './all.css',
+  './bundle.css',
   './actions.css',
   './choices.css',
   './data-display.css',

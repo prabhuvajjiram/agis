@@ -2,6 +2,18 @@ import AxeBuilder from '@axe-core/playwright'
 import { expect, test } from '@playwright/test'
 
 const themes = ['operations', 'operations-dark', 'cad', 'marketing']
+const allowedHiddenRelationshipTargets = new Set([
+  JSON.stringify(['#catalog-lookup']),
+  JSON.stringify(['#catalog-vendor-search']),
+  JSON.stringify(['#menu-trigger']),
+])
+const allowedScannerOnlyContrastTargets = new Map([
+  [JSON.stringify(['#catalog-pagination-current']), new Set(['shortTextContent'])],
+  [JSON.stringify(['th[aria-sort="ascending"] > .as-table__sort[data-sort-type="text"] > span[aria-hidden="true"]']), new Set(['nonBmp'])],
+  [JSON.stringify(['button[data-view-name="Active Orders"]']), new Set(['elmPartiallyObscured'])],
+  [JSON.stringify(['#dialog-description']), new Set(['elmPartiallyObscuring'])],
+  [JSON.stringify(['.as-dialog__body > p']), new Set(['elmPartiallyObscuring'])],
+])
 
 test.beforeEach(async ({ page }) => {
   await page.goto('/site/')
@@ -20,13 +32,45 @@ async function settleVisualRendering(page) {
   })
 }
 
+function expectAxeScan(results, label, { allowDecorativeEffects = false } = {}) {
+  expect(results.violations, `${label} accessibility violations`).toEqual([])
+
+  const unexpectedIncomplete = results.incomplete.flatMap((rule) => rule.nodes
+    .filter((node) => {
+      const target = JSON.stringify(node.target)
+      if (rule.id === 'aria-valid-attr-value' && allowedHiddenRelationshipTargets.has(target)) return false
+      if (rule.id !== 'color-contrast') return true
+
+      const messageKeys = node.any.map((check) => check.data?.messageKey).filter(Boolean)
+      const allowedMessageKeys = allowedScannerOnlyContrastTargets.get(target)
+      if (allowedMessageKeys && messageKeys.length > 0 && messageKeys.every((key) => allowedMessageKeys.has(key))) {
+        return false
+      }
+      return !(allowDecorativeEffects && messageKeys.length > 0 &&
+        messageKeys.every((key) => ['bgGradient', 'pseudoContent'].includes(key)))
+    })
+    .map((node) => ({ rule: rule.id, target: node.target, summary: node.failureSummary })))
+
+  expect(unexpectedIncomplete, `${label} unexpected incomplete Axe checks`).toEqual([])
+}
+
 for (const theme of themes) {
   test(`@a11y ${theme} theme has no automatically detectable violations`, async ({ page }) => {
     await page.locator('#theme-select').selectOption(theme)
     await expect(page.locator('body')).toHaveAttribute('data-as-theme', theme)
-    await page.waitForTimeout(350)
+    await settleVisualRendering(page)
     const results = await new AxeBuilder({ page }).analyze()
-    expect(results.violations, `${theme} theme accessibility violations`).toEqual([])
+    expectAxeScan(results, `${theme} theme`, { allowDecorativeEffects: true })
+
+    await page.addStyleTag({ content: `
+      *, *::before, *::after {
+        background-image: none !important;
+        -webkit-backdrop-filter: none !important;
+        backdrop-filter: none !important;
+      }
+    ` })
+    const solidResults = await new AxeBuilder({ page }).analyze()
+    expectAxeScan(solidResults, `${theme} solid fallback`)
   })
 }
 
@@ -203,7 +247,7 @@ test('@a11y sidebar exposes current navigation, filtering, and reduced-motion be
   await expect(orderDesk).toBeHidden()
   await expect(page.locator('#catalog-sidebar-status')).toHaveText('1 destination available.')
   const results = await new AxeBuilder({ page }).include('.as-sidebar').analyze()
-  expect(results.violations, 'filtered sidebar accessibility violations').toEqual([])
+  expectAxeScan(results, 'filtered sidebar', { allowDecorativeEffects: true })
 
   await search.fill('')
   const initialRailOffset = await rail.evaluate((element) => getComputedStyle(element).getPropertyValue('--as-sidebar-rail-active-offset'))
@@ -277,7 +321,7 @@ test('@a11y confirmation keeps danger on the final decision and restores focus i
     await expect(dialog).toBeVisible()
     await expect(dialog.getByRole('button', { name: 'Archive example' })).toHaveAttribute('data-variant', 'destructive')
     const results = await new AxeBuilder({ page }).include('#catalog-dialog').analyze()
-    expect(results.violations, `${theme} open confirmation dialog accessibility violations`).toEqual([])
+    expectAxeScan(results, `${theme} open confirmation dialog`, { allowDecorativeEffects: true })
     await page.keyboard.press('Escape')
     await expect(dialog).toBeHidden()
     await expect(trigger).toBeFocused()
@@ -303,7 +347,7 @@ test('@a11y menu dismisses outside and supports the complete keyboard contract',
   await expect(trigger).toHaveAttribute('aria-expanded', 'true')
   await expect(menu).toBeVisible()
   const openResults = await new AxeBuilder({ page }).include('#overlays').analyze()
-  expect(openResults.violations, 'open command menu accessibility violations').toEqual([])
+  expectAxeScan(openResults, 'open command menu', { allowDecorativeEffects: true })
 
   await outside.click()
   await expect(menu).toBeHidden()
@@ -359,7 +403,7 @@ test('@a11y menu and feedback reflow under enhanced text spacing', async ({ page
   }))
   expect(sizes.scrollWidth).toBeLessThanOrEqual(sizes.clientWidth)
   const results = await new AxeBuilder({ page }).include('#feedback').include('#overlays').analyze()
-  expect(results.violations, 'enhanced text-spacing accessibility violations').toEqual([])
+  expectAxeScan(results, 'enhanced text-spacing', { allowDecorativeEffects: true })
 })
 
 test('@a11y searchable selection filters and chooses an option from inside the popup', async ({ page }) => {
@@ -374,7 +418,7 @@ test('@a11y searchable selection filters and chooses an option from inside the p
   const listbox = page.locator('#catalog-vendor-options')
   await expect(listbox.getByRole('option', { name: 'Heritage Memorial Supply' })).toBeVisible()
   const openResults = await new AxeBuilder({ page }).include('#catalog-vendor-popover').analyze()
-  expect(openResults.violations, 'open searchable selection accessibility violations').toEqual([])
+  expectAxeScan(openResults, 'open searchable selection', { allowDecorativeEffects: true })
 
   await search.press('ArrowDown')
   const option = listbox.getByRole('option', { name: 'Heritage Memorial Supply' })
@@ -401,6 +445,28 @@ test('@a11y standalone menu confirmation restores focus to its visible trigger',
   await dialog.getByRole('button', { name: 'Keep template' }).click()
   await expect(dialog).toBeHidden()
   await expect(trigger).toBeFocused()
+})
+
+test('@a11y standalone form specimen passes automated checks', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== 'desktop-1440', 'One focused form specimen run is sufficient')
+  await page.goto('/examples/forms.html')
+  const results = await new AxeBuilder({ page }).analyze()
+  expectAxeScan(results, 'standalone form specimen', { allowDecorativeEffects: true })
+})
+
+test('@a11y local catalogue server handles fonts, HEAD, and unsupported methods safely', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== 'desktop-1440', 'One server contract run is sufficient')
+  const fontResponse = await page.request.get('/site/assets/fonts/inter-latin-wght-normal.woff2')
+  expect(fontResponse.status()).toBe(200)
+  expect(fontResponse.headers()['content-type']).toBe('font/woff2')
+
+  const headResponse = await page.request.head('/site/index.html')
+  expect(headResponse.status()).toBe(200)
+  expect(await headResponse.body()).toHaveLength(0)
+
+  const postResponse = await page.request.post('/site/index.html')
+  expect(postResponse.status()).toBe(405)
+  expect(postResponse.headers().allow).toBe('GET, HEAD')
 })
 
 test('@a11y every meaningful specimen table column supports announced sorting', async ({ page }) => {
@@ -479,6 +545,23 @@ test('@a11y premium effects and action hierarchy retain forced-colors fallbacks'
   expect(await buttons.evaluateAll((elements) => elements
     .filter((element) => getComputedStyle(element).boxShadow !== 'none')
     .map((element) => element.textContent?.trim()))).toEqual([])
+})
+
+test('@a11y solid action fallbacks remain readable when gradients are unavailable', async ({ page }) => {
+  const primary = page.getByRole('button', { name: 'Save changes', exact: true })
+  const destructive = page.getByRole('button', { name: 'Delete', exact: true })
+
+  await page.addStyleTag({ content: '#actions .as-button { background-image: none !important; }' })
+
+  await expect(primary).toHaveCSS('background-image', 'none')
+  await expect(primary).toHaveCSS('background-color', 'rgb(31, 93, 152)')
+  await expect(primary).toHaveCSS('color', 'rgb(255, 255, 255)')
+  await primary.hover()
+  await expect(primary).toHaveCSS('background-color', 'rgb(23, 75, 125)')
+
+  await expect(destructive).toHaveCSS('background-image', 'none')
+  await expect(destructive).toHaveCSS('background-color', 'rgb(153, 27, 27)')
+  await expect(destructive).toHaveCSS('color', 'rgb(255, 255, 255)')
 })
 
 test('@a11y representative interactive patterns expose visible keyboard focus', async ({ page }) => {

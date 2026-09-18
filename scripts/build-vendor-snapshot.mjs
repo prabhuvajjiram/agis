@@ -46,6 +46,7 @@ async function buildSnapshot(destination) {
     await mkdir(path.dirname(outputPath), { recursive: true })
     await cp(path.join(patternDirectory, file), outputPath)
   }
+  await cp(path.join(patternDirectory, 'dist'), path.join(destination, 'packages/ui-patterns/dist'), { recursive: true })
 
   const files = await filesBelow(destination)
   const hashes = {}

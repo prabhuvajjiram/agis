@@ -130,11 +130,11 @@ for (const option of selectionOptions) {
 }
 
 document.addEventListener('pointerdown', (event) => {
-  if (!selectionPopover.hidden && !selection.contains(event.target)) closeSelection()
+  if (selectionPopover && selection && !selectionPopover.hidden && !selection.contains(event.target)) closeSelection()
 })
 
 document.addEventListener('focusin', (event) => {
-  if (!selectionPopover.hidden && !selection.contains(event.target)) closeSelection()
+  if (selectionPopover && selection && !selectionPopover.hidden && !selection.contains(event.target)) closeSelection()
 })
 
 const sortableTable = document.querySelector('.as-table')
@@ -495,13 +495,13 @@ menu?.addEventListener('click', (event) => {
 })
 
 document.addEventListener('pointerdown', (event) => {
-  if (!menu.hidden && !menu.contains(event.target) && event.target !== menuTrigger) {
+  if (menu && menuTrigger && !menu.hidden && !menu.contains(event.target) && event.target !== menuTrigger) {
     closeMenu(menu.contains(document.activeElement))
   }
 })
 
 document.addEventListener('focusin', (event) => {
-  if (!menu.hidden && !menu.contains(event.target) && event.target !== menuTrigger) closeMenu()
+  if (menu && menuTrigger && !menu.hidden && !menu.contains(event.target) && event.target !== menuTrigger) closeMenu()
 })
 
 document.querySelector('#dialog-open')?.addEventListener('click', (event) => openDialog(event.currentTarget))

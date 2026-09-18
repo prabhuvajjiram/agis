@@ -2,7 +2,8 @@
   font-family: "Inter ASIG";
   font-style: normal;
   font-weight: 100 900;
-  font-display: block;
+  /* Snapshot tests wait for this local font explicitly; swap avoids hiding text while it loads. */
+  font-display: swap;
   src: url("./fonts/inter-latin-wght-normal.woff2") format("woff2-variations");
 }
 
