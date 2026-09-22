@@ -129,7 +129,10 @@ const requiredFiles = {
     'prefers-reduced-transparency',
     'forced-colors',
   ],
+  'packages/ui-patterns/pages.css': ['.as-workspace', '.as-page-text', '.as-page-table-region', '.as-page-detail', 'forced-colors', '--as-layout-gutter'],
   'packages/ui-patterns/all.css': [
+    '@import "./typography.css"',
+    '@import "./pages.css"',
     '@import "./forms.css"',
     '@import "./actions.css"',
     '@import "./selection.css"',
@@ -145,6 +148,8 @@ const requiredFiles = {
   'packages/ui-patterns/dist/all.css': [
     'Generated from packages/ui-patterns/*.css',
     '/* forms.css */',
+    '/* typography.css */',
+    '/* pages.css */',
     '/* actions.css */',
     '/* surfaces.css */',
   ],

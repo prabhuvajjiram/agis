@@ -55,6 +55,15 @@ jobs:
       - name: Run accessibility, interaction, responsive, and visual checks
         run: npm test
 
+      - name: Build public catalogue artifact
+        run: npm run build:site
+
+      - name: Upload GitHub Pages artifact
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: dist/pages
+
       - name: Upload browser report on failure
         if: failure()
         uses: actions/upload-artifact@v7
@@ -73,3 +82,22 @@ jobs:
           name: asig-${{ steps.release.outputs.version }}-vendored-snapshot
           path: vendor/asig-${{ steps.release.outputs.version }}/
           if-no-files-found: error
+
+  deploy-pages:
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    needs: validate
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+      - name: Deploy catalogue
+        id: deployment
+        uses: actions/deploy-pages@v4

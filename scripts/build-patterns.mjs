@@ -7,19 +7,10 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
 const patternRoot = path.join(root, 'packages/ui-patterns')
 const outputPath = path.join(patternRoot, 'dist/all.css')
 const checkOnly = process.argv.includes('--check')
-const patternFiles = [
-  'forms.css',
-  'actions.css',
-  'selection.css',
-  'choices.css',
-  'navigation.css',
-  'data-display.css',
-  'disclosure.css',
-  'specialized-inputs.css',
-  'overlays.css',
-  'feedback.css',
-  'surfaces.css',
-]
+// Keep both entry points in the same order; additions to all.css also enter the bundle.
+const imports = await readFile(path.join(patternRoot, 'all.css'), 'utf8')
+const patternFiles = [...imports.matchAll(/@import "\.\/([a-z-]+\.css)";/g)].map(match => match[1])
+if (!patternFiles.length) throw new Error('No pattern imports found in all.css')
 
 const sections = await Promise.all(patternFiles.map(async (file) => {
   const content = await readFile(path.join(patternRoot, file), 'utf8')

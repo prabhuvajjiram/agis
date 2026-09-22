@@ -307,10 +307,13 @@ const sidebarDestinations = document.querySelector('#catalog-sidebar-destination
 const sidebarSearch = document.querySelector('#catalog-sidebar-search')
 const sidebarStatus = document.querySelector('#catalog-sidebar-status')
 const sidebarAreaDestinations = {
-  home: ['Overview', 'My Work', 'Notifications', 'Recent Records', 'Favorites', 'Help Center'],
-  commercial: ['Sales Dashboard', 'Sales Pipeline', 'Team Quotes', 'Order Desk', 'Service Orders', 'Customers and Partners'],
-  operations: ['Production Dashboard', 'Shop Floor', 'Scheduling', 'Quality Control', 'Inventory', 'Shipping'],
-  settings: ['Company Profile', 'Users and Roles', 'Workflows', 'Integrations', 'Notifications', 'Audit and Security'],
+  home: [['Executive Dashboard', 'HomeIcon'], ['Workbench', 'ClipboardDocumentCheckIcon'], ['Analytics', 'ChartBarIcon']],
+  sales: [['Sales Dashboard', 'PresentationChartLineIcon'], ['Sales Pipeline', 'PresentationChartLineIcon'], ['Team Quotes', 'ClipboardDocumentListIcon'], ['Order Desk', 'DocumentTextIcon'], ['Service Orders', 'WrenchScrewdriverIcon'], ['Customers and Partners', 'UsersIcon']],
+  operations: [['Production Dashboard', 'ChartBarIcon'], ['Shop Floor', 'ClipboardDocumentCheckIcon'], ['Scheduling', 'ClipboardDocumentListIcon'], ['Quality Control', 'ClipboardDocumentCheckIcon'], ['Shipping', 'TruckIcon']],
+  inventory: [['Inventory overview', 'CubeIcon'], ['Containers', 'ArchiveBoxIcon'], ['Receiving', 'TruckIcon']],
+  finance: [['Accounts receivable', 'BanknotesIcon'], ['Accounts payable', 'BanknotesIcon']],
+  reports: [['Report library', 'DocumentChartBarIcon'], ['Saved reports', 'DocumentTextIcon']],
+  admin: [['Company Profile', 'Cog6ToothIcon'], ['Users and Roles', 'UsersIcon'], ['Workflows', 'ClipboardDocumentListIcon'], ['Integrations', 'Cog6ToothIcon']],
 }
 
 const positionSidebarIndicator = (link, { animate = true } = {}) => {
@@ -343,12 +346,12 @@ const positionSidebarRailIndicator = (link, { animate = true } = {}) => {
 
 const selectSidebarArea = (link) => {
   const areaKey = link.dataset.sidebarArea
-  const areaLabel = link.getAttribute('aria-label')
+  const areaLabel = link.dataset.sidebarTitle ?? link.getAttribute('aria-label')
   const destinations = sidebarAreaDestinations[areaKey]
   if (!destinations) return
 
-  for (const candidate of sidebarRailLinks) candidate.removeAttribute('aria-current')
-  link.setAttribute('aria-current', 'page')
+  for (const candidate of sidebarRailLinks) candidate.setAttribute('aria-expanded', 'false')
+  link.setAttribute('aria-expanded', 'true')
   positionSidebarRailIndicator(link)
 
   sidebarTitle.textContent = areaLabel
@@ -356,9 +359,11 @@ const selectSidebarArea = (link) => {
   sidebarSearch.value = ''
   sidebarSearch.setAttribute('aria-label', `Search ${areaLabel} navigation`)
   for (const [index, destinationLink] of sidebarLinks.entries()) {
-    destinationLink.closest('li').hidden = false
-    destinationLink.dataset.sidebarLabel = destinations[index]
-    destinationLink.querySelector('span').textContent = destinations[index]
+    const destination = destinations[index]
+    destinationLink.closest('li').hidden = !destination
+    destinationLink.dataset.sidebarLabel = destination?.[0] ?? ''
+    destinationLink.querySelector('span').textContent = destination?.[0] ?? ''
+    destinationLink.querySelector('use').setAttribute('href', `./assets/icons/navigation.svg#${destination?.[1] ?? 'HomeIcon'}`)
     destinationLink.removeAttribute('aria-current')
   }
 
@@ -375,7 +380,7 @@ const selectSidebarArea = (link) => {
 }
 
 if (sidebarRail) {
-  const currentArea = sidebarRailLinks.find((link) => link.getAttribute('aria-current') === 'page')
+  const currentArea = sidebarRailLinks.find((link) => link.getAttribute('aria-expanded') === 'true')
   positionSidebarRailIndicator(currentArea, { animate: false })
   sidebarRail.dataset.animatedIndicator = 'true'
 }
@@ -404,7 +409,7 @@ sidebarSearch?.addEventListener('input', () => {
   const query = sidebarSearch.value.trim().toLocaleLowerCase()
   let visibleCount = 0
   for (const link of sidebarLinks) {
-    const visible = link.dataset.sidebarLabel.toLocaleLowerCase().includes(query)
+    const visible = Boolean(link.dataset.sidebarLabel) && link.dataset.sidebarLabel.toLocaleLowerCase().includes(query)
     link.closest('li').hidden = !visible
     if (visible) visibleCount += 1
   }
@@ -416,7 +421,7 @@ sidebarSearch?.addEventListener('input', () => {
 
 window.addEventListener('resize', () => {
   syncSelectedTabIndicator()
-  const currentArea = sidebarRailLinks.find((link) => link.getAttribute('aria-current') === 'page')
+  const currentArea = sidebarRailLinks.find((link) => link.getAttribute('aria-expanded') === 'true')
   positionSidebarRailIndicator(currentArea, { animate: false })
   const currentLink = sidebarLinks.find((link) => link.getAttribute('aria-current') === 'page')
   positionSidebarIndicator(currentLink, { animate: false })

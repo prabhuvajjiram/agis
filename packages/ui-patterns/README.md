@@ -5,7 +5,7 @@ Framework-neutral CSS patterns from the Angel Stones Interface Guidelines.
 ## Install
 
 ```sh
-npm install --save-exact @angelstones/design-tokens@0.5.1 @angelstones/ui-patterns@0.5.1
+npm install --save-exact @angelstones/design-tokens@0.6.0 @angelstones/ui-patterns@0.6.0
 ```
 
 ## Use
@@ -31,3 +31,11 @@ by the consuming application.
 ## License
 
 MIT
+
+## Page patterns
+
+The 0.6 release adds opt-in operational page composition through
+`pages.css` and `.as-workspace` / `.as-page-*` classes. Both `all.css` and `bundle.css` include
+typography and page styles. The application loads its font once; the package inherits it.
+See the repository's `docs/PAGE_DESIGN.md` and `site/pages.html` for exact geometry, type
+roles, responsive examples and adapter mappings. Stable releases use the `latest` channel.

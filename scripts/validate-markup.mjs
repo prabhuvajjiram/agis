@@ -4,11 +4,13 @@ import process from 'node:process'
 import { fileURLToPath } from 'node:url'
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
-const files = ['examples/forms.html', 'examples/controls.html', 'site/index.html']
+const files = ['examples/forms.html', 'examples/controls.html', 'site/index.html', 'site/foundations.html', 'examples/operations.html', 'examples/orders.html', 'examples/workbench.html', 'examples/order-detail.html', 'site/pages.html', 'site/document.html']
 const failures = []
 const patternCss = (
   await Promise.all([
     'forms.css',
+    'pages.css',
+    'typography.css',
     'actions.css',
     'selection.css',
     'overlays.css',

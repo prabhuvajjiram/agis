@@ -42,6 +42,7 @@ jobs:
         run: npx playwright install --with-deps chromium
 
       - name: Verify release tag and package versions
+        id: release
         run: node scripts/verify-release-tag.mjs
         env:
           RELEASE_TAG: ${{ github.ref_name }}
@@ -53,11 +54,11 @@ jobs:
         run: npm test
 
       - name: Publish design tokens with provenance
-        run: npm publish --workspace=@angelstones/design-tokens --access public --provenance
+        run: npm publish --workspace=@angelstones/design-tokens --access public --provenance --tag "$NPM_DIST_TAG"
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NPM_DIST_TAG: ${{ steps.release.outputs.dist-tag }}
 
       - name: Publish UI patterns with provenance
-        run: npm publish --workspace=@angelstones/ui-patterns --access public --provenance
+        run: npm publish --workspace=@angelstones/ui-patterns --access public --provenance --tag "$NPM_DIST_TAG"
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NPM_DIST_TAG: ${{ steps.release.outputs.dist-tag }}

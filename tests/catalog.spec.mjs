@@ -28,6 +28,7 @@ async function settleVisualRendering(page) {
       document.fonts.load('700 16px "Inter ASIG"'),
     ])
     await document.fonts.ready
+    await Promise.all(document.getAnimations().filter(animation => animation.effect?.getComputedTiming().iterations !== Infinity).map(animation => animation.finished.catch(() => {})))
     await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)))
   })
 }
@@ -220,17 +221,23 @@ test('@a11y pagination announces changes and disables unavailable boundaries', a
 
 test('@a11y sidebar exposes current navigation, filtering, and reduced-motion behavior', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'no-preference' })
-  const sidebar = page.getByRole('complementary', { name: 'Commercial workspace navigation' })
+  const sidebar = page.getByRole('complementary', { name: 'Workspace navigation example' })
   const menu = page.locator('#catalog-sidebar-menu')
   const indicator = menu.locator('.as-sidebar__indicator')
   const rail = page.locator('#catalog-sidebar-rail')
   const railIndicator = rail.locator('.as-sidebar__rail-indicator')
-  const commercial = rail.getByRole('link', { name: 'Commercial' })
-  const operations = rail.getByRole('link', { name: 'Operations' })
+  const commercial = rail.getByRole('button', { name: 'Sales', exact: true })
+  const operations = rail.getByRole('button', { name: 'Ops (Operations)', exact: true })
   const teamQuotes = sidebar.getByRole('link', { name: 'Team Quotes' })
   const orderDesk = sidebar.getByRole('link', { name: 'Order Desk' })
 
-  await expect(commercial).toHaveAttribute('aria-current', 'page')
+  await expect(rail.getByRole('button')).toHaveCount(7)
+  await expect(rail.getByRole('button', { name: 'Home', exact: true })).toHaveAttribute('aria-expanded', 'true')
+  await expect(rail.locator('.as-sidebar__rail-label')).toHaveText(['Home', 'Sales', 'Ops', 'Inventory', 'Finance', 'Reports', 'Admin'])
+  await expect(sidebar.getByRole('link', { name: 'Executive Dashboard' }).locator('use')).toHaveAttribute('href', './assets/icons/navigation.svg#HomeIcon')
+  await commercial.click()
+  await teamQuotes.click()
+  await expect(commercial).toHaveAttribute('aria-expanded', 'true')
   await expect(teamQuotes).toHaveAttribute('aria-current', 'page')
   const initialOffset = await menu.evaluate((element) => getComputedStyle(element).getPropertyValue('--as-sidebar-active-offset'))
   await orderDesk.click()
@@ -241,7 +248,7 @@ test('@a11y sidebar exposes current navigation, filtering, and reduced-motion be
   expect(movedOffset).not.toBe(initialOffset)
   expect(await indicator.evaluate((element) => getComputedStyle(element).transitionDuration)).not.toBe('0s')
 
-  const search = page.getByRole('searchbox', { name: 'Search Commercial navigation' })
+  const search = page.getByRole('searchbox', { name: 'Search Sales navigation' })
   await search.fill('service')
   await expect(sidebar.getByRole('link', { name: 'Service Orders' })).toBeVisible()
   await expect(orderDesk).toBeHidden()
@@ -252,10 +259,11 @@ test('@a11y sidebar exposes current navigation, filtering, and reduced-motion be
   await search.fill('')
   const initialRailOffset = await rail.evaluate((element) => getComputedStyle(element).getPropertyValue('--as-sidebar-rail-active-offset'))
   await operations.click()
-  await expect(operations).toHaveAttribute('aria-current', 'page')
-  await expect(commercial).not.toHaveAttribute('aria-current')
+  await expect(operations).toHaveAttribute('aria-expanded', 'true')
+  await expect(commercial).toHaveAttribute('aria-expanded', 'false')
   await expect(page.locator('#catalog-sidebar-title')).toHaveText('Operations')
   await expect(sidebar.getByRole('link', { name: 'Production Dashboard' })).toHaveAttribute('aria-current', 'page')
+  await expect(sidebar.getByRole('link', { name: 'Production Dashboard' }).locator('use')).toHaveAttribute('href', './assets/icons/navigation.svg#ChartBarIcon')
   await expect(page.locator('#catalog-sidebar-status')).toHaveText('Operations: Production Dashboard is the current destination.')
   const movedRailOffset = await rail.evaluate((element) => getComputedStyle(element).getPropertyValue('--as-sidebar-rail-active-offset'))
   expect(movedRailOffset).not.toBe(initialRailOffset)
@@ -264,6 +272,11 @@ test('@a11y sidebar exposes current navigation, filtering, and reduced-motion be
   await page.emulateMedia({ reducedMotion: 'reduce' })
   expect(await indicator.evaluate((element) => getComputedStyle(element).transitionDuration)).toBe('0s')
   expect(await railIndicator.evaluate((element) => getComputedStyle(element).transitionDuration)).toBe('0s')
+  await rail.getByRole('button', { name: 'Finance', exact: true }).click()
+  await page.getByRole('searchbox', { name: 'Search Finance navigation' }).fill('no match')
+  await page.getByRole('searchbox', { name: 'Search Finance navigation' }).fill('')
+  await expect(menu.getByRole('link')).toHaveCount(2)
+  await expect(menu.getByRole('link', { name: 'Accounts payable' }).locator('use')).toHaveAttribute('href', './assets/icons/navigation.svg#BanknotesIcon')
 })
 
 test('@a11y checkbox and radio cards retain native keyboard behavior', async ({ page }) => {
@@ -450,12 +463,21 @@ test('@a11y standalone menu confirmation restores focus to its visible trigger',
 test('@a11y standalone form specimen passes automated checks', async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== 'desktop-1440', 'One focused form specimen run is sufficient')
   await page.goto('/examples/forms.html')
+  await settleVisualRendering(page)
   const results = await new AxeBuilder({ page }).analyze()
   expectAxeScan(results, 'standalone form specimen', { allowDecorativeEffects: true })
 })
 
 test('@a11y local catalogue server handles fonts, HEAD, and unsupported methods safely', async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== 'desktop-1440', 'One server contract run is sufficient')
+  for (const entry of ['/', '/site']) {
+    for (const method of ['get', 'head']) {
+      const response = await page.request[method](`${entry}?preview=operations`, { maxRedirects: 0 })
+      expect(response.status()).toBe(307)
+      expect(response.headers().location).toBe('/site/?preview=operations')
+      expect(await response.body()).toHaveLength(0)
+    }
+  }
   const fontResponse = await page.request.get('/site/assets/fonts/inter-latin-wght-normal.woff2')
   expect(fontResponse.status()).toBe(200)
   expect(fontResponse.headers()['content-type']).toBe('font/woff2')
@@ -467,6 +489,48 @@ test('@a11y local catalogue server handles fonts, HEAD, and unsupported methods 
   const postResponse = await page.request.post('/site/index.html')
   expect(postResponse.status()).toBe(405)
   expect(postResponse.headers().allow).toBe('GET, HEAD')
+})
+
+test('guidance links open readable documentation in the browser', async ({ page }) => {
+  for (const [route, name, documentPath, heading] of [
+    ['/site/pages.html', 'Implementation guidance', '/docs/PAGE_DESIGN.md', '# Operational page design'],
+    ['/site/', 'Usage, states and implementation guidance', '/docs/ACTIONS.md', '# Actions'],
+  ]) {
+    await page.goto(route)
+    const container = route === '/site/' ? page.locator('#actions') : page.locator('main')
+    const link = container.getByRole('link', { name, exact: true })
+    const responsePromise = page.waitForResponse(response => new URL(response.url()).pathname === documentPath)
+    await link.click()
+    const response = await responsePromise
+    expect(response.status()).toBe(200)
+    expect(response.headers()['content-type']).toBe('text/plain; charset=utf-8')
+    await expect(page).toHaveURL(new RegExp(`/site/document\\.html\\?file=${documentPath.slice(1)}$`))
+    await expect(page.locator('#document-body')).toContainText(heading)
+    await expect(page.getByRole('heading', { level: 1 })).toContainText(heading.slice(2))
+    expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([])
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth)).toBe(true)
+  }
+})
+
+test('catalogue entry URLs preserve styles, fonts, scripts, and relative navigation', async ({ page }) => {
+  const failedResources = []
+  page.on('response', response => {
+    if (response.status() >= 400) failedResources.push(response.url())
+  })
+  page.on('requestfailed', request => failedResources.push(request.url()))
+  for (const entry of ['/', '/site', '/site/']) {
+    await page.goto(`${entry}?preview=operations#foundation`)
+    await expect(page).toHaveURL(/\/site\/\?preview=operations#foundation$/)
+    await settleVisualRendering(page)
+    await expect(page.locator('body')).toHaveCSS('font-family', /Inter ASIG/)
+    await expect(page.locator('.catalog-header')).toHaveCSS('display', 'flex')
+    expect(await page.evaluate(() => [...document.fonts].some(font => font.family.includes('Inter ASIG') && font.status === 'loaded'))).toBe(true)
+    await page.locator('#theme-select').selectOption('operations-dark')
+    await expect(page.locator('body')).toHaveAttribute('data-as-theme', 'operations-dark')
+    await page.getByRole('link', { name: 'Complete page examples', exact: true }).click()
+    await expect(page).toHaveURL(/\/site\/pages\.html$/)
+  }
+  expect(failedResources).toEqual([])
 })
 
 test('@a11y every meaningful specimen table column supports announced sorting', async ({ page }) => {
@@ -575,7 +639,7 @@ test('@a11y representative interactive patterns expose visible keyboard focus', 
     '#catalog-switch',
     '#tab-summary',
     '#catalog-sidebar-search',
-    '.as-sidebar__rail-link[aria-current="page"]',
+    '.as-sidebar__rail-link[aria-expanded="true"]',
     '.as-sidebar__link[aria-current="page"]',
     '.as-pagination__button[aria-current="page"]',
     '.as-table__sort',
@@ -609,6 +673,17 @@ test('@visual catalogue matches the reviewed reference', async ({ page }) => {
     timeout: 40_000,
   })
 })
+
+for (const theme of themes) {
+  test(`@visual labeled navigation ${theme}`, async ({ page }, testInfo) => {
+    test.skip(!['mobile-375', 'desktop-1440'].includes(testInfo.project.name), 'Narrow and wide navigation references')
+    await page.locator('#theme-select').selectOption(theme)
+    await settleVisualRendering(page)
+    await expect(page.locator('.as-sidebar')).toHaveScreenshot(`navigation-${theme}.png`, {
+      animations: 'disabled', maxDiffPixels: 50, timeout: 40_000,
+    })
+  })
+}
 
 for (const theme of ['operations', 'operations-dark']) {
   test(`@visual ${theme} confirmation dialog matches the reviewed reference`, async ({ page }, testInfo) => {

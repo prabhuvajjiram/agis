@@ -428,3 +428,8 @@ main {
     backdrop-filter: none;
   }
 }
+
+.catalog-header a, .catalog-section__intro a { color: var(--as-color-primary); text-underline-offset: .2em; }
+.catalog-header a:focus-visible, .catalog-section__intro a:focus-visible { outline: var(--as-focus-width) solid var(--as-color-focus); outline-offset: var(--as-focus-offset); }
+
+.catalog-resource-links { display: grid; gap: var(--as-space-2); margin-bottom: var(--as-space-4); }

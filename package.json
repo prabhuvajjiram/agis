@@ -1,17 +1,19 @@
 {
   "name": "angelstones-design-system",
-  "version": "0.5.1",
+  "version": "0.6.0",
   "private": true,
   "description": "Angel Stones Interface Guidelines, semantic design tokens, and cross-product UI patterns.",
   "workspaces": [
     "packages/*"
   ],
   "scripts": {
-    "build": "node scripts/build-tokens.mjs && node scripts/build-patterns.mjs",
-    "check": "node scripts/validate.mjs && node scripts/validate-patterns.mjs && node scripts/validate-markup.mjs && node scripts/build-tokens.mjs --check && node scripts/build-patterns.mjs --check && node scripts/build-vendor-snapshot.mjs --check && npm run check:packages",
+    "build:site": "npm run build && node scripts/build-site.mjs",
+    "build": "node scripts/build-tokens.mjs && node scripts/build-patterns.mjs && node scripts/build-foundations.mjs && node scripts/build-pages.mjs",
+    "check": "node scripts/validate.mjs && node scripts/validate-patterns.mjs && node scripts/validate-markup.mjs && node scripts/build-tokens.mjs --check && node scripts/build-patterns.mjs --check && node scripts/build-vendor-snapshot.mjs --check && node scripts/build-foundations.mjs --check && node scripts/build-pages.mjs --check && npm run check:packages",
     "check:packages": "npm pack --dry-run --workspace=@angelstones/design-tokens && npm pack --dry-run --workspace=@angelstones/ui-patterns",
     "serve": "node scripts/serve.mjs",
     "snapshot": "npm run build && node scripts/build-vendor-snapshot.mjs",
+    "pretest": "node scripts/build-site.mjs",
     "test": "playwright test",
     "test:a11y": "playwright test --grep @a11y",
     "test:visual": "playwright test --grep @visual"

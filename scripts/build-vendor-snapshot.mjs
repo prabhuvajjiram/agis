@@ -13,6 +13,10 @@ const checkOnly = process.argv.includes('--check')
 
 const sources = [
   ['README.md', 'README.md'],
+  ['LICENSE', 'LICENSE'],
+  ['SECURITY.md', 'SECURITY.md'],
+  ['CODE_OF_CONDUCT.md', 'CODE_OF_CONDUCT.md'],
+  ['DESIGN.md', 'DESIGN.md'],
   ['CHANGELOG.md', 'CHANGELOG.md'],
   ['packages/tokens/package.json', 'packages/design-tokens/package.json'],
   ['packages/tokens/src/tokens.json', 'packages/design-tokens/src/tokens.json'],

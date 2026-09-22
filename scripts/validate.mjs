@@ -100,6 +100,11 @@ for (const [name, theme] of Object.entries(tokens.themes)) {
     if (ratio < 4.5) failures.push(`${name} ${label} contrast is ${ratio.toFixed(2)}:1`)
   }
 
+  for (const tone of ['Blue', 'Cyan', 'Emerald', 'Amber', 'Violet', 'Sky', 'Rose']) {
+    const ratio = contrast(theme[`navigation${tone}Ink`], theme[`navigation${tone}Surface`])
+    if (ratio < 4.5) failures.push(`${name} navigation ${tone} contrast is ${ratio.toFixed(2)}:1`)
+  }
+
   for (const [label, boundary, adjacent] of [
     ['control boundary against surface', theme.borderStrong, theme.surface],
     ['control boundary against input', theme.borderStrong, theme.input],

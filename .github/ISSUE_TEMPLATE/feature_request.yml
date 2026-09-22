@@ -1,0 +1,21 @@
+name: Improvement proposal
+description: Propose a reusable pattern, documentation change or accessibility improvement.
+title: "[Proposal]: "
+body:
+  - type: textarea
+    id: need
+    attributes:
+      label: What task or problem should this address?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed behavior
+      description: Explain why this belongs in the shared system and which themes or states it affects.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Existing patterns or alternatives considered

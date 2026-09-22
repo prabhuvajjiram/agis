@@ -1,4 +1,4 @@
-import { readFile } from 'node:fs/promises'
+import { appendFile, readFile } from 'node:fs/promises'
 import path from 'node:path'
 import process from 'node:process'
 import { fileURLToPath } from 'node:url'
@@ -28,3 +28,6 @@ if (failures.length) {
 }
 
 console.log(`Verified aligned ASIG release tag ${releaseTag}.`)
+const distTag = expectedVersion.split('+')[0].includes('-') ? 'next' : 'latest'
+if (process.env.GITHUB_OUTPUT) await appendFile(process.env.GITHUB_OUTPUT, `dist-tag=${distTag}\n`)
+console.log(`npm distribution tag: ${distTag}`)

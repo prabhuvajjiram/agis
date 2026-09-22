@@ -12,6 +12,7 @@ const mimeTypes = {
   '.html': 'text/html; charset=utf-8',
   '.js': 'text/javascript; charset=utf-8',
   '.json': 'application/json; charset=utf-8',
+  '.md': 'text/plain; charset=utf-8',
   '.png': 'image/png',
   '.svg': 'image/svg+xml',
   '.txt': 'text/plain; charset=utf-8',
@@ -27,7 +28,7 @@ createServer(async (request, response) => {
   try {
     const requestUrl = new URL(request.url ?? '/', 'http://127.0.0.1')
     const decodedPath = decodeURIComponent(requestUrl.pathname)
-    const requested = decodedPath === '/' ? '/site/index.html' : decodedPath
+    const requested = decodedPath === '/' ? '/site/' : decodedPath
     let filePath = path.resolve(root, `.${requested}`)
 
     if (filePath !== root && !filePath.startsWith(`${root}${path.sep}`)) {
@@ -42,6 +43,14 @@ createServer(async (request, response) => {
       return
     }
     const fileInfo = await stat(resolvedFile)
+    // Relative assets need the directory URL, including its trailing slash.
+    const redirectPath = decodedPath === '/'
+      ? '/site/'
+      : info.isDirectory() && !requestUrl.pathname.endsWith('/') ? `${requestUrl.pathname}/` : null
+    if (redirectPath) {
+      response.writeHead(307, { Location: `${redirectPath}${requestUrl.search}`, 'Cache-Control': 'no-store' }).end()
+      return
+    }
     response.writeHead(200, {
       'Content-Type': mimeTypes[path.extname(resolvedFile)] ?? 'application/octet-stream',
       'Content-Length': fileInfo.size,

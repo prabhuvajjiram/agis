@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Vendor procurement · ASIG Operations example</title>
+  <link rel="stylesheet" href="../packages/tokens/dist/tokens.css">
+  <link rel="stylesheet" href="../packages/ui-patterns/all.css">
+  <link rel="stylesheet" href="../site/assets/catalog.css">
+  <link rel="stylesheet" href="../site/assets/guide.css">
+  <script src="./operations.js" defer></script>
+</head>
+<body data-as-theme="operations" class="guide-page">
+  <a class="as-skip-link" href="#content">Skip to procurement</a>
+  <main id="content" class="guide-shell" tabindex="-1">
+    <nav aria-label="Design resources"><a href="../site/index.html">Component catalogue</a><a href="../site/foundations.html">Foundations</a><a href="../site/document.html?file=DESIGN.md">Design brief</a></nav>
+    <header class="guide-header">
+      <p class="catalog-kicker">Operations · Task composition</p>
+      <h1 class="as-text" data-role="title">Vendor procurement</h1>
+      <p>SO-1042 · Heritage Memorial · Polished granite tablet</p>
+      <p class="as-form-note">Interactive sample only. Changes stay in this page until reload; no ERP records or purchase orders are created.</p>
+      <div class="guide-toolbar"><div class="as-field"><label for="theme-select" class="as-field__label">Preview theme</label><select id="theme-select" class="as-select"><option value="operations">Operations</option><option value="operations-dark">Operations dark</option></select></div></div>
+    </header>
+    <div class="operations-layout">
+      <form id="procurement-form" class="operations-form" novalidate>
+        <section class="as-form-section" aria-labelledby="vendor-title">
+          <header class="as-form-section__header"><h2 id="vendor-title" class="as-form-section__title">Supplier and reference</h2><p class="as-form-section__description">Keep identity visible while entering purchasing details.</p></header>
+          <div class="as-field"><span class="as-field__label">Selected supplier</span><p class="as-text" data-role="body">Northern Granite · Elberton</p><p class="as-field__help">This example starts with a supplier selected. Use the shared searchable picker when selecting from the full supplier list.</p></div>
+          <div class="as-field"><label class="as-field__label" for="vendor-reference">Vendor PO reference</label><input class="as-control" type="text" id="vendor-reference" value="NG-2026-18" aria-describedby="reference-help"><p id="reference-help" class="as-field__help">Optional in this sample draft. Use the supplier's reference.</p></div>
+        </section>
+        <section class="as-form-section" aria-labelledby="receiving-title">
+          <header class="as-form-section__header"><h2 id="receiving-title" class="as-form-section__title">Receiving details</h2><p class="as-form-section__description">Related values stack when this panel is narrow, even on a wide screen.</p></header>
+          <div class="as-form-container"><div class="as-field-grid" data-columns="2">
+            <div class="as-field"><label class="as-field__label" for="location">Receiving location</label><input class="as-control" type="text" id="location" readonly value="Elberton warehouse" aria-describedby="location-help"><p id="location-help" class="as-field__help">Selected sample location. Actual products supply authorized location choices.</p></div>
+            <div class="as-field"><label class="as-field__label" for="expected-date">Expected date</label><input class="as-control" type="date" id="expected-date" aria-describedby="date-help"><p id="date-help" class="as-field__help">Optional for this sample draft.</p></div>
+            <div class="as-field as-field-grid__full"><div class="as-field__header"><label class="as-field__label" for="instructions">Receiving instructions</label><span class="as-field__requirement" data-state="required">Required in this example</span></div><textarea class="as-control" id="instructions" required aria-describedby="instructions-help">Check the finish and dimensions against the approved drawing.</textarea><p id="instructions-help" class="as-field__help">Add a clear instruction for the receiving team.</p><p id="instructions-error" class="as-field__error" hidden>Enter receiving instructions before saving the sample.</p></div>
+          </div></div>
+        </section>
+        <p id="save-error" class="as-form-note" role="alert" hidden></p>
+        <div class="guide-toolbar"><button type="submit" class="as-button">Save sample draft</button><button type="reset" class="as-button" data-variant="secondary">Reset sample</button></div>
+        <p id="save-status" role="status" aria-live="polite">Sample draft ready to edit.</p>
+      </form>
+      <aside class="as-form-section" aria-labelledby="context-title">
+        <h2 id="context-title" class="as-form-section__title">Order context</h2>
+        <dl class="operations-facts"><div><dt>Order</dt><dd>SO-1042</dd></div><div><dt>Customer</dt><dd>Heritage Memorial</dd></div><div><dt>Current state</dt><dd>Draft procurement</dd></div><div><dt>Item</dt><dd>Polished granite tablet · approved drawing reference HM-8841</dd></div><div><dt>Next step</dt><dd>Review the vendor order in the ERP.</dd></div></dl>
+        <p class="as-field__help">Stock, quantities, costs and release eligibility remain backend-owned. This composition does not calculate or decide them.</p>
+      </aside>
+    </div>
+    <section class="as-form-section" aria-labelledby="review-title">
+      <h2 id="review-title" class="as-form-section__title">Review this pattern</h2>
+      <p>Use for a focused edit with supporting record context. For a full order workspace, reuse the ERP detail shell and its existing navigation.</p>
+      <label class="as-choice"><input type="checkbox" id="simulate-failure"><span class="as-choice__label">Simulate one failed save to review recovery</span></label>
+      <details><summary>Composition and ERP mapping</summary><p>Use WorkspaceDetailPage → FormSection → FieldGrid → Field in ERP. The narrow column remains readable without viewport-driven field squeezing. Keep the existing mutation handler and server errors.</p><pre><code>&lt;div class="as-form-container"&gt;
+  &lt;div class="as-field-grid" data-columns="2"&gt;
+    &lt;!-- Label, control, help and error for each field --&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre></details>
+    </section>
+  </main>
+</body>
+</html>

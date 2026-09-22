@@ -21,6 +21,7 @@
         <p class="catalog-lede">Framework-neutral patterns shared by Operations, CAD, and Marketing.</p>
       </div>
       <div class="catalog-theme">
+        <div class="catalog-resource-links"><a href="./foundations.html">Foundations &amp; tokens</a><a href="./pages.html">Complete page examples</a></div>
         <label class="as-field__label" for="theme-select">Preview theme</label>
         <select class="as-select" id="theme-select">
           <option value="operations">Operations</option>
@@ -51,7 +52,7 @@
           <div class="catalog-section__intro">
             <p class="catalog-eyebrow">Foundation</p>
             <h2>Semantic color and type</h2>
-            <p>The selected product theme changes expression while semantic roles remain stable.</p>
+            <p>The selected product theme changes expression while semantic roles remain stable. <a href="./foundations.html">Explore the full palette, type scale, spacing and depth.</a></p>
           </div>
           <div class="catalog-swatches" role="group" aria-label="Semantic color examples">
             <div class="catalog-swatch" data-color="primary"><span>Primary</span></div>
@@ -92,6 +93,7 @@
             <p class="catalog-eyebrow">Actions</p>
             <h2>Buttons and hierarchy</h2>
             <p>One clear primary action, with secondary, ghost, destructive, compact, and loading states.</p>
+            <p><a href="../site/document.html?file=docs/ACTIONS.md">Usage, states and implementation guidance</a></p>
           </div>
           <div class="catalog-demo catalog-demo--row">
             <button class="as-button" type="button">Save changes</button>
@@ -111,6 +113,7 @@
             <p class="catalog-eyebrow">Forms and selection</p>
             <h2>Field composition</h2>
             <p>Stable labels, explicit requirements, connected help, and responsive grouping.</p>
+            <p><a href="../site/document.html?file=docs/FORMS.md">Usage, states and implementation guidance</a></p>
           </div>
           <form class="as-form-container catalog-demo" aria-label="Vendor example">
             <section class="as-form-section">
@@ -179,6 +182,7 @@
             <p class="catalog-eyebrow">Choices</p>
             <h2>Checkbox, radio, and switch</h2>
             <p>Native form choices for submitted decisions; switches for immediate settings.</p>
+            <p><a href="../site/document.html?file=docs/CHOICES.md">Usage, states and implementation guidance</a></p>
           </div>
           <div class="catalog-demo catalog-grid">
             <fieldset class="as-choice-group">
@@ -218,6 +222,7 @@
             <p class="catalog-eyebrow">Navigation</p>
             <h2>View switchers, sidebar, tabs, and pagination</h2>
             <p>Calm hierarchy keeps frequent data scopes visible, specialized views searchable, and navigation transitions smooth.</p>
+            <p><a href="../site/document.html?file=docs/NAVIGATION.md">Usage, states and implementation guidance</a></p>
           </div>
           <div class="catalog-demo catalog-stack">
             <div class="as-view-switcher-bar">
@@ -228,61 +233,59 @@
               </div>
               <p class="catalog-caption as-view-context" id="catalog-view-status" role="status" aria-live="polite">Needs Attention is the current workbench view.</p>
             </div>
-            <aside class="as-sidebar" aria-label="Commercial workspace navigation">
+            <aside class="as-sidebar" data-rail-style="labeled" aria-label="Workspace navigation example">
               <nav class="as-sidebar__rail" id="catalog-sidebar-rail" aria-label="Product areas">
                 <span class="as-sidebar__rail-indicator" aria-hidden="true"></span>
-                <a class="as-sidebar__rail-link" href="#navigation" aria-label="Home" data-sidebar-area="home">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><path d="m3 11 9-7 9 7"></path><path d="M5 10v10h14V10M9 20v-6h6v6"></path></svg>
-                </a>
-                <a class="as-sidebar__rail-link" href="#navigation" aria-label="Commercial" data-sidebar-area="commercial" aria-current="page">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><path d="M4 5h16v11H4z"></path><path d="M8 20h8M12 16v4M8 10l2 2 5-5 2 2"></path></svg>
-                </a>
-                <a class="as-sidebar__rail-link" href="#navigation" aria-label="Operations" data-sidebar-area="operations">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><path d="m12 3 8 4.5v9L12 21l-8-4.5v-9z"></path><path d="m4 7.5 8 4.5 8-4.5M12 12v9"></path></svg>
-                </a>
-                <a class="as-sidebar__rail-link" href="#navigation" aria-label="Settings" data-sidebar-area="settings">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1-2.8 2.8-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.6v.2h-4V21a1.7 1.7 0 0 0-1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1L4.2 17l.1-.1a1.7 1.7 0 0 0 .3-1.9A1.7 1.7 0 0 0 3 14H2.8v-4H3a1.7 1.7 0 0 0 1.6-1 1.7 1.7 0 0 0-.3-1.9L4.2 7 7 4.2l.1.1a1.7 1.7 0 0 0 1.9.3A1.7 1.7 0 0 0 10 3V2.8h4V3a1.7 1.7 0 0 0 1 1.6 1.7 1.7 0 0 0 1.9-.3l.1-.1L19.8 7l-.1.1a1.7 1.7 0 0 0-.3 1.9 1.7 1.7 0 0 0 1.6 1h.2v4H21a1.7 1.7 0 0 0-1.6 1Z"></path></svg>
-                </a>
+                <button class="as-sidebar__rail-link" type="button" aria-label="Home" data-sidebar-area="home" data-tone="blue" aria-expanded="true" aria-controls="catalog-sidebar-panel">
+                  <span class="as-sidebar__rail-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><use href="./assets/icons/navigation.svg#HomeIcon"></use></svg></span>
+                  <span class="as-sidebar__rail-label">Home</span>
+                </button>
+                <button class="as-sidebar__rail-link" type="button" aria-label="Sales" data-sidebar-area="sales" data-tone="cyan" aria-expanded="false" aria-controls="catalog-sidebar-panel">
+                  <span class="as-sidebar__rail-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><use href="./assets/icons/navigation.svg#PresentationChartLineIcon"></use></svg></span>
+                  <span class="as-sidebar__rail-label">Sales</span>
+                </button>
+                <button class="as-sidebar__rail-link" type="button" aria-label="Ops (Operations)" data-sidebar-title="Operations" data-sidebar-area="operations" data-tone="emerald" aria-expanded="false" aria-controls="catalog-sidebar-panel">
+                  <span class="as-sidebar__rail-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><use href="./assets/icons/navigation.svg#ClipboardDocumentCheckIcon"></use></svg></span>
+                  <span class="as-sidebar__rail-label">Ops</span>
+                </button>
+                <button class="as-sidebar__rail-link" type="button" aria-label="Inventory" data-sidebar-area="inventory" data-tone="amber" aria-expanded="false" aria-controls="catalog-sidebar-panel">
+                  <span class="as-sidebar__rail-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><use href="./assets/icons/navigation.svg#CubeIcon"></use></svg></span>
+                  <span class="as-sidebar__rail-label">Inventory</span>
+                </button>
+                <button class="as-sidebar__rail-link" type="button" aria-label="Finance" data-sidebar-area="finance" data-tone="violet" aria-expanded="false" aria-controls="catalog-sidebar-panel">
+                  <span class="as-sidebar__rail-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><use href="./assets/icons/navigation.svg#BanknotesIcon"></use></svg></span>
+                  <span class="as-sidebar__rail-label">Finance</span>
+                </button>
+                <button class="as-sidebar__rail-link" type="button" aria-label="Reports" data-sidebar-area="reports" data-tone="sky" aria-expanded="false" aria-controls="catalog-sidebar-panel">
+                  <span class="as-sidebar__rail-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><use href="./assets/icons/navigation.svg#DocumentChartBarIcon"></use></svg></span>
+                  <span class="as-sidebar__rail-label">Reports</span>
+                </button>
+                <button class="as-sidebar__rail-link" type="button" aria-label="Administration" data-sidebar-area="admin" data-tone="rose" aria-expanded="false" aria-controls="catalog-sidebar-panel">
+                  <span class="as-sidebar__rail-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><use href="./assets/icons/navigation.svg#Cog6ToothIcon"></use></svg></span>
+                  <span class="as-sidebar__rail-label">Admin</span>
+                </button>
               </nav>
-              <div class="as-sidebar__panel">
+              <div class="as-sidebar__panel" id="catalog-sidebar-panel">
                 <header class="as-sidebar__header">
-                  <h3 class="as-sidebar__title" id="catalog-sidebar-title">Commercial</h3>
+                  <h3 class="as-sidebar__title" id="catalog-sidebar-title">Home</h3>
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><path d="m8 10 4 4 4-4"></path></svg>
                 </header>
                 <div class="as-sidebar__search">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-4-4"></path></svg>
-                  <input class="as-control" id="catalog-sidebar-search" type="search" autocomplete="off" aria-label="Search Commercial navigation" aria-describedby="catalog-sidebar-status" placeholder="Search navigation">
+                  <input class="as-control" id="catalog-sidebar-search" type="search" autocomplete="off" aria-label="Search Home navigation" aria-describedby="catalog-sidebar-status" placeholder="Search navigation">
                 </div>
-                <nav id="catalog-sidebar-destinations" aria-label="Commercial destinations">
+                <nav id="catalog-sidebar-destinations" aria-label="Home destinations">
                   <ul class="as-sidebar__menu" id="catalog-sidebar-menu">
                     <li class="as-sidebar__indicator" aria-hidden="true"></li>
-                    <li><a class="as-sidebar__link" href="#navigation" data-sidebar-label="Sales Dashboard">
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><path d="M4 5h16v11H4z"></path><path d="M8 20h8M12 16v4M8 12l2-2 2 2 4-4"></path></svg>
-                      <span>Sales Dashboard</span>
-                    </a></li>
-                    <li><a class="as-sidebar__link" href="#navigation" data-sidebar-label="Sales Pipeline">
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><path d="M4 5h16v4H4zM7 9v5h10V9M10 14v5h4v-5"></path></svg>
-                      <span>Sales Pipeline</span>
-                    </a></li>
-                    <li><a class="as-sidebar__link" href="#navigation" data-sidebar-label="Team Quotes" aria-current="page">
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><path d="M6 3h9l4 4v14H6z"></path><path d="M15 3v5h4M9 12h6M9 16h6"></path></svg>
-                      <span>Team Quotes</span>
-                    </a></li>
-                    <li><a class="as-sidebar__link" href="#navigation" data-sidebar-label="Order Desk">
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><path d="M6 3h9l4 4v14H6z"></path><path d="M15 3v5h4M9 12h6M9 16h4"></path></svg>
-                      <span>Order Desk</span>
-                    </a></li>
-                    <li><a class="as-sidebar__link" href="#navigation" data-sidebar-label="Service Orders">
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><path d="m14.5 6.5 3-3 3 3-3 3M9.5 17.5l-3 3-3-3 3-3M13 8l-5 5M16 11l-5 5"></path></svg>
-                      <span>Service Orders</span>
-                    </a></li>
-                    <li><a class="as-sidebar__link" href="#navigation" data-sidebar-label="Customers and Partners">
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><circle cx="9" cy="8" r="3"></circle><circle cx="17" cy="10" r="2"></circle><path d="M3 20c0-4 2.5-6 6-6s6 2 6 6M15 15c3 0 5 1.5 5 4"></path></svg>
-                      <span>Customers &amp; Partners</span>
-                    </a></li>
+                    <li><a class="as-sidebar__link" href="#navigation" data-sidebar-label="Executive Dashboard" aria-current="page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><use href="./assets/icons/navigation.svg#HomeIcon"></use></svg><span>Executive Dashboard</span></a></li>
+                    <li><a class="as-sidebar__link" href="#navigation" data-sidebar-label="Workbench"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><use href="./assets/icons/navigation.svg#ClipboardDocumentCheckIcon"></use></svg><span>Workbench</span></a></li>
+                    <li><a class="as-sidebar__link" href="#navigation" data-sidebar-label="Analytics"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><use href="./assets/icons/navigation.svg#ChartBarIcon"></use></svg><span>Analytics</span></a></li>
+                    <li hidden><a class="as-sidebar__link" href="#navigation" data-sidebar-label=""><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><use href="./assets/icons/navigation.svg#HomeIcon"></use></svg><span></span></a></li>
+                    <li hidden><a class="as-sidebar__link" href="#navigation" data-sidebar-label=""><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><use href="./assets/icons/navigation.svg#HomeIcon"></use></svg><span></span></a></li>
+                    <li hidden><a class="as-sidebar__link" href="#navigation" data-sidebar-label=""><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><use href="./assets/icons/navigation.svg#HomeIcon"></use></svg><span></span></a></li>
                   </ul>
                 </nav>
-                <p class="as-sidebar__status" id="catalog-sidebar-status" role="status" aria-live="polite">Team Quotes is the current destination.</p>
+                <p class="as-sidebar__status" id="catalog-sidebar-status" role="status" aria-live="polite">Executive Dashboard is the current destination.</p>
               </div>
             </aside>
             <nav class="as-breadcrumbs" aria-label="Example breadcrumb">
@@ -333,6 +336,7 @@
             <p class="catalog-eyebrow">Data display</p>
             <h2>Cards, descriptions, and tables</h2>
             <p>Semantic structures preserve comparison, record identity, and accessible headers.</p>
+            <p><a href="../site/document.html?file=docs/DATA_DISPLAY.md">Usage, states and implementation guidance</a></p>
           </div>
           <div class="catalog-demo catalog-stack">
             <article class="as-card" data-appearance="summary">
@@ -405,6 +409,7 @@
             <p class="catalog-eyebrow">Disclosure</p>
             <h2>Details, tooltip, and popover</h2>
             <p>Progressive disclosure keeps essential instructions visible and optional detail nearby.</p>
+            <p><a href="../site/document.html?file=docs/DISCLOSURE.md">Usage, states and implementation guidance</a></p>
           </div>
           <div class="catalog-demo catalog-demo--row">
             <details class="as-disclosure">
@@ -428,6 +433,7 @@
             <p class="catalog-eyebrow">Specialized inputs</p>
             <h2>File, date, and time</h2>
             <p>Native controls remain available while the product owns validation, storage, and time-zone rules.</p>
+            <p><a href="../site/document.html?file=docs/SPECIALIZED_INPUTS.md">Usage, states and implementation guidance</a></p>
           </div>
           <div class="catalog-demo catalog-stack">
             <div class="as-field">
@@ -447,6 +453,7 @@
             <p class="catalog-eyebrow">Feedback</p>
             <h2>Alerts, status, loading, and empty state</h2>
             <p>Messages identify the state, its scope, and the next useful action.</p>
+            <p><a href="../site/document.html?file=docs/FEEDBACK.md">Usage, states and implementation guidance</a></p>
           </div>
           <div class="catalog-demo catalog-stack">
             <div class="as-alert" data-variant="success" role="status" aria-labelledby="feedback-saved-title">
@@ -480,6 +487,7 @@
             <p class="catalog-eyebrow">Overlays</p>
             <h2>Menu and confirmation dialog</h2>
             <p>Overlays keep focus, dismissal, and destructive consequences explicit.</p>
+            <p><a href="../site/document.html?file=docs/OVERLAYS.md">Usage, states and implementation guidance</a></p>
           </div>
           <div class="catalog-demo catalog-demo--row">
             <div>
@@ -507,6 +515,6 @@
       </main>
     </div>
 
-    <footer class="catalog-footer">ASIG 0.4.0 · patterns are framework-neutral; business behavior stays product-owned.</footer>
+    <footer class="catalog-footer">ASIG <!-- asig-version -->0.6.0<!-- /asig-version --> · patterns are framework-neutral; business behavior stays product-owned.</footer>
   </body>
 </html>

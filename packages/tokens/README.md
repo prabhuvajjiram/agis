@@ -5,8 +5,12 @@ Semantic design tokens for Angel Stones operations, CAD, and marketing products.
 ## Install
 
 ```sh
-npm install --save-exact @angelstones/design-tokens@0.5.1
+npm install --save-exact @angelstones/design-tokens@0.6.0
 ```
+
+The 0.6 release is published under `latest`. Keep tokens and UI pattern versions aligned.
+Explore the [catalogue](https://prabhuvajjiram.github.io/agis/) and
+[getting started guide](https://github.com/prabhuvajjiram/agis/wiki/Getting-Started).
 
 ## Use
 

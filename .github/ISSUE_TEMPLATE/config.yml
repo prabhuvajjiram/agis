@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Documentation and getting started
+    url: https://github.com/prabhuvajjiram/agis/wiki
+    about: Explore installation, design guidance and contribution instructions.
+  - name: Private vulnerability report
+    url: https://github.com/prabhuvajjiram/agis/security/advisories/new
+    about: Report security issues privately; do not disclose them in public issues.
