@@ -42,3 +42,11 @@ review.
 Release notes must state whether the change affects tokens, markup contracts, visual
 appearance, keyboard behavior, or consumers. Product adoption belongs in a separate change
 inside the consuming repository.
+
+## Visual reference environment
+
+Linux release references target GitHub's Ubuntu 24.04 runner and the locked Playwright
+version. A local emulated Linux container can render native select labels and fallback
+glyphs differently. Inspect expected/actual/diff images from the hosted browser report
+before accepting a baseline update; verify the result in a subsequent native CI run.
+Do not increase pixel tolerances to hide an unexplained rendering change.
