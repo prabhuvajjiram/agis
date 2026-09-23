@@ -3,7 +3,7 @@
 ## Install matching packages
 
 ```sh
-npm install --save-exact @angelstones/design-tokens@0.6.0 @angelstones/ui-patterns@0.6.0
+npm install --save-exact @angelstones/design-tokens@0.7.0 @angelstones/ui-patterns@0.7.0
 ```
 
 Import tokens first in the CSS entry point handled by your application's bundler:

@@ -50,3 +50,21 @@ test('release gate rejects misaligned tags and routes prereleases away from late
     await rm(root, { recursive: true, force: true })
   }
 })
+
+test('favicon resolves for every published page under a project prefix', async ({ page, request }, info) => {
+  test.skip(info.project.name !== 'desktop-1440', 'Asset paths do not depend on viewport')
+  for (const route of ['site/', 'site/foundations.html', 'site/pages.html', 'site/document.html?file=docs/COMPONENT_CONTRACTS.md',
+    'examples/forms.html', 'examples/controls.html', 'examples/operations.html', 'examples/orders.html', 'examples/workbench.html', 'examples/order-detail.html']) {
+    await page.goto(`/dist/pages/${route}`)
+    const icon = page.locator('link[rel="icon"]')
+    await expect(icon).toHaveCount(1)
+    const url = await icon.evaluate(element => element.href)
+    expect(new URL(url).pathname).toBe('/dist/pages/site/assets/brand/favicon.png')
+    const response = await request.get(url)
+    expect(response.ok()).toBeTruthy()
+    expect(response.headers()['content-type']).toContain('image/png')
+    expect((await response.body()).subarray(0, 8).toString('hex')).toBe('89504e470d0a1a0a')
+  }
+  const entry = await request.get('/dist/pages/index.html')
+  expect(await entry.text()).toContain('href="./site/assets/brand/favicon.png"')
+})

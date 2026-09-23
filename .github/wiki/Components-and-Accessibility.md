@@ -16,6 +16,14 @@ themes. Use it alongside the behavior contracts below.
 | Menus and dialogs | [Overlays](https://github.com/prabhuvajjiram/agis/blob/main/docs/OVERLAYS.md) |
 | Alerts, status, loading and recovery | [Feedback](https://github.com/prabhuvajjiram/agis/blob/main/docs/FEEDBACK.md) |
 
+## Inputs, outputs and framework integration
+
+Each family guide includes an **Inputs, outputs and state** section. Start with the
+[component contract conventions](https://github.com/prabhuvajjiram/agis/blob/main/docs/COMPONENT_CONTRACTS.md)
+for required inputs, defaults, payloads, native event timing and controlled state.
+ASIG ships CSS, not framework components. React/Next.js callbacks, Angular outputs/signals
+and plain JavaScript listeners belong to product adapters; no ASIG event runtime is implied.
+
 ## Quality expectations
 
 WCAG 2.1 AA is the minimum target. Provide semantic controls, keyboard access, visible

@@ -17,6 +17,7 @@ const html = `<!DOCTYPE html>
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/png" sizes="512x512" href="../site/assets/brand/favicon.png">
   <title>ASIG foundations and tokens</title>
   <link rel="stylesheet" href="../packages/tokens/dist/tokens.css">
   <link rel="stylesheet" href="../packages/ui-patterns/all.css">

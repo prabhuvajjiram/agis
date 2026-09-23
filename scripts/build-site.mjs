@@ -24,6 +24,6 @@ for (const source of sources) {
 }
 await writeFile(path.join(destination, '.nojekyll'), '')
 await writeFile(path.join(destination, 'index.html'), `<!DOCTYPE html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta http-equiv="refresh" content="0; url=./site/"><title>Angel Stones Interface Guidelines</title></head><body><a href="./site/">Open the ASIG catalogue</a></body></html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta http-equiv="refresh" content="0; url=./site/"><link rel="icon" type="image/png" sizes="512x512" href="./site/assets/brand/favicon.png"><title>Angel Stones Interface Guidelines</title></head><body><a href="./site/">Open the ASIG catalogue</a></body></html>
 `)
 console.log('Built GitHub Pages artifact in dist/pages.')

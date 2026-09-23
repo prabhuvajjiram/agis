@@ -2,7 +2,7 @@
 
 ## Version channels
 
-**0.6.0 is the stable release line.** Stable versions publish under npm's `latest` tag;
+**0.7.0 is the stable release line.** Stable versions publish under npm's `latest` tag;
 prereleases use `next`. Keep design tokens and UI patterns on matching versions.
 Installed applications change only when their dependencies are upgraded.
 

@@ -5,7 +5,7 @@ Framework-neutral CSS patterns from the Angel Stones Interface Guidelines.
 ## Install
 
 ```sh
-npm install --save-exact @angelstones/design-tokens@0.6.0 @angelstones/ui-patterns@0.6.0
+npm install --save-exact @angelstones/design-tokens@0.7.0 @angelstones/ui-patterns@0.7.0
 ```
 
 ## Use
@@ -39,3 +39,11 @@ The 0.6 release adds opt-in operational page composition through
 typography and page styles. The application loads its font once; the package inherits it.
 See the repository's `docs/PAGE_DESIGN.md` and `site/pages.html` for exact geometry, type
 roles, responsive examples and adapter mappings. Stable releases use the `latest` channel.
+
+## Component integration contracts
+
+Read the [framework-neutral contracts](https://github.com/prabhuvajjiram/agis/blob/v0.7.0/docs/COMPONENT_CONTRACTS.md)
+for input types/defaults, native events, recommended adapter outputs and state ownership.
+React/Next.js, Angular and plain HTML can use the same CSS. Callbacks, outputs, signals,
+focus management and business operations are implemented by the consuming application;
+this package does not export JavaScript components or an event runtime.

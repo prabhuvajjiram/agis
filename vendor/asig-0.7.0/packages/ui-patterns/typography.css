@@ -1,0 +1,12 @@
+.as-text {
+  margin: 0;
+  color: inherit;
+  font-family: inherit;
+}
+
+.as-text[data-role="title"] { font-size: var(--as-type-title-size); font-weight: var(--as-type-title-weight); line-height: var(--as-type-title-line); }
+.as-text[data-role="section"] { font-size: var(--as-type-section-size); font-weight: var(--as-type-section-weight); line-height: var(--as-type-section-line); }
+.as-text[data-role="body"] { font-size: var(--as-type-body-size); font-weight: var(--as-type-body-weight); line-height: var(--as-type-body-line); }
+.as-text[data-role="label"] { font-size: var(--as-type-label-size); font-weight: var(--as-type-label-weight); line-height: var(--as-type-label-line); }
+.as-text[data-role="caption"] { font-size: var(--as-type-caption-size); font-weight: var(--as-type-caption-weight); line-height: var(--as-type-caption-line); }
+.as-text[data-role="numeric"] { font-size: var(--as-type-numeric-size); font-weight: var(--as-type-numeric-weight); line-height: var(--as-type-numeric-line); font-variant-numeric: tabular-nums; }

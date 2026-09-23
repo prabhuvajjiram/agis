@@ -5,7 +5,7 @@ Semantic design tokens for Angel Stones operations, CAD, and marketing products.
 ## Install
 
 ```sh
-npm install --save-exact @angelstones/design-tokens@0.6.0
+npm install --save-exact @angelstones/design-tokens@0.7.0
 ```
 
 The 0.6 release is published under `latest`. Keep tokens and UI pattern versions aligned.

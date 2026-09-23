@@ -87,3 +87,13 @@ test('@visual operations composition', async ({ page }) => {
   await page.evaluate(() => document.fonts.ready)
   await expect(page).toHaveScreenshot('operations-composition.png', { fullPage: true, animations: 'disabled', maxDiffPixels: 50, timeout: 40_000 })
 })
+
+test('component contracts are reachable from usage guidance without implying a runtime API', async ({ page }) => {
+  await page.goto('/site/document.html?file=docs/ACTIONS.md')
+  await expect(page.locator('#document-body')).toContainText('## Inputs, outputs and state')
+  await page.getByRole('link', { name: 'Inputs, outputs and state', exact: true }).click()
+  await expect(page.locator('#document-title')).toHaveText('Component contracts: inputs, outputs and state')
+  await expect(page.locator('#document-body')).toContainText('not events dispatched by ASIG')
+  await expect(page.locator('#document-body')).toContainText('Angular')
+  await expect(page.locator('#document-body')).toContainText('React / Next.js')
+})
