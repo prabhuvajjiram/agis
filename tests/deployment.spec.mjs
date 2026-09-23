@@ -11,6 +11,8 @@ test('Pages artifact works under a project prefix without escaping its assets', 
   })
   page.on('requestfailed', request => failures.push(request.url()))
   await page.goto('/dist/pages/')
+  // The artifact root performs a second navigation through its meta refresh.
+  await page.waitForURL(/\/dist\/pages\/site\/$/)
   await expect(page).toHaveURL(/\/dist\/pages\/site\/$/)
   await expect(page.locator('body')).toHaveCSS('font-family', /Inter ASIG/)
   await page.getByRole('link', { name: 'Complete page examples', exact: true }).click()
@@ -53,7 +55,7 @@ test('release gate rejects misaligned tags and routes prereleases away from late
 
 test('favicon resolves for every published page under a project prefix', async ({ page, request }, info) => {
   test.skip(info.project.name !== 'desktop-1440', 'Asset paths do not depend on viewport')
-  for (const route of ['site/', 'site/foundations.html', 'site/pages.html', 'site/document.html?file=docs/COMPONENT_CONTRACTS.md',
+  for (const route of ['site/', 'site/start.html', 'site/foundations.html', 'site/pages.html', 'site/document.html?file=docs/COMPONENT_CONTRACTS.md',
     'examples/forms.html', 'examples/controls.html', 'examples/operations.html', 'examples/orders.html', 'examples/workbench.html', 'examples/order-detail.html']) {
     await page.goto(`/dist/pages/${route}`)
     const icon = page.locator('link[rel="icon"]')

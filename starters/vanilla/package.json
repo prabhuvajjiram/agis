@@ -1,0 +1,21 @@
+{
+  "name": "asig-vanilla-starter",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1",
+    "build": "vite build",
+    "preview": "vite preview --host 127.0.0.1"
+  },
+  "engines": {
+    "node": ">=26 <27"
+  },
+  "dependencies": {
+    "@angelstones/design-tokens": "0.7.0",
+    "@angelstones/ui-patterns": "0.7.0"
+  },
+  "devDependencies": {
+    "vite": "8.3.0"
+  }
+}
