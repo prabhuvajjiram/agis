@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Build your first ASIG screen with runnable Next.js, Angular and plain JavaScript starters. Shared design tokens and CSS, with behavior owned by your application.">
+  <title>Start building · ASIG</title>
+  <link rel="icon" type="image/png" sizes="512x512" href="./assets/brand/favicon.png">
+  <link rel="stylesheet" href="../packages/tokens/dist/tokens.css">
+  <link rel="stylesheet" href="../packages/ui-patterns/all.css">
+  <link rel="stylesheet" href="./assets/catalog.css">
+  <link rel="stylesheet" href="./assets/guide.css">
+  <link rel="stylesheet" href="./assets/start.css">
+</head>
+<body data-as-theme="operations" class="guide-page">
+  <a class="as-skip-link" href="#content">Skip to quickstart</a>
+  <main id="content" class="guide-shell" tabindex="-1">
+    <nav aria-label="Design resources"><a href="./index.html">Component catalogue</a><a href="./pages.html">Page examples</a><a href="./document.html?file=docs/COMPONENT_CONTRACTS.md">Component contracts</a><a href="https://github.com/prabhuvajjiram/agis">GitHub</a></nav>
+    <header class="guide-header start-hero">
+      <p class="catalog-kicker">ASIG 0.7.0 · Open source · MIT</p>
+      <h1>One design language.<br>Your framework.</h1>
+      <p class="catalog-lede">Start with a working Orders screen. Keep your framework, own the behavior, and use shared tokens and CSS for a consistent interface.</p>
+      <a class="as-button" href="#choose">Choose your starter</a>
+      <a class="start-secondary" href="#existing">Add to an existing app</a>
+    </header>
+    <section aria-labelledby="demo-title" class="start-section">
+      <h2 id="demo-title">See the starter in action</h2>
+      <p id="demo-description">A 20-second silent demo: filter three sample orders down to two, switch to the dark theme and keep the selected filter. On-screen captions explain each step.</p>
+      <video class="start-demo" controls playsinline preload="none" poster="./assets/adoption/poster.jpg" aria-label="ASIG starter demo" aria-describedby="demo-description" width="1920" height="1080">
+        <source src="./assets/adoption/demo.mp4" type="video/mp4">
+        <track kind="captions" src="./assets/adoption/captions.vtt" srclang="en" label="English">
+        <a href="./assets/adoption/demo.mp4">Download the ASIG starter demo</a>
+      </video>
+      <p><a href="./assets/adoption/demo.mp4" download>Download the demo (MP4)</a></p>
+    </section>
+    <section aria-labelledby="choose" class="start-section">
+      <h2 id="choose">A small example you can make your own</h2>
+      <p>Each starter includes search, stage filtering, reset, an empty state and four themes. They use the same fictional Orders data and the published npm packages.</p>
+      <div class="token-grid">
+        <article class="token-card"><p class="catalog-eyebrow">DOM events</p><h3>Plain JavaScript</h3><p>Vite and native HTML. See the CSS contract with the smallest amount of application code.</p><a href="https://github.com/prabhuvajjiram/agis/tree/main/starters/vanilla">Run the JavaScript starter →</a></article>
+        <article class="token-card"><p class="catalog-eyebrow">Props &amp; callbacks</p><h3>Next.js + React</h3><p>App Router, global CSS and a controlled filter component. State stays in your application.</p><a href="https://github.com/prabhuvajjiram/agis/tree/main/starters/nextjs">Run the Next.js starter →</a></article>
+        <article class="token-card"><p class="catalog-eyebrow">Signals &amp; outputs</p><h3>Angular</h3><p>A standalone component with signal inputs, outputs and a computed filtered list.</p><a href="https://github.com/prabhuvajjiram/agis/tree/main/starters/angular">Run the Angular starter →</a></article>
+      </div>
+      <p>Use Node.js 26. Clone the repository, choose a starter and run:</p>
+      <pre class="start-code"><code>git clone https://github.com/prabhuvajjiram/agis.git
+cd agis/starters/vanilla
+npm ci
+npm run dev</code></pre>
+      <p>Replace <code>vanilla</code> with <code>nextjs</code> or <code>angular</code>. Open the local URL printed in your terminal. Every folder is self-contained with its own lockfile.</p>
+    </section>
+    <section aria-labelledby="existing" class="start-section">
+      <h2 id="existing">Already have an application?</h2>
+      <p>Install both packages together and import their CSS once in your global stylesheet.</p>
+      <pre class="start-code"><code>npm install @angelstones/design-tokens@0.7.0 @angelstones/ui-patterns@0.7.0</code></pre>
+      <pre class="start-code"><code>@import "@angelstones/design-tokens/tokens.css";
+@import "@angelstones/ui-patterns/all.css";</code></pre>
+      <p>Apply a theme to the page or a wrapper, then use opt-in classes:</p>
+      <pre class="start-code"><code>&lt;div data-as-theme="operations"&gt;
+  &lt;button class="as-button" type="button"&gt;Save draft&lt;/button&gt;
+&lt;/div&gt;</code></pre>
+      <p>ASIG provides design tokens, CSS patterns and implementation guidance. Your application implements the click handler, state and data access. These packages do not export React or Angular components.</p>
+    </section>
+    <section aria-labelledby="next" class="start-section">
+      <h2 id="next">Build one screen, then share what you learned</h2>
+      <ol class="start-steps"><li><a href="./pages.html">Explore complete page examples</a> for typography, spacing and responsive composition.</li><li><a href="./document.html?file=docs/COMPONENT_CONTRACTS.md">Read the component contracts</a> for inputs, events, state and accessibility responsibilities.</li><li><a href="https://github.com/prabhuvajjiram/agis/issues/new/choose">Tell us where you got stuck</a>, or contribute a small example with invented data.</li></ol>
+      <p>The starters are learning examples. Add your own authentication, API, persistence and product-specific behavior before production use.</p>
+    </section>
+  </main>
+</body>
+</html>

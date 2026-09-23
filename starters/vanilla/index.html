@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Orders · ASIG starter</title>
+  </head>
+  <body>
+    <div class="as-workspace starter" id="app" data-as-theme="operations">
+      <a class="as-skip-link" href="#content">Skip to orders</a>
+      <main class="as-workspace__main" id="content" tabindex="-1">
+        <header class="as-page-header">
+          <div class="as-page-header__identity">
+            <p class="as-page-text" data-role="caption">ASIG / STARTER</p>
+            <h1 class="as-page-text" data-role="page-title">Orders</h1>
+            <p class="as-page-text" data-role="page-subtitle">
+              A working screen. Your framework. One design language.
+            </p>
+          </div>
+          <div class="as-field">
+            <label class="as-field__label" for="theme">Theme</label
+            ><select class="as-select" id="theme">
+              <option value="operations">Operations</option>
+              <option value="operations-dark">Operations dark</option>
+              <option value="cad">CAD</option>
+              <option value="marketing">Marketing</option>
+            </select>
+          </div>
+        </header>
+        <section class="as-page-panel" aria-label="Order workspace">
+          <form
+            class="as-page-toolbar"
+            id="filters"
+            role="search"
+            aria-label="Filter orders"
+          >
+            <div class="as-field">
+              <label class="as-field__label" for="query">Find an order</label
+              ><input
+                class="as-control"
+                id="query"
+                type="search"
+                placeholder="Order or customer"
+              />
+            </div>
+            <div class="as-field">
+              <label class="as-field__label" for="stage">Stage</label
+              ><select class="as-select" id="stage">
+                <option value="all">All stages</option>
+                <option value="review">Needs review</option>
+                <option value="ready">Ready</option>
+              </select>
+            </div>
+            <button class="as-button" data-variant="secondary" type="reset">
+              Reset filters
+            </button>
+          </form>
+          <p role="status" id="result-count" aria-live="polite"></p>
+          <div
+            class="as-page-table-region"
+            tabindex="0"
+            role="region"
+            aria-label="Scrollable order table"
+          >
+            <table class="as-page-table">
+              <caption class="starter-caption">
+                Sample customer orders
+              </caption>
+              <thead>
+                <tr>
+                  <th scope="col">Order</th>
+                  <th scope="col">Customer</th>
+                  <th scope="col">Stage</th>
+                  <th scope="col" data-numeric>Quantity</th>
+                </tr>
+              </thead>
+              <tbody id="rows"></tbody>
+            </table>
+          </div>
+          <p id="empty" hidden>
+            No orders match. Try another search or reset the filters.
+          </p>
+        </section>
+        <footer>
+          <p class="starter-note">
+            Invented sample data. Filtering stays in this browser; no backend or
+            persistence.
+          </p>
+          <nav class="starter-footer" aria-label="Learning resources">
+            <a href="https://prabhuvajjiram.github.io/agis/"
+              >Component catalogue</a
+            ><a
+              href="https://github.com/prabhuvajjiram/agis/blob/v0.7.0/docs/COMPONENT_CONTRACTS.md"
+              >Inputs, outputs and state</a
+            >
+          </nav>
+        </footer>
+      </main>
+    </div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

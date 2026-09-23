@@ -1,0 +1,38 @@
+name: Starter integration checks
+on:
+  push:
+    branches: [main]
+    paths: ['starters/**', 'playwright.starters.config.mjs', '.github/workflows/starters.yml', 'package-lock.json']
+  pull_request:
+    paths: ['starters/**', 'playwright.starters.config.mjs', '.github/workflows/starters.yml', 'package-lock.json']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  starters:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+          cache-dependency-path: |
+            package-lock.json
+            starters/*/package-lock.json
+      - run: npm ci
+      - name: Install and build the standalone starters
+        run: |
+          for starter in vanilla nextjs angular; do
+            npm --prefix "starters/$starter" ci
+            npm --prefix "starters/$starter" run build
+          done
+      - run: npx playwright install --with-deps chromium
+      - run: npx playwright test --config playwright.starters.config.mjs
+      - uses: actions/upload-artifact@v7
+        if: failure()
+        with:
+          name: starter-test-results
+          path: test-results/
+          retention-days: 7

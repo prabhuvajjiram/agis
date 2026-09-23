@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><title>ASIG scene-4</title></head><body><template>
+<style>
+@font-face { font-family: Inter; src: url('assets/inter.woff2') format('woff2'); font-weight: 100 900; }
+* { box-sizing: border-box; }
+html, body { width:100%; height:100%; margin:0; }
+body { background:#edf4f8; color:#102538; font-family:Inter,sans-serif; }
+#root { background:#edf4f8; color:#102538; font-family:Inter,sans-serif; position:relative; width:100%; height:100%; overflow:hidden; }
+.clip { position:absolute; inset:0; }
+.brand { position:absolute; top:52px; left:80px; display:flex; align-items:center; gap:20px; font-size:26px; font-weight:650; }
+.brand img { width:56px; height:56px; border-radius:12px; }
+.meta { position:absolute; top:66px; right:80px; font-size:24px; color:#365770; }
+.topline { position:absolute; top:130px; left:80px; right:80px; height:2px; background:#bdd2e2; transform-origin:left; }
+.scene { height:100%; padding:174px 80px 58px; display:grid; grid-template-columns:560px 1fr; gap:70px; align-items:center; }
+.copy { align-self:center; }
+.eyebrow { color:#18588f; font-size:24px; font-weight:700; letter-spacing:.1em; margin:0 0 24px; }
+h1,h2 { font-size:76px; line-height:1.06; letter-spacing:-.05em; margin:0 0 30px; font-weight:750; }
+.slide-lines span { display:block; will-change:transform,opacity; }
+.explain { font-size:30px; line-height:1.45; margin:0; max-width:550px; color:#365770; }
+.frameworks { margin-top:40px; display:flex; flex-wrap:wrap; gap:12px; }
+.frameworks span { border:2px solid #bdd2e2; padding:13px 18px; border-radius:12px; font-size:26px; font-weight:650; background:#f7fafc; }
+.product { width:1130px; position:relative; border:2px solid #bdd2e2; border-radius:22px; overflow:hidden; background:#edf4f8; box-shadow:0 24px 60px #16354d20; }
+.product img { width:100%; height:auto; display:block; }
+.product-label { font-size:24px; color:#365770; margin:22px 0 0; }
+.proof { align-self:center; }
+.cursor { position:absolute; width:40px; height:48px; filter:drop-shadow(0 2px 2px #10253855); }
+.cursor svg { width:100%; height:100%; }
+#filter-cursor { left:860px; top:212px; }
+#theme-cursor { left:1050px; top:77px; }
+.cta { margin-top:36px; font-size:28px; line-height:1.5; color:#18588f; font-weight:650; overflow-wrap:anywhere; }
+.repo { font-size:32px; font-weight:650; margin-top:40px; }
+</style>
+<div data-hf-id="hf-rjq2" id="root" data-composition-id="scene-4" data-width="1920" data-height="1080" data-duration="4">
+  <div data-hf-id="hf-oojr" class="brand"><img data-hf-id="hf-2l72" src="assets/logo.png" alt="Angel Stones"><span data-hf-id="hf-9sat">ASIG</span></div>
+  <div data-hf-id="hf-3c5m" class="meta">Design tokens + CSS patterns</div><div data-hf-id="hf-o5lv" class="topline"></div>
+    <div data-hf-id="hf-wua0" class="scene"><div data-hf-id="hf-bdx3" class="copy"><p data-hf-id="hf-kl72" class="eyebrow">OPEN SOURCE / MIT</p><h2 data-hf-id="hf-f4s5" class="slide-lines" id="cta-heading"><span data-hf-id="hf-kk2a">Build your</span><span data-hf-id="hf-npz7">first ASIG</span><span data-hf-id="hf-wz9d">screen.</span></h2><p data-hf-id="hf-hpaq" class="explain">Pick a starter.<br data-hf-id="hf-x5px">Run it. Make it yours.</p><p data-hf-id="hf-uc8f" class="repo">github.com/prabhuvajjiram/agis</p></div><div data-hf-id="hf-0nwy" class="proof"><div data-hf-id="hf-b5gv" class="product" id="product-4"><img data-hf-id="hf-jre2" src="assets/orders-all.png" alt="Orders starter available in three frameworks"></div><p data-hf-id="hf-7sed" class="cta">prabhuvajjiram.github.io/agis/site/start.html</p></div></div>
+
+</div><script>const tl = gsap.timeline({ paused:true });
+tl.fromTo('#cta-heading span',{opacity:0,x:-36,y:18},{opacity:1,x:0,y:0,duration:.42,stagger:.08,ease:'power3.out'},.15);
+window.__timelines['scene-4'] = tl;</script>
+</template></body></html>

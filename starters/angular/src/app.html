@@ -1,0 +1,87 @@
+<div class="as-workspace starter" [attr.data-as-theme]="theme()">
+  <a class="as-skip-link" href="#content">Skip to orders</a>
+  <main class="as-workspace__main" id="content" tabindex="-1">
+    <header class="as-page-header">
+      <div class="as-page-header__identity">
+        <p class="as-page-text" data-role="caption">ASIG / STARTER</p>
+        <h1 class="as-page-text" data-role="page-title">Orders</h1>
+        <p class="as-page-text" data-role="page-subtitle">
+          A working screen. Your framework. One design language.
+        </p>
+      </div>
+      <div class="as-field">
+        <label class="as-field__label" for="theme">Theme</label
+        ><select
+          #appearance
+          class="as-select"
+          id="theme"
+          [value]="theme()"
+          (change)="theme.set(appearance.value)"
+        >
+          <option value="operations">Operations</option>
+          <option value="operations-dark">Operations dark</option>
+          <option value="cad">CAD</option>
+          <option value="marketing">Marketing</option>
+        </select>
+      </div>
+    </header>
+    <section class="as-page-panel" aria-label="Order workspace">
+      <app-order-filters
+        [query]="query()"
+        [stage]="stage()"
+        (queryChange)="query.set($event)"
+        (stageChange)="stage.set($event)"
+        (resetRequested)="reset()"
+      />
+      <p role="status" aria-live="polite">
+        {{ visible().length }} of {{ orders.length }} orders
+      </p>
+      <div
+        class="as-page-table-region"
+        tabindex="0"
+        role="region"
+        aria-label="Scrollable order table"
+      >
+        <table class="as-page-table">
+          <caption class="starter-caption">
+            Sample customer orders
+          </caption>
+          <thead>
+            <tr>
+              <th scope="col">Order</th>
+              <th scope="col">Customer</th>
+              <th scope="col">Stage</th>
+              <th scope="col" data-numeric>Quantity</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (order of visible(); track order.id) {
+            <tr>
+              <td data-identifier>{{ order.id }}</td>
+              <td>{{ order.customer }}</td>
+              <td>{{ order.stage === 'ready' ? 'Ready' : 'Needs review' }}</td>
+              <td data-numeric>{{ order.quantity }}</td>
+            </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+      @if (visible().length === 0) {
+      <p>No orders match. Try another search or reset the filters.</p>
+      }
+    </section>
+    <footer>
+      <p class="starter-note">
+        Invented sample data. Filtering stays in this browser; no backend or
+        persistence.
+      </p>
+      <nav class="starter-footer" aria-label="Learning resources">
+        <a href="https://prabhuvajjiram.github.io/agis/">Component catalogue</a
+        ><a
+          href="https://github.com/prabhuvajjiram/agis/blob/v0.7.0/docs/COMPONENT_CONTRACTS.md"
+          >Inputs, outputs and state</a
+        >
+      </nav>
+    </footer>
+  </main>
+</div>

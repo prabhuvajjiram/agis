@@ -1,0 +1,12 @@
+.start-hero { padding-block: var(--as-space-8); }
+.start-hero h1 { font-size: clamp(2.4rem, 5vw, 4rem); line-height: 1.1; letter-spacing: -.035em; margin-block: var(--as-space-4); }
+.start-hero .catalog-lede { max-width: 52ch; margin-bottom: var(--as-space-6); }
+.start-hero a.as-button { color: var(--as-color-on-primary); text-decoration: none; }
+.start-secondary { display: inline-flex; align-items: center; min-height: 44px; margin-inline-start: var(--as-space-4); }
+.start-section { border-top: 1px solid var(--as-color-border); padding-top: var(--as-space-8); }
+.start-code { background: var(--as-color-surface-muted); padding: var(--as-space-4); border: 1px solid var(--as-color-border); border-radius: var(--as-radius-control); line-height: 1.7; }
+.start-section .token-card a { display: inline-flex; align-items: center; min-height: 44px; margin-top: var(--as-space-4); }
+.start-steps { padding-inline-start: var(--as-space-6); }
+.start-steps li { padding-block: var(--as-space-2); }
+
+.start-demo { display: block; width: 100%; height: auto; border: 1px solid var(--as-color-border); border-radius: var(--as-radius-panel); }

@@ -1,0 +1,31 @@
+@import "@angelstones/design-tokens/tokens.css";
+@import "@angelstones/ui-patterns/all.css";
+
+/* Product shell only. Component appearance comes from the installed ASIG packages. */
+body {
+  margin: 0;
+  font-family: ui-sans-serif, system-ui, sans-serif;
+}
+.starter {
+  min-height: 100vh;
+}
+.starter .as-workspace__main {
+  max-width: 72rem;
+}
+.starter-caption {
+  text-align: start;
+  padding: 1rem;
+}
+.starter-note {
+  color: var(--as-color-foreground-muted);
+}
+.starter-footer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+.starter-footer a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}

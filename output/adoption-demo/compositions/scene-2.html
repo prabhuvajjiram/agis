@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><title>ASIG scene-2</title></head><body><template>
+<style>
+@font-face { font-family: Inter; src: url('assets/inter.woff2') format('woff2'); font-weight: 100 900; }
+* { box-sizing: border-box; }
+html, body { width:100%; height:100%; margin:0; }
+body { background:#edf4f8; color:#102538; font-family:Inter,sans-serif; }
+#root { background:#edf4f8; color:#102538; font-family:Inter,sans-serif; position:relative; width:100%; height:100%; overflow:hidden; }
+.clip { position:absolute; inset:0; }
+.brand { position:absolute; top:52px; left:80px; display:flex; align-items:center; gap:20px; font-size:26px; font-weight:650; }
+.brand img { width:56px; height:56px; border-radius:12px; }
+.meta { position:absolute; top:66px; right:80px; font-size:24px; color:#365770; }
+.topline { position:absolute; top:130px; left:80px; right:80px; height:2px; background:#bdd2e2; transform-origin:left; }
+.scene { height:100%; padding:174px 80px 58px; display:grid; grid-template-columns:560px 1fr; gap:70px; align-items:center; }
+.copy { align-self:center; }
+.eyebrow { color:#18588f; font-size:24px; font-weight:700; letter-spacing:.1em; margin:0 0 24px; }
+h1,h2 { font-size:76px; line-height:1.06; letter-spacing:-.05em; margin:0 0 30px; font-weight:750; }
+.slide-lines span { display:block; will-change:transform,opacity; }
+.explain { font-size:30px; line-height:1.45; margin:0; max-width:550px; color:#365770; }
+.frameworks { margin-top:40px; display:flex; flex-wrap:wrap; gap:12px; }
+.frameworks span { border:2px solid #bdd2e2; padding:13px 18px; border-radius:12px; font-size:26px; font-weight:650; background:#f7fafc; }
+.product { width:1130px; position:relative; border:2px solid #bdd2e2; border-radius:22px; overflow:hidden; background:#edf4f8; box-shadow:0 24px 60px #16354d20; }
+.product img { width:100%; height:auto; display:block; }
+.product-label { font-size:24px; color:#365770; margin:22px 0 0; }
+.proof { align-self:center; }
+.cursor { position:absolute; width:40px; height:48px; filter:drop-shadow(0 2px 2px #10253855); }
+.cursor svg { width:100%; height:100%; }
+#filter-cursor { left:860px; top:212px; }
+#theme-cursor { left:1050px; top:77px; }
+.cta { margin-top:36px; font-size:28px; line-height:1.5; color:#18588f; font-weight:650; overflow-wrap:anywhere; }
+.repo { font-size:32px; font-weight:650; margin-top:40px; }
+</style>
+<div data-hf-id="hf-en3j" id="root" data-composition-id="scene-2" data-width="1920" data-height="1080" data-duration="5">
+  <div data-hf-id="hf-oojr" class="brand"><img data-hf-id="hf-2l72" src="assets/logo.png" alt="Angel Stones"><span data-hf-id="hf-9sat">ASIG</span></div>
+  <div data-hf-id="hf-3c5m" class="meta">Design tokens + CSS patterns</div><div data-hf-id="hf-o5lv" class="topline"></div>
+    <div data-hf-id="hf-wua0" class="scene"><div data-hf-id="hf-bdx3" class="copy"><p data-hf-id="hf-h9fe" class="eyebrow">01 / APPLICATION BEHAVIOR</p><h2 data-hf-id="hf-vv3p" class="slide-lines" id="filter-heading"><span data-hf-id="hf-3wr5">Filter the work.</span><span data-hf-id="hf-flin">Keep the</span><span data-hf-id="hf-6df6">context.</span></h2><p data-hf-id="hf-oamm" class="explain">Native events, React callbacks or Angular outputs.</p></div><div data-hf-id="hf-0nwy" class="proof"><div data-hf-id="hf-fv8p" class="product" id="product-2"><img data-hf-id="hf-4cd8" src="assets/orders-ready.png" alt="Ready filter selected; two matching orders remain"><div data-hf-id="hf-qjk9" class="cursor" id="filter-cursor"><svg data-hf-id="hf-995t" viewBox="0 0 40 48"><path data-hf-id="hf-8s80" d="M3 2 L35 27 L21 29 L15 43 Z" fill="#18588f" stroke="#ffffff" stroke-width="3" /></svg></div></div><p data-hf-id="hf-dyvc" class="product-label">Stage: Ready · 2 of 3 orders</p></div></div>
+
+</div><script>const tl = gsap.timeline({ paused:true });
+tl.fromTo('#filter-heading span',{opacity:0,x:-36,y:18},{opacity:1,x:0,y:0,duration:.42,stagger:.08,ease:'power3.out'},.15);
+tl.fromTo('#filter-cursor',{opacity:0,x:38,y:30},{opacity:1,x:0,y:0,duration:.45,ease:'power2.out'},.1);
+tl.to('#filter-cursor',{opacity:0,duration:.25},1.6);
+window.__timelines['scene-2'] = tl;</script>
+</template></body></html>

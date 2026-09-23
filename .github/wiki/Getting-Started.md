@@ -1,5 +1,15 @@
 # Getting started
 
+## Try a runnable starter
+
+Start with [the quickstart](https://prabhuvajjiram.github.io/agis/site/start.html) or choose a standalone example:
+
+- [Plain JavaScript + Vite](https://github.com/prabhuvajjiram/agis/tree/main/starters/vanilla): native DOM events.
+- [Next.js + React](https://github.com/prabhuvajjiram/agis/tree/main/starters/nextjs): controlled props and callbacks.
+- [Angular](https://github.com/prabhuvajjiram/agis/tree/main/starters/angular): signal inputs and outputs.
+
+All three use the published ASIG 0.7.0 packages, fictional data and their own dependency lockfiles. They demonstrate search, filtering, empty state, reset and theme switching. Your application owns the behavior; ASIG provides the styling.
+
 ## Install matching packages
 
 ```sh
